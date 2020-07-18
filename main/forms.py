@@ -30,8 +30,8 @@ class UserCreateForm(UserCreationForm):
         return user
 
     def clean_email(self):
-        if get_user_model().objects.filter(email=self.cleaned_data['email']).exists():
-            raise ValidationError(self.fields['email'].error_messages['exists'])
+        # if get_user_model().objects.filter(email=self.cleaned_data['email']).exists():
+        #     raise ValidationError(self.fields['email'].error_messages['exists'])
         return self.cleaned_data['email']
 
 

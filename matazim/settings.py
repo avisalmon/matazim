@@ -21,7 +21,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # The secret 7key below will be overiden in the depoloy
-SECRET_KEY = 'vw^0hv@a3&gy4amaky!#y&tdu+6)0)c^1!a-@r77eu6(xp5910'
+# SECRET_KEY = '???'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

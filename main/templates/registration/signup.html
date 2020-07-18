@@ -7,17 +7,18 @@
 <p color='red'>{{ error }}</p>
 {% endif %}
 
+  <h3>Login with:</h3>
+  <a href="{% provider_login_url 'facebook' %}" class="btn btn-primary">facebook</a>
+  <a href="{% provider_login_url 'google' %}" class="btn btn-danger">  Google  </a>
+  <a href="{% provider_login_url 'github' %}" class="btn btn-info">Github</a>
+<br><br>
+<p>---------------------- OR -------------------------</p>
   <h2>Sign up</h2>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Sign up</button>
   </form>
-  <hr>
-  <h3>You can also Login with:</h3>
-  <p><a href="{% provider_login_url 'github' %}">Login with GitHub</a></p>
-  <p><a href="{% provider_login_url 'google' %}">Login with Google</a></p>
-  <p><a href="{% provider_login_url 'facebook' %}">Login with FaceBook</a></p>
 
 
 {% endblock %}
