@@ -1,0 +1,68 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="jumbotron ">
+  <h1 class="display-4 text-center">MATAZIM - מטצים </h1>
+  <h3 class="text-center">Get in - Sign up - be part of the game:</h3>
+  <ul>
+    <li>מטצים - מדריכים טכנולוגיים צעירים</li>
+    <li><a href={% url 'programs:program_list' %}>Technology Programs</a></li>
+    <li>Facilitators (Schools, institutes etc.)</li>
+    <li>Facilities (Maker spaces, innovation spaces...)</li>
+    <li>Online training program</li>
+  </ul>
+<hr>
+
+<div class="container">
+  <div class="row">
+    <!-- start col -->
+    <div class="col">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{% static 'programs/programs.jpg' %}" height=300 alt="">
+        <div class="card-body">
+          <h5 class="card-title">Programs</h5>
+          <p class="card-text">Jump in and see all the different Education technical programs identified. Don’t see yours? Add it..</p>
+          <a href={% url 'programs:program_list' %} class="btn btn-primary">Go Programs</a>
+        </div>
+      </div>
+    </div>
+    <!-- endof col -->
+
+    <!-- start card col -->
+    <div class="col">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{% static 'programs/school.png' %}" height=300 alt="">
+        <div class="card-body">
+          <h5 class="card-title">Facilitators</h5>
+          <p class="card-text">Schools, institutions that hosts programs. don`t see yours in the list? add it...</p>
+          <a href="#" class="btn btn-danger">TBD facilitators</a>
+        </div>
+      </div>
+    </div>
+    <!-- endof card col -->
+
+      <!-- start card col -->
+    <div class="col">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{% static 'programs/makers.png' %}" height=300 alt="">
+        <div class="card-body">
+          <h5 class="card-title">Facilities</h5>
+          <p class="card-text">Maker spaces, FabLabs, innovation rooms, labs etc. You own one and don't see it in the list? add it...</p>
+          <a href="#" class="btn btn-danger">TBD Facilities</a>
+        </div>
+      </div>
+    </div>
+    <!-- endof card col -->
+
+  </div>
+</div>
+
+
+
+
+</div>
+
+
+{% endblock %}

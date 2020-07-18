@@ -1,0 +1,62 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+<h1>{{ program.name}}</h1>
+
+{% if user.profile in program.members.all %}
+  <a href={% url 'programs:program_remove_member' program.id user.profile.id %}>
+  <button type="button" class="btn btn-danger">Remove me from this program</button>
+  </a>
+{% else %}
+  <a href={% url 'programs:program_add_member' program.id user.profile.id %}>
+  <button type="button" class="btn btn-success">Add me as a member to this program</button>
+  </a>
+{% endif %}
+
+{% if program.owner == user %}
+<a href={% url 'programs:program_update' program.id %}>
+<button type="button" class="btn btn-success">Edit this Program</button>
+</a>
+<a href={% url 'programs:program_delete' program.id %}>
+<button type="button" class="btn btn-danger">Delete this Program</button>
+</a>
+{% endif %}
+<a href={% url 'programs:program_list' %}>
+<button type="button" class="btn btn-success">Back to list</button>
+</a>
+<hr>
+
+<p>owner:
+  <a href={% url 'main:profile' program.owner.profile.id %}>
+    ({{ program.owner}}): {{program.owner.first_name}} {{ program.owner.last_name }}
+  </a>
+</p>
+<p>{{ program.description|safe }}</p>
+{% if program.link %}
+  <p><a href={{ program.link }} target="_blank">more info {{ program.link }}</a></p>
+{% endif %}
+{% if program.image %}
+  <img src="{{ program.image.url }}" alt="" height=200>
+{% endif %}
+
+{% if program.members.count %}
+<h2>Members:</h2>
+<ul>
+  {% for member in program.members.all %}
+    <li>
+      <a href={% url 'main:profile' member.id %} >
+        ({{ member.user }}): {{member.user.first_name}} {{ member.user.last_name }}
+      </a>
+      {% if member == user.profile %}
+      whoops, its me... <a href={% url 'programs:program_remove_member' program.id member.id %}>get me out of here</a>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+
+{% else %}
+  <h2>No members. </h2>
+{% endif %}
+
+
+{% endblock %}

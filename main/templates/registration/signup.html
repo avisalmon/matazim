@@ -1,0 +1,23 @@
+{% extends "main/base.html" %}
+{% load socialaccount %}
+
+{% block content %}
+{% if error %}
+<h3>Something went wrong:</h3>
+<p color='red'>{{ error }}</p>
+{% endif %}
+
+  <h2>Sign up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign up</button>
+  </form>
+  <hr>
+  <h3>You can also Login with:</h3>
+  <p><a href="{% provider_login_url 'github' %}">Login with GitHub</a></p>
+  <p><a href="{% provider_login_url 'google' %}">Login with Google</a></p>
+  <p><a href="{% provider_login_url 'facebook' %}">Login with FaceBook</a></p>
+
+
+{% endblock %}

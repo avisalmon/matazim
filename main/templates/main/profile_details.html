@@ -1,0 +1,18 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>Profile page for {{ profile.user.first_name }} {{ profile.user.last_name}}</h1>
+<i>User: {{ profile.user }}<br></i>
+{% if profile.image %}
+<img src="{{ profile.image.url }}" alt="" height=100 >
+{% endif %}
+{% if profile.bio %}
+<p><u><b>Bio:</b></u></p>
+<p>  {{ profile.bio|safe }}</p>
+{% endif %}
+{% if profile.birth_date %}
+<p><b>Birthday: </b>{{ profile.birth_date|date }}</p>
+{% endif %}
+{% endblock %}

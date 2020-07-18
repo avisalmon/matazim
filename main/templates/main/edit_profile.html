@@ -1,0 +1,19 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+<h1>Edit Your Profile</h1>
+
+<p>User: {{ user }}</p>
+<h2 style="color:red">{{ errors }}</h2>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <table>
+  {{ form.as_p }}
+  {{ profile_form }}
+  </table>
+  <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

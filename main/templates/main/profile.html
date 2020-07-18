@@ -1,0 +1,16 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+<h1>This is Your Profile page</h1>
+<p><a href="{% url 'main:edit_profile' %}">Edit your profile</a></p>
+
+<h2>{{ user.first_name }} {{ user.last_name }}</h2>
+User: {{ user }}<br>
+{% if user.profile.image %}
+<img src="{{ user.profile.image.url }}" alt="" width=15% >
+{% endif %}
+<p><u><b>Bio:</b></u></p>
+<p>  {{ user.profile.bio|safe }}</p>
+<p><b>Birthday: </b>{{ user.profile.birth_date|date }}</p>
+{% endblock %}
