@@ -70,3 +70,42 @@ def program_remove_member(request, program_id, profile_id):
 
     program.members.remove(profile)
     return redirect('programs:program_detail', pk=program_id)
+
+## ***************** Facilitator *********************
+
+class FacilitatorListView(ListView):
+    model=Facilitator
+
+
+class FacilitatorDetailView(DetailView):
+    model=Facilitator
+
+
+class FacilitatorCreateView(LoginRequiredMixin, CreateView):
+    model=Facilitator
+    fields = ['name', 'description', 'link', 'image']
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.owner = self.request.user
+        obj.save()
+        return super().form_valid(form)
+
+
+class FacilitatorUpdateView(LoginRequiredMixin, UpdateView):
+    model=Facilitator
+    fields = ['name', 'description', 'link', 'image']
+
+    def dispatch(self, request, *args, **kwargs):
+        """" Making sure that only owners can update """
+        obj = self.get_object()
+        print(f'obj: {obj}')
+        if obj.owner != self.request.user:
+            print('Hi')
+            return redirect('programs:program_list')
+        return super(ProgramUpdateView, self).dispatch(request, *args, **kwargs)
+
+
+class FacilitatorDeleteView(DeleteView):
+    model=Facilitator
+    success_url = reverse_lazy('programs:program_list')

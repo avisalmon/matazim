@@ -1,0 +1,28 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+  <h1 dir="rtl">Schools and facilitators</h1>
+  <h3>This is a list of Schools and facilities</h3>
+  <p>we look for schools that adopts technology programs and maker spaces and want to get Matazim in the game</p>
+</div>
+<hr>
+<a href="#">
+<button type="button" class="btn btn-success">Add a new School</button>
+</a>
+<hr>
+<ul>
+  {% for facilitator in facilitator_list %}
+    <li>
+      <a href={% url 'programs:facilitator_detail' facilitator.id %}>
+        <p>{{ facilitator.name }} ; owner: {{ facilitator.owner.first_name}} {{ facilitator.owner.last_name}}
+      </a>
+      {% if facilitator.owner == user %}
+      ... this is your school... <a href=# >Remove it</a>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+
+
+{% endblock %}

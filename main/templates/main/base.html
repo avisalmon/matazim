@@ -40,11 +40,12 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-?             What do you want to see?
+             What do you want to see?
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <!-- <a class="dropdown-item" href=#>Learn</a> -->
               <a class="dropdown-item" href={% url 'programs:program_list' %}>Programs</a>
+              <a class="dropdown-item" href={% url 'programs:facilitator_list' %}>Schools and Facilitators</a>
               <a class="dropdown-item" href=#>Maker Spaces</a>
               <a class="dropdown-item" href=#>Events</a>
               <a class="dropdown-item" href=#>Teachers</a>
@@ -53,8 +54,17 @@
               <a class="dropdown-item" href="#">Connect us</a>
             </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">in the news</a>
+          <li class="nav-item dropdown font-weight-light">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             This Website developement
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <!-- <a class="dropdown-item" href=#>Learn</a> -->
+              <a class="dropdown-item" target="_blank" href="https://github.com/avisalmon/matazim">GitHub</a>
+              <a class="dropdown-item" target="_blank" href="https://airtable.com/tblzIwe7Vwt9A0qfU/viwzPk0NFxxwqlBQd?blocks=show">Report a bug</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Connect us</a>
+            </div>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">

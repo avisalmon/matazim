@@ -1,0 +1,62 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+<h1>{{ facilitator.name }}</h1>
+
+{% if user.profile in facilitators.members.all %}
+  <a href=#>
+  <button type="button" class="btn btn-danger">Remove me from this school</button>
+  </a>
+{% else %}
+  <a href=#>
+  <button type="button" class="btn btn-success">Add me as a member to this school</button>
+  </a>
+{% endif %}
+
+{% if program.owner == user %}
+<a href=#>
+<button type="button" class="btn btn-success">Edit School details</button>
+</a>
+<a href=#>
+<button type="button" class="btn btn-danger">Delete this School</button>
+</a>
+{% endif %}
+<a href={% url 'programs:facilitator_list' %}>
+<button type="button" class="btn btn-success">Back to School list</button>
+</a>
+<hr>
+
+<p>owner:
+  <a href={% url 'main:profile' facilitator.owner.profile.id %}>
+    ({{ facilitator.owner}}): {{ facilitator.owner.first_name}} {{ facilitator.owner.last_name }}
+  </a>
+</p>
+<p>{{ facilitator.description|safe }}</p>
+{% if program.link %}
+  <p><a href={{ facilitator.link }} target="_blank">more info... </a></p>
+{% endif %}
+{% if facilitator.image %}
+  <img src="{{ facilitator.image.url }}" alt="" height=200>
+{% endif %}
+
+{% if facilitator.members.count %}
+<h2>Members:</h2>
+<ul>
+  {% for member in facilitator.members.all %}
+    <li>
+      <a href={% url 'main:profile' member.id %} >
+        ({{ member.user }}): {{member.user.first_name}} {{ member.user.last_name }}
+      </a>
+      {% if member == user.profile %}
+      whoops, its me... <a href=>get me out of here</a>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+
+{% else %}
+  <h2>No members. </h2>
+{% endif %}
+
+
+{% endblock %}
