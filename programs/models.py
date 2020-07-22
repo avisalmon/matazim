@@ -32,7 +32,7 @@ class Facilitator(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('programs:facilitator_details', kwargs={'pk': self.pk})
+        return reverse('programs:facilitator_detail', kwargs={'pk': self.pk})
 
 
 class Facility (models.Model):

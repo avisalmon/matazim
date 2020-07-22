@@ -99,13 +99,33 @@ class FacilitatorUpdateView(LoginRequiredMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         """" Making sure that only owners can update """
         obj = self.get_object()
-        print(f'obj: {obj}')
         if obj.owner != self.request.user:
-            print('Hi')
-            return redirect('programs:program_list')
-        return super(ProgramUpdateView, self).dispatch(request, *args, **kwargs)
+            return redirect('programs:facilitator_list')
+        return super(FacilitatorUpdateView, self).dispatch(request, *args, **kwargs)
 
 
 class FacilitatorDeleteView(DeleteView):
     model=Facilitator
-    success_url = reverse_lazy('programs:program_list')
+    success_url = reverse_lazy('programs:facilitator_list')
+
+
+def facilitator_add_member(request, facilitator_id, profile_id):
+    print(f'got in. facilitator {facilitator_id}, profile {profile_id}')
+    try:
+        facilitator = Facilitator.objects.get(pk=facilitator_id)
+        profile = Profile.objects.get(pk=profile_id)
+    except:
+        return redirect('programs:facilitator_list')
+
+    facilitator.members.add(profile)
+    return redirect('programs:facilitator_detail', pk=facilitator_id)
+
+def facilitator_remove_member(request, facilitator_id, profile_id):
+    try:
+        facilitator = Facilitator.objects.get(pk=facilitator_id)
+        profile = Profile.objects.get(pk=profile_id)
+    except:
+        return redirect('programs:facilitator_list')
+
+    facilitator.members.remove(profile)
+    return redirect('programs:facilitator_detail', pk=facilitator_id)

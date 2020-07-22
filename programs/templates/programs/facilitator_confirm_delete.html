@@ -3,15 +3,15 @@
 
 {% block content %}
 
-{% if program.owner != user %}
+{% if facilitator.owner != user %}
 <h1>You are not allowed to delete. It is not your Program! Go away. </h1>
-<a href={% url 'programs:program_list'  %}>Go back to Programs</a>
+<a href={% url 'programs:facilitator_list'  %}>Go back to Programs</a>
 {% else %}
 
 <form method="post">
 {% csrf_token %}
 <input type="hidden" name="program" value={{ program.pk }} >
-<p>Are you sure you want to delete the Program: "{{ program }}"?</p>
+n<p>Are you sure you want to delete the School/Facilitator?: "{{ facilitator }}"?</p>
 <input type="submit" value="Confirm">
 </form>
 

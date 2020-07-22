@@ -3,21 +3,21 @@
 {% block content %}
 <h1>{{ facilitator.name }}</h1>
 
-{% if user.profile in facilitators.members.all %}
-  <a href=#>
+{% if user.profile in facilitator.members.all %}
+  <a href={% url 'programs:facilitator_remove_member' facilitator.id user.profile.id %}>
   <button type="button" class="btn btn-danger">Remove me from this school</button>
   </a>
 {% else %}
-  <a href=#>
+  <a href={% url 'programs:facilitator_add_member' facilitator.id user.profile.id %}>
   <button type="button" class="btn btn-success">Add me as a member to this school</button>
   </a>
 {% endif %}
 
-{% if program.owner == user %}
-<a href=#>
+{% if facilitator.owner == user %}
+<a href={% url 'programs:facilitator_update' facilitator.id  %}>
 <button type="button" class="btn btn-success">Edit School details</button>
 </a>
-<a href=#>
+<a href={% url 'programs:facilitator_delete' facilitator.id %}>
 <button type="button" class="btn btn-danger">Delete this School</button>
 </a>
 {% endif %}
@@ -32,7 +32,7 @@
   </a>
 </p>
 <p>{{ facilitator.description|safe }}</p>
-{% if program.link %}
+{% if facilitator.link %}
   <p><a href={{ facilitator.link }} target="_blank">more info... </a></p>
 {% endif %}
 {% if facilitator.image %}
@@ -48,7 +48,7 @@
         ({{ member.user }}): {{member.user.first_name}} {{ member.user.last_name }}
       </a>
       {% if member == user.profile %}
-      whoops, its me... <a href=>get me out of here</a>
+      whoops, its me... <a href={% url 'programs:facilitator_remove_member' facilitator.id user.profile.id %}>get me out of here</a>
       {% endif %}
     </li>
   {% endfor %}
