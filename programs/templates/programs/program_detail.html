@@ -1,7 +1,7 @@
 {% extends "main/base.html" %}
 {% load static %}
 {% block content %}
-<h1>{{ program.name}}</h1>
+<h1>PROGRAM: {{ program.name}}</h1>
 
 {% if user.profile in program.members.all %}
   <a href={% url 'programs:program_remove_member' program.id user.profile.id %}>
@@ -22,9 +22,14 @@
 </a>
 {% endif %}
 <a href={% url 'programs:program_list' %}>
-<button type="button" class="btn btn-success">Back to list</button>
+<button type="button" class="btn btn-success">Back to programs list</button>
 </a>
 <hr>
+
+<div class="container">
+  <div class="row">
+<!-- start col1 -->
+  <div class="col">
 
 <p>owner:
   <a href={% url 'main:profile' program.owner.profile.id %}>
@@ -57,6 +62,35 @@
 {% else %}
   <h2>No members. </h2>
 {% endif %}
+
+    </div>
+<!-- end col 1 -->
+
+<!-- start col 2 -->
+    <div class="col">
+      <h2>Schools/Facilitators part of this program</h2>
+      {% if program.owner == user %}
+      <a href={% url 'programs:program_add_school' program.id %}>
+      <button type="button" class="btn btn-primary">Add a school</button>
+      </a>
+      {% endif %}
+      <ul>
+        {% for facilitator in program.facilitators.all  %}
+        <a href={% url 'programs:facilitator_detail' facilitator.id %}>
+        <li>{{ facilitator }} ....
+            {% if program.owner == user %}
+            <a href={% url 'programs:program_delet_school_action' program.id facilitator.id %}>Remove</a></li>
+            {% endif %}
+        </a>
+        {% endfor %}
+      </ul>
+    </div>
+    <!-- end of col 2 -->
+  </div>
+</div>
+
+
+
 
 
 {% endblock %}

@@ -49,6 +49,34 @@ class ProgramDeleteView(DeleteView):
     model=Program
     success_url = reverse_lazy('programs:program_list')
 
+## Addint a school to a program
+class ProgramAddSchoolList(ListView):
+    model=Facilitator
+    template_name = 'programs/program_add_school.html'
+    context_object_name = 'facilitators'
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(ProgramAddSchoolList, self).get_context_data(**kwargs)
+        # Add stuff
+        program = Program.objects.get(pk=self.kwargs['source_program'])
+        context['source_program'] = self.kwargs['source_program']
+        context['program'] = program
+        return context
+
+def program_add_school_action(request, source_program, dest_facilitator):
+    program = Program.objects.get(pk=source_program)
+    facilitator = Facilitator.objects.get(pk=dest_facilitator)
+    facilitator.programs.add(program)
+    return redirect(program)
+
+def program_delet_school_action(request, source_program, dest_facilitator):
+    program = Program.objects.get(pk=source_program)
+    facilitator = Facilitator.objects.get(pk=dest_facilitator)
+    facilitator.programs.remove(program)
+    return redirect(program)
+
+## End of adding a school to a program
 
 def program_add_member(request, program_id, profile_id):
     try:

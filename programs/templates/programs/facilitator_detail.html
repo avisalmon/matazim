@@ -1,7 +1,7 @@
 {% extends "main/base.html" %}
 {% load static %}
 {% block content %}
-<h1>{{ facilitator.name }}</h1>
+<h1>SCHOOL: {{ facilitator.name }}</h1>
 
 {% if user.profile in facilitator.members.all %}
   <a href={% url 'programs:facilitator_remove_member' facilitator.id user.profile.id %}>
@@ -26,37 +26,61 @@
 </a>
 <hr>
 
-<p>owner:
-  <a href={% url 'main:profile' facilitator.owner.profile.id %}>
-    ({{ facilitator.owner}}): {{ facilitator.owner.first_name}} {{ facilitator.owner.last_name }}
-  </a>
-</p>
-<p>{{ facilitator.description|safe }}</p>
-{% if facilitator.link %}
-  <p><a href={{ facilitator.link }} target="_blank">more info... </a></p>
-{% endif %}
-{% if facilitator.image %}
-  <img src="{{ facilitator.image.url }}" alt="" height=200>
-{% endif %}
+<div class="container">
+  <div class="row">
+    <!-- start col 1 -->
+    <div class="col">
 
-{% if facilitator.members.count %}
-<h2>Members:</h2>
-<ul>
-  {% for member in facilitator.members.all %}
-    <li>
-      <a href={% url 'main:profile' member.id %} >
-        ({{ member.user }}): {{member.user.first_name}} {{ member.user.last_name }}
-      </a>
-      {% if member == user.profile %}
-      whoops, its me... <a href={% url 'programs:facilitator_remove_member' facilitator.id user.profile.id %}>get me out of here</a>
+      <p>owner:
+        <a href={% url 'main:profile' facilitator.owner.profile.id %}>
+          ({{ facilitator.owner}}): {{ facilitator.owner.first_name}} {{ facilitator.owner.last_name }}
+        </a>
+      </p>
+      <p>{{ facilitator.description|safe }}</p>
+      {% if facilitator.link %}
+        <p><a href={{ facilitator.link }} target="_blank">more info... </a></p>
       {% endif %}
-    </li>
-  {% endfor %}
-</ul>
+      {% if facilitator.image %}
+        <img src="{{ facilitator.image.url }}" alt="" height=200>
+      {% endif %}
 
-{% else %}
-  <h2>No members. </h2>
-{% endif %}
+      {% if facilitator.members.count %}
+      <h2>Members:</h2>
+      <ul>
+        {% for member in facilitator.members.all %}
+          <li>
+            <a href={% url 'main:profile' member.id %} >
+              ({{ member.user }}): {{member.user.first_name}} {{ member.user.last_name }}
+            </a>
+            {% if member == user.profile %}
+            whoops, its me... <a href={% url 'programs:facilitator_remove_member' facilitator.id user.profile.id %}>get me out of here</a>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+
+      {% else %}
+        <h2>No members. </h2>
+      {% endif %}
+
+    </div>
+    <!-- end of col 1 -->
+    <!-- start col 2 -->
+    <div class="col">
+      <h2>Programs participating in this School:</h2>
+      <ul>
+        {% for program in facilitator.programs.all %}
+        <a href={% url 'programs:program_detail' program.id %}>
+          <li>
+            {{ program }}
+          </li>
+        </a>
+        {% endfor %}
+      </ul>
+    </div>
+    <!-- end col 2 -->
+  </div>
+</div>
 
 
 {% endblock %}

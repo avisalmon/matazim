@@ -25,7 +25,7 @@ class Facilitator(models.Model):
     description = models.TextField(max_length=5000, blank=True)
     link = models.URLField(max_length=200, blank=True)
     image = models.ImageField(upload_to='programs/images/', blank=True)
-    programs = models.ManyToManyField(Program, blank=True)
+    programs = models.ManyToManyField(Program, blank=True, related_name='facilitators')
     members = models.ManyToManyField(Profile, blank=True)
 
     def __str__(self):
