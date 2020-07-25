@@ -68,11 +68,19 @@
     <!-- start col 2 -->
     <div class="col">
       <h2>Programs participating in this School:</h2>
+      {% if facilitator.owner == user %}
+      <a href={% url 'programs:facilitator_add_program' facilitator.id %}>
+      <button type="button" class="btn btn-primary">Add a Program</button>
+      </a>
+      {% endif %}
       <ul>
         {% for program in facilitator.programs.all %}
         <a href={% url 'programs:program_detail' program.id %}>
           <li>
             {{ program }}
+            {% if facilitator.owner == user %}
+            <a href={% url 'programs:facilitator_delet_program_action' facilitator.id program.id %}>.... Remove</a></li>
+            {% endif %}
           </li>
         </a>
         {% endfor %}

@@ -46,4 +46,13 @@ urlpatterns = [
     path('facilitator/remove_member/<int:facilitator_id>/<int:profile_id>',
          views.facilitator_remove_member,
          name='facilitator_remove_member'),
+    path('facilitator/add_program/<int:source_facilitator>/',
+        views.FacilitatorAddProgramList.as_view(),
+        name='facilitator_add_program'),
+    path('facilitator/add_program/<int:source_facilitator>/<int:dest_program>',
+        views.facilitator_add_program_action,
+        name='facilitator_add_program_action'),
+    path('facilitator/delete_program/<int:source_facilitator>/<int:dest_program>',
+         views.facilitator_delet_program_action,
+         name='facilitator_delet_program_action'),
 ]

@@ -1,0 +1,17 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+  <h1>Adding a pProgram to a school: {{ facilitator }}</h1>
+
+  <h2>Please click on the program you want to add:</h2>
+  <ul>
+    {% for program in programs %}
+    <a href={% url 'programs:facilitator_add_program_action' facilitator.id program.id %}>
+      <li>
+        {{ program }}
+      </li>
+    </a>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

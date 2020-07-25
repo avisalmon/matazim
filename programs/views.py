@@ -157,3 +157,35 @@ def facilitator_remove_member(request, facilitator_id, profile_id):
 
     facilitator.members.remove(profile)
     return redirect('programs:facilitator_detail', pk=facilitator_id)
+
+## Addint a program to a facilitator / school
+class FacilitatorAddProgramList(ListView):
+    model=Program
+    template_name = 'programs/facilitator_add_program.html'
+    context_object_name = 'programs'
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(FacilitatorAddProgramList, self).get_context_data(**kwargs)
+        # Add stuff
+        print('HI')
+        facilitator = Facilitator.objects.get(pk=self.kwargs['source_facilitator'])
+        context['source_facilitator'] = self.kwargs['source_facilitator']
+        context['facilitator'] = facilitator
+        return context
+
+def facilitator_add_program_action(request, source_facilitator, dest_program):
+    program = Program.objects.get(pk=dest_program)
+    facilitator = Facilitator.objects.get(pk=source_facilitator)
+    facilitator.programs.add(program)
+    return redirect(facilitator)
+
+def facilitator_delet_program_action(request, source_facilitator, dest_program):
+    print('HI')
+    program = Program.objects.get(pk=dest_program)
+    print(f'program: {program}')
+    facilitator = Facilitator.objects.get(pk=source_facilitator)
+    facilitator.programs.remove(program)
+    return redirect(facilitator)
+
+## End of ddint a program to a facilitator / school
