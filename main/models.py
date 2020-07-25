@@ -22,7 +22,7 @@ class Profile(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
     bio = HTMLField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
-    birth_date = models.DateField(null=True, blank=True)
+    birth_date = models.DateField(null=True, blank=True, help_text="Please use the following format: <em>YYYY-MM-DD</em>.")
     image = models.ImageField(upload_to='main/images/', blank=True, null=True)
     mataz = models.BooleanField(default=False)
     fake = models.BooleanField(default=False)

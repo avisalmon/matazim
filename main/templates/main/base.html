@@ -90,6 +90,20 @@
           <a href="{% provider_login_url 'facebook' %}">Login with FaceBook</a>...
         </p> -->
       {% endif %}
+      {% if user.is_authenticated and not user.amail and not user.first_name %}
+      <div class="text-danger">
+        <h1 class="" > PLEASE GIVE MORE DETAILS ON YOUR PROFILE </h1>
+        <h2>It is very helpfull for the network. at least add you mail and name. </h2>
+        <p>We promiss not to expose your email. ONLY through our messaging system</p>
+        <h3>
+          <a href={% url 'main:edit_profile' %}>Edit your Profile</a>
+        </h3>
+      </div>
+
+      <hr>
+
+      </header>
+      {% endif %}
       {% block content %}{% endblock %}
 </div>
 
