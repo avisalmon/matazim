@@ -6,9 +6,11 @@
   <p>The focus is on programs that has technical orientation and can benifit using Matazim</p>
 </div>
 <hr>
+{% if user.is_authenticated %}
 <a href={% url 'programs:program_create' %}>
 <button type="button" class="btn btn-success">Add a new program you own</button>
 </a>
+{% endif %}
 <hr>
 <ul>
   {% for program in program_list %}

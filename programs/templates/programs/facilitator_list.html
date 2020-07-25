@@ -3,13 +3,14 @@
 {% block content %}
 <div class="container">
   <h1 dir="rtl">Schools and facilitators</h1>
-  <h3>This is a list of Schools and facilities</h3>
   <p>we look for schools that adopts technology programs and maker spaces and want to get Matazim in the game</p>
 </div>
 <hr>
+{% if user.is_authenticated %}
 <a href={% url 'programs:facilitator_create' %}>
 <button type="button" class="btn btn-success">Add a new School</button>
 </a>
+{% endif %}
 <hr>
 <ul>
   {% for facilitator in facilitator_list %}

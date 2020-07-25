@@ -3,14 +3,16 @@
 {% block content %}
 <h1>PROGRAM: {{ program.name}}</h1>
 
-{% if user.profile in program.members.all %}
-  <a href={% url 'programs:program_remove_member' program.id user.profile.id %}>
-  <button type="button" class="btn btn-danger">Remove me from this program</button>
-  </a>
-{% else %}
-  <a href={% url 'programs:program_add_member' program.id user.profile.id %}>
-  <button type="button" class="btn btn-success">Add me as a member to this program</button>
-  </a>
+{% if user.is_authenticated %}
+  {% if user.profile in program.members.all %}
+    <a href={% url 'programs:program_remove_member' program.id user.profile.id %}>
+    <button type="button" class="btn btn-danger">Remove me from this program</button>
+    </a>
+  {% else %}
+    <a href={% url 'programs:program_add_member' program.id user.profile.id %}>
+    <button type="button" class="btn btn-success">Add me as a member to this program</button>
+    </a>
+  {% endif %}
 {% endif %}
 
 {% if program.owner == user %}
@@ -78,7 +80,7 @@
         {% for facilitator in program.facilitators.all  %}
         <a href={% url 'programs:facilitator_detail' facilitator.id %}>
         <li>{{ facilitator }} ....
-            {% if program.owner == user %}
+            {% if user.is_authenticated and program.owner == user %}
             <a href={% url 'programs:program_delet_school_action' program.id facilitator.id %}>Remove</a></li>
             {% endif %}
         </a>

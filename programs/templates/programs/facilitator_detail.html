@@ -3,14 +3,16 @@
 {% block content %}
 <h1>SCHOOL: {{ facilitator.name }}</h1>
 
-{% if user.profile in facilitator.members.all %}
-  <a href={% url 'programs:facilitator_remove_member' facilitator.id user.profile.id %}>
-  <button type="button" class="btn btn-danger">Remove me from this school</button>
-  </a>
-{% else %}
-  <a href={% url 'programs:facilitator_add_member' facilitator.id user.profile.id %}>
-  <button type="button" class="btn btn-success">Add me as a member to this school</button>
-  </a>
+{% if user.is_authenticated %}
+  {% if user.profile in facilitator.members.all %}
+    <a href={% url 'programs:facilitator_remove_member' facilitator.id user.profile.id %}>
+    <button type="button" class="btn btn-danger">Remove me from this school</button>
+    </a>
+  {% else %}
+    <a href={% url 'programs:facilitator_add_member' facilitator.id user.profile.id %}>
+    <button type="button" class="btn btn-success">Add me as a member to this school</button>
+    </a>
+  {% endif %}
 {% endif %}
 
 {% if facilitator.owner == user %}
@@ -68,7 +70,7 @@
     <!-- start col 2 -->
     <div class="col">
       <h2>Programs participating in this School:</h2>
-      {% if facilitator.owner == user %}
+      {% if user.is_authenticated and facilitator.owner == user %}
       <a href={% url 'programs:facilitator_add_program' facilitator.id %}>
       <button type="button" class="btn btn-primary">Add a Program</button>
       </a>
