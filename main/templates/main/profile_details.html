@@ -12,7 +12,5 @@
 <p><u><b>Bio:</b></u></p>
 <p>  {{ profile.bio|safe }}</p>
 {% endif %}
-{% if profile.birth_date %}
-<p><b>Birthday: </b>{{ profile.birth_date|date }}</p>
-{% endif %}
+
 {% endblock %}
