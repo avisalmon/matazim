@@ -1,7 +1,6 @@
 {% extends "main/base.html" %}
 {% load static %}
 {% block content %}
-<h1>PROGRAM: {{ program.name}}</h1>
 
 {% if user.is_authenticated %}
   {% if user.profile in program.members.all %}
@@ -31,8 +30,8 @@
 <div class="container">
   <div class="row">
 <!-- start col1 -->
-  <div class="col">
-
+  <div class="col border border-primary">
+    <h1>PROGRAM: {{ program.name}}</h1>
 <p>owner:
   <a href={% url 'main:profile' program.owner.profile.id %}>
     ({{ program.owner}}): {{program.owner.first_name}} {{ program.owner.last_name }}

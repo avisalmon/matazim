@@ -1,7 +1,6 @@
 {% extends "main/base.html" %}
 {% load static %}
 {% block content %}
-<h1>SCHOOL: {{ facilitator.name }}</h1>
 
 {% if user.is_authenticated %}
   {% if user.profile in facilitator.members.all %}
@@ -31,8 +30,8 @@
 <div class="container">
   <div class="row">
     <!-- start col 1 -->
-    <div class="col">
-
+    <div class="col border border-primary">
+      <h1>SCHOOL: {{ facilitator.name }}</h1>
       <p>owner:
         <a href={% url 'main:profile' facilitator.owner.profile.id %}>
           ({{ facilitator.owner}}): {{ facilitator.owner.first_name}} {{ facilitator.owner.last_name }}

@@ -19,7 +19,7 @@
         <p>{{ program.name }} ; owner: {{ program.owner.first_name}} {{ program.owner.last_name}}
       </a>
       {% if program.owner == user %}
-      ... this is your program... <a href={% url 'programs:program_delete' program.id %}>Remove it</a>
+      ... this is your program... <a href={% url 'programs:program_delete' program.id %}><i class="fas fa-trash-alt"></i></a>
       {% endif %}
       </p>
     </li>

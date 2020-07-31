@@ -7,12 +7,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <script src="https://kit.fontawesome.com/0eb9bf2c1a.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Acme&family=IBM+Plex+Serif:wght@300&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="{% static "main/Logo.png" %}">
 
     <link rel="stylesheet" href={% static 'main/css/bootstrap.min.css' %}>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'main/css/main_local.css' %}">
 
     <!-- The bellow is for tinymce editor cdn -->
     <!--  more info: https://www.codementor.io/hiteshgarg14/how-to-integrate-custom-rich-text-editor-in-django-54czmp0gi-->
@@ -22,9 +22,10 @@
 </head>
   <body>
     <!-- example navbar -->
-    <div class="container">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary text-white">
+
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-primary text-white">
+    <div class="container">
       <a class="navbar-brand" href="{% url 'home' %}">
         <img src="{% static "main/Logo.png" %}" width="30" height="30" class="d-inline-block align-top" alt="Matazim Logo">
         <!-- <span>Avi Home</span> -->
@@ -72,9 +73,10 @@
           <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
+  </div>
     </nav>
 
-  </div>
+
 
 <div class="container">
       {% if user.is_authenticated %}
@@ -104,8 +106,14 @@
 
       </header>
       {% endif %}
-      {% block content %}{% endblock %}
+
 </div>
+      <div class="container">
+
+        {% block content %}{% endblock %}
+      </div>
+
+
 
 
     <!-- Optional JavaScript -->

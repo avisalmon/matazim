@@ -7,18 +7,43 @@
 <p color='red'>{{ error }}</p>
 {% endif %}
 
-  <h3>Login with:</h3>
-  <a href="{% provider_login_url 'facebook' %}" class="btn btn-primary">facebook</a>
-  <a href="{% provider_login_url 'google' %}" class="btn btn-danger">  Google  </a>
-  <a href="{% provider_login_url 'github' %}" class="btn btn-info">Github</a>
-<br><br>
-<p>---------------------- OR -------------------------</p>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-4 border border-primary rounded">
+      <h3 class="text-center">Login with:</h3>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-8 m-2">
+            <a href="{% provider_login_url 'facebook' %}" class="btn btn-primary d-block"><i class="fab fa-facebook-f pr-4"></i>facebook</a>
+          </div>
+          <div class="col-8 m-2">
+            <a href="{% provider_login_url 'google' %}" class="btn btn-danger d-block"><i class="fab fa-google pr-4"></i>Google</a>
+          </div>
+          <div class="col-8 m-2">
+            <a href="{% provider_login_url 'github' %}" class="btn btn-info d-block"><i class="fab fa-github-square pr-4"></i>Github</a>
+          </div>
+
+      </div>
+
+      </div>
+      <br>
+<p class="text-center">Have user/password? <a href="{% url 'login' %}">Login</a></p>
+    </div>
+    </div>
+    </div>
+    <br><br><hr>
+<p class="text-center">-- OR --</p>
   <h2>Sign up</h2>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Sign up</button>
   </form>
+  <br>
+  <br>
+  <br>
+
+
 
 
 {% endblock %}

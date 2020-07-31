@@ -17,32 +17,78 @@
     {% endif %}
   {% endif %}
 
-  <h3>Login with:</h3>
-  <a href="{% provider_login_url 'facebook' %}" class="btn btn-primary">facebook</a>
-  <a href="{% provider_login_url 'google' %}" class="btn btn-danger">  Google  </a>
-  <a href="{% provider_login_url 'github' %}" class="btn btn-info">Github</a>
-  <br><br>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-4 border border-primary rounded">
+        <h3 class="text-center">Login with:</h3>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-8 m-2">
+              <a href="{% provider_login_url 'facebook' %}" class="btn btn-primary d-block"><i class="fab fa-facebook-f pr-4"></i>facebook</a>
+            </div>
+            <div class="col-8 m-2">
+              <a href="{% provider_login_url 'google' %}" class="btn btn-danger d-block"><i class="fab fa-google pr-4"></i>Google</a>
+            </div>
+            <div class="col-8 m-2">
+              <a href="{% provider_login_url 'github' %}" class="btn btn-info d-block"><i class="fab fa-github-square pr-4"></i>Github</a>
+            </div>
 
-<p>---------------------- OR -------------------------</p>
+        </div>
 
-  <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <table>
-      <tr>
-        <td>{{ form.username.label_tag }}</td>
-        <td>{{ form.username }}</td>
-      </tr>
-      <tr>
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password }}</td>
-      </tr>
-    </table>
-    <input type="submit" value="login" />
-    <input type="hidden" name="next" value="{{ next }}" />
-  </form>
+        </div>
+        <br>
 
-  {# Assumes you setup the password_reset view in your URLconf #}
-  <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-  <hr>
+      <p class="text-center">-- OR --</p>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-8">
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+
+      <div class="control-group mb-4">
+        <div class="controls">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fas fa-user"></i></div>
+            <input class="form-control" type="text" id="username" name="username"  placeholder="Username">
+          </div>
+        </div>
+      </div>
+
+      <div class="control-group">
+          <div class="controls">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-key"></i></div>
+              <input class="form-control" type="password" name="password" id="password" placeholder="Password">
+            </div>
+          </div>
+      </div>
+      <br>
+      <div class="control-group">
+        <div class="d-block ">
+          <div class="controls border">
+            <button type="submit" class="btn btn-success btn-block">Login</button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+    <p>
+      <a href="{% url 'signup' %}"> or sign up</a>
+    </p>
+    </div>
+  </div>
+</div>
+
+
+<hr>
+        <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+      </div>
+    </div>
+  </div>
+
+
+
+
 
 {% endblock %}
