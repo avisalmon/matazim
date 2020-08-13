@@ -11,9 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Acme&family=IBM+Plex+Serif:wght@300&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="{% static "main/Logo.png" %}">
 
-    <link rel="stylesheet" href={% static 'main/css/bootstrap.min.css' %}>
-    <link rel="stylesheet" href="{% static 'main/css/main_local.css' %}">
-
+    <link rel="stylesheet" href={% static 'main/css/site_custom.css' %}>
+    <!-- <link rel="stylesheet" href="{% static 'main/css/main_local.css' %}"> -->
+  <title>Matazim</title>
     <!-- The bellow is for tinymce editor cdn -->
     <!--  more info: https://www.codementor.io/hiteshgarg14/how-to-integrate-custom-rich-text-editor-in-django-54czmp0gi-->
     <script src="https://cdn.tiny.cloud/1/wqz74mr18ulmc97svb64752cmeadhyf5z3y7g3b556whx4m0/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
@@ -22,6 +22,8 @@
 </head>
   <body>
     <!-- example navbar -->
+
+<div class="sticky-top bg-white">
 
 
     <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-primary text-white">
@@ -41,7 +43,7 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             What do you want to see?
+             Navigate
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <!-- <a class="dropdown-item" href=#>Learn</a> -->
@@ -57,7 +59,7 @@
           </li>
           <li class="nav-item dropdown font-weight-light">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             This Website developement
+             Help development
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <!-- <a class="dropdown-item" href=#>Learn</a> -->
@@ -78,7 +80,7 @@
 
 
 
-<div class="container">
+
       {% if user.is_authenticated %}
         <p>Looged in as ({{ user.username}}) <b>{{ user.first_name}} {{ user.last_name}}</b>  <a href="{% url 'logout' %}">Log out</a>
         <a href="{% url 'main:my_profile_view' %}">  |  See your profile</a>
@@ -104,14 +106,14 @@
 
       <hr>
 
-      </header>
+
       {% endif %}
 
+
 </div>
-      <div class="container">
 
         {% block content %}{% endblock %}
-      </div>
+
 
 
 
@@ -120,6 +122,7 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
+    <script src="{% static 'main/bootstrap-4.5.2/dist/js/bootstrap.min.js' %}"></script>
   </body>
 </html>

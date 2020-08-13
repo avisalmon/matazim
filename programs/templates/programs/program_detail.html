@@ -37,7 +37,7 @@
     ({{ program.owner}}): {{program.owner.first_name}} {{ program.owner.last_name }}
   </a>
 </p>
-<p>{{ program.description|safe }}</p>
+<p>{{ program.description|safe|truncatewords:"50" }}</p>
 {% if program.link %}
   <p><a href={{ program.link }} target="_blank">more info {{ program.link }}</a></p>
 {% endif %}

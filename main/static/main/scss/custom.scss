@@ -1,0 +1,15 @@
+// ***** Top Custom scss
+// Using Koala for convert /scss/custom.css (this file)
+// to /css/site_custom.css that will include all site scc in one file
+// bootstrap 4 + customizing + private modifications
+
+// Customize colors and more
+
+$theme-colors: (
+  "primary": #766fdb,
+  "danger": #ff4136
+);
+// import bootstrap
+
+@import "../bootstrap-4.5.2/scss/bootstrap";
+@import "main_local";

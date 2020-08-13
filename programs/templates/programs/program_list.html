@@ -1,30 +1,108 @@
 {% extends "main/base.html" %}
+{% load static %}
 
 {% block content %}
-<div class="container">
-  <h1 dir="rtl">Educational Programs</h1>
-  <p>The focus is on programs that has technical orientation and can benifit using Matazim</p>
-</div>
-<hr>
-{% if user.is_authenticated %}
-<a href={% url 'programs:program_create' %}>
-<button type="button" class="btn btn-success">Add a new program you own</button>
-</a>
-{% endif %}
-<hr>
-<ul>
-  {% for program in program_list %}
-    <li>
-      <a href={% url 'programs:program_detail' program.id %}>
-        <p>{{ program.name }} ; owner: {{ program.owner.first_name}} {{ program.owner.last_name}}
+<div class="row">
+  <div class="col-2 d-none d-lg-block" style="position:fixed">
+
+      <ul class="list-group">
+        {%  if user.is_authenticated %}
+        <li class="list-group-item">
+          <a class="btn btn-success" href="#">
+            Add Program
+          </a>
+        </li>
+        {% endif %}
+        <li class="list-group-item">
+          <a href="#">
+            Coffe house
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="#">
+            Search
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="#">
+            Contact us
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="#">
+            More
+          </a>
+        </li>
+        <li class="list-group-item">Link 3</li>
+        <li class="list-group-item">Link 4</li>
+        <li class="list-group-item">Link 5</li>
+      </ul>
+  </div>
+
+<!-- Dummy Column for the fixed column above -->
+  <div class="col-2 d-none d-lg-block"></div>
+
+  <div class="col">
+    <div class="container">
+      <h1 dir="rtl">Educational Programs</h1>
+      <p>The focus is on programs that has technical orientation and can benifit using Matazim</p>
+      <p class="hebrew d-flex justify-content-sm-end">תוכניות חינוכיות בדגש טכנולוגי.</p>
+
+    <hr>
+    <div class="d-block d-lg-none">
+      {% if user.is_authenticated %}
+      <a href={% url 'programs:program_create' %}>
+        <button type="button" class="btn btn-success">Add a new program you own</button>
       </a>
-      {% if program.owner == user %}
-      ... this is your program... <a href={% url 'programs:program_delete' program.id %}><i class="fas fa-trash-alt"></i></a>
       {% endif %}
-      </p>
-    </li>
-  {% endfor %}
-</ul>
+    </div>
+
+    <div class="" id="programList">
+    {% for program in program_list %}
+
+    <div class="card my-4">
+      <h5 class="card-header">
+        <a href={% url 'programs:program_detail' program.id %}>
+          {{ program.name }}
+        </a>
+        {% if program.owner == user %}
+        <span class="font-weight-normal text-danger">
+          ... this is your program...
+            <a class="pr-2" href={% url 'programs:program_update' program.id %}><i class="fas fa-edit"></i></a>
+            <a href={% url 'programs:program_delete' program.id %}><i class="fas fa-trash-alt"></i></a>
+        </span>
+        {% endif %}
+      </h5>
+
+      <div class="card-body">
+        <div class="row">
+          <div class="col-2 d-none d-md-block">
+            {% if program.image %}
+            <img  class="img-fluid" src="{{ program.image.url }}"  alt="...">
+            {% else %}
+            <img  class="img-fluid" src="{% static 'programs/programs.jpg' %}"  alt="...">
+            {% endif %}
+          </div>
+          <div class="col">
+            <h5 class="card-title">owner:
+              <a href={% url 'main:profile' program.owner.profile.id %}>
+                {{ program.owner.first_name}} {{ program.owner.last_name}}
+              </a>
+            </h5>
+            <p class="card-text">{{ program.description|safe|truncatewords:"10"}}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    {% endfor %}
+    </div>
+
+</div>
+  </div>
+</div>
+
 
 
 {% endblock %}

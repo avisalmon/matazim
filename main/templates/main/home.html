@@ -3,61 +3,61 @@
 
 {% block content %}
 
-<div id="" class="jumbotron ">
-  <h1 class="display-4 text-center">MATAZIM - מטצים </h1>
-  <h3 class="text-center">Get in - Sign up - be part of the game:</h3>
-  <ul>
-    <li>מטצים - מדריכים טכנולוגיים צעירים</li>
-    <li><a href={% url 'programs:program_list' %}>Technology Programs</a></li>
-    <li><a href={% url 'programs:facilitator_list' %}>Facilitators (Schools, institutes etc.)</a></li>
-    <li>Facilities (Maker spaces, innovation spaces...)</li>
-    <li>Online training program</li>
-  </ul>
-<hr>
+<div id="mainJumbo" class="jumbotron ">
 
-<div  class="container">
   <div class="row">
-    <!-- start col -->
     <div class="col">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{% static 'programs/programs.jpg' %}" height=300 alt="">
-        <div class="card-body">
-          <h5 class="card-title">Programs</h5>
-          <p class="card-text">Jump in and see all the different Education technical programs identified. Don’t see yours? Add it..</p>
-          <a href={% url 'programs:program_list' %} class="btn btn-primary">Go Programs</a>
-        </div>
-      </div>
+      <h1 class="display-4 text-center">MATAZIM - מטצים </h1>
+      <h3 class="text-center d-none d-sm-block">Get in - Sign up - be part of the game:</h3>
     </div>
-    <!-- endof col -->
-
-    <!-- start card col -->
-    <div class="col">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{% static 'programs/school.png' %}" height=300 alt="">
-        <div class="card-body">
-          <h5 class="card-title">Facilitators</h5>
-          <p class="card-text">Schools, institutions that hosts programs. don`t see yours in the list? add it...</p>
-          <a href={% url 'programs:facilitator_list' %} class="btn btn-primary">Go facilitators</a>
-        </div>
-      </div>
+    <div class="col d-none d-sm-block">
+      <ul>
+        <li>מטצים - מדריכים טכנולוגיים צעירים</li>
+        <li><a href={% url 'programs:program_list' %}>Technology Programs</a></li>
+        <li><a href={% url 'programs:facilitator_list' %}>Facilitators (Schools, institutes etc.)</a></li>
+        <li>Facilities (Maker spaces, innovation spaces...)</li>
+        <li>Online training program</li>
+      </ul>
     </div>
-    <!-- endof card col -->
-
-      <!-- start card col -->
-    <div class="col">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{% static 'programs/makers.png' %}" height=300 alt="">
-        <div class="card-body">
-          <h5 class="card-title">Facilities</h5>
-          <p class="card-text">Maker spaces, FabLabs, innovation rooms, labs etc. You own one and don't see it in the list? add it...</p>
-          <a href="#" class="btn btn-danger">TBD Facilities</a>
-        </div>
-      </div>
-    </div>
-    <!-- endof card col -->
-
   </div>
-</div>
+
+  <hr>
+  <div class="container">
+    <div id="homeCards" class="row">
+      <div class="col-sm-4">
+          <div class="card">
+            <img class="card-img-top px-3 pt-2 d-none d-sm-inline" src="{% static 'programs/programs.jpg' %}" height=300 alt="">
+            <div class="card-body">
+              <h5 class="card-title">Programs</h5>
+              <p class="card-text">Jump in and see all the different Education technical programs identified. Don’t see yours? Add it..</p>
+              <a href={% url 'programs:program_list' %} class="btn btn-primary">Go Programs</a>
+            </div>
+          </div>
+      </div>
+      <div class="col-sm-4">
+          <div class="card">
+            <img class="card-img-top px-3 pt-2 d-none d-sm-inline" src="{% static 'programs/school.png' %}" alt="">
+            <div class="card-body">
+              <h5 class="card-title">Facilitators</h5>
+              <p class="card-text">Jump in and see all the different Education technical programs identified. Don’t see yours? Add it..</p>
+              <a href={% url 'programs:facilitator_list' %} class="btn btn-primary">Go Schools</a>
+            </div>
+          </div>
+      </div>
+      <div class="col-sm-4">
+          <div class="card">
+            <img class="card-img-top px-3 pt-2 d-none d-sm-inline" src="{% static 'programs/makers.png' %}" alt="">
+            <div class="card-body">
+              <h5 class="card-title">Facilities</h5>
+              <p class="card-text">Jump in and see all the different Education technical programs identified. Don’t see yours? Add it..</p>
+              <a href="#" class="btn btn-warning">TBD spaces</a>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
 
 
 
