@@ -8,7 +8,7 @@
       <ul class="list-group">
         {%  if user.is_authenticated %}
         <li class="list-group-item">
-          <a class="btn btn-success" href="#">
+          <a class="btn btn-success" href={% url 'programs:program_create' %}>
             Add Program
           </a>
         </li>
@@ -43,7 +43,7 @@
   <div class="col-2 d-none d-lg-block"></div>
 
   <div class="col">
-    <div class="container">
+
       <h1 dir="rtl">Educational Programs</h1>
       <p>The focus is on programs that has technical orientation and can benifit using Matazim</p>
       <p class="hebrew d-flex justify-content-sm-end">תוכניות חינוכיות בדגש טכנולוגי.</p>
@@ -83,7 +83,7 @@
             <img  class="img-fluid" src="{% static 'programs/programs.jpg' %}"  alt="...">
             {% endif %}
           </div>
-          <div class="col">
+          <div class="col-lg-10">
             <h5 class="card-title">owner:
               <a href={% url 'main:profile' program.owner.profile.id %}>
                 {{ program.owner.first_name}} {{ program.owner.last_name}}
@@ -99,7 +99,6 @@
     {% endfor %}
     </div>
 
-</div>
   </div>
 </div>
 
