@@ -3,13 +3,13 @@
 
 {% block content %}
 <div class="row">
-  <div class="col-2 d-none d-lg-block" style="position:fixed">
+  <div class="col-2 d-none d-lg-block" >
 
       <ul class="list-group">
         {%  if user.is_authenticated %}
         <li class="list-group-item">
           <a class="btn btn-success" href={% url 'programs:program_create' %}>
-            Add Program
+            Add Programm
           </a>
         </li>
         {% endif %}
@@ -40,7 +40,7 @@
   </div>
 
 <!-- Dummy Column for the fixed column above -->
-  <div class="col-2 d-none d-lg-block"></div>
+  <!-- <div class="col-2 d-none d-lg-block"></div> -->
 
   <div class="col">
 
