@@ -7806,6 +7806,9 @@ a.text-dark:hover, a.text-dark:focus {
 
 #programList img {
   height: 100px; }
+#programList .card-body {
+  height: 200px;
+  overflow: scroll; }
 
 .hebrew {
   direction: rtl; }
@@ -7818,5 +7821,32 @@ a.text-dark:hover, a.text-dark:focus {
 
   #mainJumbo h1 {
     font-size: 2rem; } }
+.sidenav {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 80px;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px; }
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block; }
+  .sidenav a:hover {
+    color: #f1f1f1; }
+
+.mainArea {
+  margin-left: 160px;
+  /* Same as the width of the sidenav */
+  padding: 0px 10px;
+  top: 80px; }
+  @media (max-width: 576px) {
+    .mainArea {
+      margin-left: 0; } }
 
 /*# sourceMappingURL=site_custom.css.map */

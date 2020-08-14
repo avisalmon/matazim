@@ -2,8 +2,76 @@
 {% load static %}
 
 {% block content %}
-<div class="row">
-  <div class="col-2 d-none d-lg-block" style="position:fixed" >
+<!-- Side Nav -->
+<div class="sidenav d-none d-sm-block">
+  <a href={% url 'programs:program_create' %}><i class="fas fa-glass-cheers"></i>  New</a>
+  <a href="#"><i class="fas fa-search"></i>  Search</a>
+  <a href="#"><i class="fas fa-coffee"></i>  Coffee</a>
+  <a href="#"><i class="fas fa-graduation-cap"></i>  Learn</a>
+</div>
+
+<!-- Main area -->
+<div class="mainArea p-5">
+
+  <h1 dir="rtl">Educational Programs</h1>
+  <p>The focus is on programs that has technical orientation and can benifit using Matazim</p>
+  <p class="hebrew d-flex justify-content-sm-end">תוכניות חינוכיות בדגש טכנולוגי.</p>
+
+  <hr>
+      <div class="d-block d-sm-none">
+        {% if user.is_authenticated %}
+        <a href={% url 'programs:program_create' %}>
+          <button type="button" class="btn btn-success">Add a new program you own</button>
+        </a>
+        {% endif %}
+      </div>
+
+      <div class="" id="programList">
+      {% for program in program_list %}
+
+      <div class="card my-4">
+        <h5 class="card-header">
+          <a href={% url 'programs:program_detail' program.id %}>
+            {{ program.name }}
+          </a>
+          {% if program.owner == user %}
+          <span class="font-weight-normal text-danger">
+            ... this is your program...
+              <a class="pr-2" href={% url 'programs:program_update' program.id %}><i class="fas fa-edit"></i></a>
+              <a href={% url 'programs:program_delete' program.id %}><i class="fas fa-trash-alt"></i></a>
+          </span>
+          {% endif %}
+        </h5>
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-2 d-none d-md-block">
+              {% if program.image %}
+              <img  class="img-fluid" src="{{ program.image.url }}"  alt="...">
+              {% else %}
+              <img  class="img-fluid" src="{% static 'programs/programs.jpg' %}"  alt="...">
+              {% endif %}
+            </div>
+            <div class="col-lg-10">
+              <h5 class="card-title">owner:
+                <a href={% url 'main:profile' program.owner.profile.id %}>
+                  {{ program.owner.first_name}} {{ program.owner.last_name}}
+                </a>
+              </h5>
+              <p class="card-text">{{ program.description|safe}}</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {% endfor %}
+      </div>
+
+</div>
+
+<!-- <div class="row"> -->
+  <!-- <div class="col-2 d-none d-lg-block" style="position:fixed" >
 
       <ul class="list-group">
         {%  if user.is_authenticated %}
@@ -37,70 +105,15 @@
         <li class="list-group-item">Link 4</li>
         <li class="list-group-item">Link 5</li>
       </ul>
-  </div>
+  </div> -->
 
 <!-- Dummy Column for the fixed column above -->
-  <div class="col-2 d-none d-lg-block"></div>
+  <!-- <div class="col-2 d-none d-lg-block"></div> -->
 
-  <div class="col">
+  <!-- <div class="col"> -->
 
-      <h1 dir="rtl">Educational Programs</h1>
-      <p>The focus is on programs that has technical orientation and can benifit using Matazim</p>
-      <p class="hebrew d-flex justify-content-sm-end">תוכניות חינוכיות בדגש טכנולוגי.</p>
-
-    <hr>
-    <div class="d-block d-lg-none">
-      {% if user.is_authenticated %}
-      <a href={% url 'programs:program_create' %}>
-        <button type="button" class="btn btn-success">Add a new program you own</button>
-      </a>
-      {% endif %}
-    </div>
-
-    <div class="" id="programList">
-    {% for program in program_list %}
-
-    <div class="card my-4">
-      <h5 class="card-header">
-        <a href={% url 'programs:program_detail' program.id %}>
-          {{ program.name }}
-        </a>
-        {% if program.owner == user %}
-        <span class="font-weight-normal text-danger">
-          ... this is your program...
-            <a class="pr-2" href={% url 'programs:program_update' program.id %}><i class="fas fa-edit"></i></a>
-            <a href={% url 'programs:program_delete' program.id %}><i class="fas fa-trash-alt"></i></a>
-        </span>
-        {% endif %}
-      </h5>
-
-      <div class="card-body">
-        <div class="row">
-          <div class="col-2 d-none d-md-block">
-            {% if program.image %}
-            <img  class="img-fluid" src="{{ program.image.url }}"  alt="...">
-            {% else %}
-            <img  class="img-fluid" src="{% static 'programs/programs.jpg' %}"  alt="...">
-            {% endif %}
-          </div>
-          <div class="col-lg-10">
-            <h5 class="card-title">owner:
-              <a href={% url 'main:profile' program.owner.profile.id %}>
-                {{ program.owner.first_name}} {{ program.owner.last_name}}
-              </a>
-            </h5>
-            <p class="card-text">{{ program.description|safe}}</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    {% endfor %}
-    </div>
-
-  </div>
-</div>
+  <!-- </div> -->
+<!-- </div> -->
 
 
 
