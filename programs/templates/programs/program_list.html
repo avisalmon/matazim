@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="row">
-  <div class="col-2 d-none d-lg-block" >
+  <div class="col-2 d-none d-lg-block" style="position:fixed" >
 
       <ul class="list-group">
         {%  if user.is_authenticated %}
@@ -40,7 +40,7 @@
   </div>
 
 <!-- Dummy Column for the fixed column above -->
-  <!-- <div class="col-2 d-none d-lg-block"></div> -->
+  <div class="col-2 d-none d-lg-block"></div>
 
   <div class="col">
 
@@ -57,7 +57,7 @@
       {% endif %}
     </div>
 
-    <!-- <div class="" id="programList"> -->
+    <div class="" id="programList">
     {% for program in program_list %}
 
     <div class="card my-4">
@@ -89,7 +89,7 @@
                 {{ program.owner.first_name}} {{ program.owner.last_name}}
               </a>
             </h5>
-            <p class="card-text">{{ program.description|safe|truncatewords:"10"}}</p>
+            <p class="card-text">{{ program.description|safe}}</p>
           </div>
         </div>
       </div>
@@ -97,7 +97,7 @@
     </div>
 
     {% endfor %}
-    <!-- </div> -->
+    </div>
 
   </div>
 </div>
