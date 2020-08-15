@@ -13,7 +13,7 @@
 <!-- Main area -->
 <div class="mainArea p-5">
 
-  <h1 dir="rtl">Educational Programs</h1>
+  <h1 dir="/rtl"><i class="text-danger fas fa-chalkboard-teacher fa-x5"></i>   Educational Programs</h1>
   <p>The focus is on programs that has technical orientation and can benifit using Matazim</p>
   <p class="hebrew d-flex justify-content-sm-end">תוכניות חינוכיות בדגש טכנולוגי.</p>
 
@@ -57,6 +57,7 @@
                 <a href={% url 'main:profile' program.owner.profile.id %}>
                   {{ program.owner.first_name}} {{ program.owner.last_name}}
                 </a>
+
               </h5>
               <p class="card-text">{{ program.description|safe}}</p>
             </div>

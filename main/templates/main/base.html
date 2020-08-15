@@ -48,10 +48,8 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <!-- <a class="dropdown-item" href=#>Learn</a> -->
               <a class="dropdown-item" href={% url 'programs:program_list' %}>Programs</a>
-              <a class="dropdown-item" href={% url 'programs:facilitator_list' %}>Schools and Facilitators</a>
-              <a class="dropdown-item" href=#>Maker Spaces</a>
-              <a class="dropdown-item" href=#>Events</a>
-              <a class="dropdown-item" href=#>Teachers</a>
+              <a class="dropdown-item" href={% url 'programs:facilitator_list' %}>Schools / Maker Spaces</a>
+              <a class="dropdown-item" href=#>Lerning</a>
               <a class="dropdown-item" href=#>Matazim</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Connect us</a>
@@ -82,7 +80,7 @@
 
 
       {% if user.is_authenticated %}
-        <p>Looged in as ({{ user.username}}) <b>{{ user.first_name}} {{ user.last_name}}</b>  <a href="{% url 'logout' %}">Log out</a>
+        <p class="pl-3">Looged in as ({{ user.username}}) <b>{{ user.first_name}} {{ user.last_name}}</b>  <a href="{% url 'logout' %}">Log out</a>
         <a href="{% url 'main:my_profile_view' %}">  |  See your profile</a>
       </p>
       {% else %}

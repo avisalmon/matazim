@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<div class="container">
 
 <div id="mainJumbo" class="jumbotron ">
 
@@ -14,8 +15,7 @@
       <ul>
         <li>מטצים - מדריכים טכנולוגיים צעירים</li>
         <li><a href={% url 'programs:program_list' %}>Technology Programs</a></li>
-        <li><a href={% url 'programs:facilitator_list' %}>Facilitators (Schools, institutes etc.)</a></li>
-        <li>Facilities (Maker spaces, innovation spaces...)</li>
+        <li><a href={% url 'programs:facilitator_list' %}>Schools, MakerSpace</a></li>
         <li>Online training program</li>
       </ul>
     </div>
@@ -64,5 +64,5 @@
 
 </div>
 
-
+</div>
 {% endblock %}

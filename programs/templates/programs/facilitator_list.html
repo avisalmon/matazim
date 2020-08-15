@@ -1,29 +1,73 @@
 {% extends "main/base.html" %}
+{% load static %}
 
 {% block content %}
-<div class="container">
-  <h1 dir="rtl">Schools and facilitators</h1>
-  <p>we look for schools that adopts technology programs and maker spaces and want to get Matazim in the game</p>
+
+<!-- Side Nav -->
+<div class="sidenav d-none d-sm-block">
+  <a href={% url 'programs:facilitator_create' %}><i class="fas fa-glass-cheers"></i>  New</a>
+  <a href="#"><i class="fas fa-search"></i>  Search</a>
+  <a href="#"><i class="fas fa-coffee"></i>  Coffee</a>
+  <a href="#"><i class="fas fa-graduation-cap"></i>  Learn</a>
 </div>
+
+<!-- Main area -->
+<div class="mainArea p-5">
+  <h1 dir="/rtl"><i class="fab fa-angrycreative fa-2x text-danger"></i> Schools and Maker Spaces</h1>
+  <p>we look for schools that adopts technology programs and maker spaces and want to get Matazim in the game</p>
+
+  <div class="d-sm-none">
+    {% if user.is_authenticated %}
+    <a href={% url 'programs:facilitator_create' %}>
+      <button type="button" class="btn btn-success">Add a new School</button>
+    </a>
+    {% endif %}
+  </div>
 <hr>
-{% if user.is_authenticated %}
-<a href={% url 'programs:facilitator_create' %}>
-<button type="button" class="btn btn-success">Add a new School</button>
-</a>
-{% endif %}
-<hr>
-<ul>
-  {% for facilitator in facilitator_list %}
-    <li>
-      <a href={% url 'programs:facilitator_detail' facilitator.id %}>
-        <p>{{ facilitator.name }} ; owner: {{ facilitator.owner.first_name}} {{ facilitator.owner.last_name}}
-      </a>
-      {% if facilitator.owner == user %}
-      ... this is your school... <a href=# >Remove it</a>
-      {% endif %}
-    </li>
-  {% endfor %}
-</ul>
+  <div class="" id="programList">
+    {% for facilitator in facilitator_list %}
+
+    <div class="card my-4">
+      <h5 class="card-header">
+        <a href={% url 'programs:facilitator_detail' facilitator.id %}>
+          {{ facilitator.name }}
+        </a>
+        {% if facilitator.owner == user %}
+        <span class="font-weight-normal text-danger">
+          ... this is your place...
+            <a class="pr-2" href={% url 'programs:facilitator_update' facilitator.id %}><i class="fas fa-edit"></i></a>
+            <a href={% url 'programs:facilitator_delete' facilitator.id %}><i class="fas fa-trash-alt"></i></a>
+        </span>
+        {% endif %}
+      </h5>
+
+      <div class="card-body">
+        <div class="row">
+          <div class="col-2 d-none d-md-block">
+            {% if facilitator.image %}
+            <img  class="img-fluid" src="{{ facilitator.image.url }}"  alt="...">
+            {% else %}
+            <img  class="img-fluid" src="{% static 'programs/makers.png' %}"  alt="...">
+            {% endif %}
+          </div>
+          <div class="col-lg-10">
+            <h5 class="card-title">owner:
+              <a href={% url 'main:profile' facilitator.owner.profile.id %}>
+                {{ facilitator.owner.first_name}} {{ facilitator.owner.last_name}}
+              </a>
+            </h5>
+            <p class="card-text">{{ facilitator.description|safe}}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    {% endfor %}
+    </div>
+
+</div>
+
 
 
 {% endblock %}

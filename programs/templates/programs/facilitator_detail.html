@@ -1,6 +1,7 @@
 {% extends "main/base.html" %}
 {% load static %}
 {% block content %}
+<div class="container">
 
 {% if user.is_authenticated %}
   {% if user.profile in facilitator.members.all %}
@@ -25,6 +26,11 @@
 <a href={% url 'programs:facilitator_list' %}>
 <button type="button" class="btn btn-success">Back to School list</button>
 </a>
+<p>
+  <i class="fas fa-exclamation-triangle"></i>
+!האם תוכנית זו בבעלותך? דרוש בעלות עליה
+<span>send mail to: avi.salmon@intel.com</span>
+</p>
 <hr>
 
 <div class="container">
@@ -91,5 +97,5 @@
   </div>
 </div>
 
-
+-</div>
 {% endblock %}
