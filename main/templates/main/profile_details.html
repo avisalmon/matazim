@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<div class="container">
 
 <h1>Profile page for {{ profile.user.first_name }} {{ profile.user.last_name}}</h1>
 <i>User: {{ profile.user }}<br></i>
@@ -12,5 +13,5 @@
 <p><u><b>Bio:</b></u></p>
 <p>  {{ profile.bio|safe }}</p>
 {% endif %}
-
+</div>
 {% endblock %}

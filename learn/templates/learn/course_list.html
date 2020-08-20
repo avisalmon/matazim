@@ -1,0 +1,56 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="container">
+<h1 class="text-center">חנות הקורסים</h1>
+<h3 class="text-center hebrew">צא ולמד!</h3>
+
+</div>
+<hr>
+<div class="row mb-5">
+    <div class="col-2 d-none d-sm-block hebrew text-right">
+
+          <h3>אלו הקורסים שנרשמת אליהם:</h3>
+          <ul>
+            {% for registration in courses_registered %}
+              <li>
+                <a href={% url 'learn:course_detail' registration.course.id %}>{{ registration.course.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+
+      </div>
+  <div class="col-sm-8 border bg-info pt-4">
+
+    <div class="card-columns">
+      {% for course in course_list.all %}
+
+      <div class="card">
+        {% if course.image %}
+        <a href={% url 'learn:course_detail' course.id %}>
+        <img class="card-img-top p-3" src={{ course.image.url }} alt="image">
+        </a>
+        {% endif %}
+        <div class="card-body">
+          <a href={% url 'learn:course_detail' course.id %}>
+            <h5 class="card-title{% if course.hebrew %} hebrew text-right{% endif %}">{{ course.title|safe }}</h5>
+          </a>
+          <p class="card-text {% if course.hebrew %} hebrew text-right{% endif %}">{{ course.short_description|safe }}</p>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+
+  </div>
+  <div class="col-2 d-none d-sm-block">
+    <p class="pr-3 hebrew text-right">
+      ברוכים הבאים לאתר הלמידה. כאן תמצאו קורסים שיעזרו לכם ללמוד תכנים טכנולוגיים מעשיים. הרשמו ולימדו. הקורסים מסודרים בצורה שתאפשר לכם להתקדם בקצב שלכם ולסמן כל שיעור שעברתם. לחלקם יש מטלות לביצוע לפני שעוברים לשיעור הבא. המערכת מבוססת על אמון, כלומר אם סימנתם שהקשבתם לשיעור אז אנחנו מאמינים לכם. בהצלחה. תהנו ותתנו משוב.
+  </div>
+</div>
+
+
+{% endblock %}

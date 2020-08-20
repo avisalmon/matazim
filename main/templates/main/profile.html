@@ -1,6 +1,7 @@
 {% extends "main/base.html" %}
 
 {% block content %}
+<div class="container">
 
 <h1>This is Your Profile page</h1>
 <p><a href="{% url 'main:edit_profile' %}">Edit your profile</a></p>
@@ -13,4 +14,5 @@ User: {{ user }}<br>
 <p><u><b>Bio:</b></u></p>
 <p>  {{ user.profile.bio|safe }}</p>
 <!-- <p><b>Birthday: </b>{{ user.profile.birth_date|date }}</p> -->
+</div>
 {% endblock %}

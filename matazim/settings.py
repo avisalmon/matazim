@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'main',
     'programs',
+    'learn',
 ]
 
 MIDDLEWARE = [

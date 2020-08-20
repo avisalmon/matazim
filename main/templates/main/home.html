@@ -2,58 +2,77 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
+<div class="container hebrew text-right">
 
 <div id="mainJumbo" class="jumbotron ">
 
   <div class="row">
     <div class="col">
       <h1 class="display-4 text-center">MATAZIM - מטצים </h1>
-      <h3 class="text-center d-none d-sm-block">Get in - Sign up - be part of the game:</h3>
+      <h3 class="text-center d-none d-sm-block">הרשמו והצטרפו למשחק</h3>
     </div>
     <div class="col d-none d-sm-block">
-      <ul>
-        <li>מטצים - מדריכים טכנולוגיים צעירים</li>
-        <li><a href={% url 'programs:program_list' %}>Technology Programs</a></li>
-        <li><a href={% url 'programs:facilitator_list' %}>Schools, MakerSpace</a></li>
-        <li>Online training program</li>
-      </ul>
+      <div class="row">
+        <div class="col-1">
+
+        </div>
+        <div class="col border border-info rounded">
+          <p>מט"צים – מדריכים טכנולוגיים צעירים. תוכנית המתמקדת בהכשרת נוער בגיל צעיר ככל הניתן על מנת להכשיר אותם כמדריכים כבר בתקופת החטיבה והתיכון. באתר זה תמצאו קורסים בחינם לתכנים טכנולוגיים.
+כמו כן באתר תמצאו רשימות של תוכניות ארציות ומרחבי יצירה בהם מט"צים מוזמנים להשתלב כמדריכים.
+</p>
+        </div>
+        <div class="col-1">
+
+        </div>
+
+      </div>
     </div>
   </div>
 
   <hr>
   <div class="container">
     <div id="homeCards" class="row">
-      <div class="col-sm-4">
+      <div class="col-sm-3">
           <div class="card">
-            <img class="card-img-top px-3 pt-2 d-none d-sm-inline" src="{% static 'programs/programs.jpg' %}" height=300 alt="">
+            <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'programs/programs.jpg' %}" height=300 alt="">
             <div class="card-body">
-              <h5 class="card-title">Programs</h5>
-              <p class="card-text">Jump in and see all the different Education technical programs identified. Don’t see yours? Add it..</p>
-              <a href={% url 'programs:program_list' %} class="btn btn-primary">Go Programs</a>
+              <h5 class="card-title">תוכניות ומיזמים</h5>
+              <p class="card-text">רשימת תוכניות ומיזמים טכנולוגיים מגוונים הפועלים ברחבי הארץ. שפע התוכניות הוא גדול ומזמין מט"צים להצטרף להדרכה.  </p>
+              <a href={% url 'programs:program_list' %} class="btn btn-primary">לרשימת התוכניות</a>
             </div>
           </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-3">
           <div class="card">
-            <img class="card-img-top px-3 pt-2 d-none d-sm-inline" src="{% static 'programs/school.png' %}" alt="">
+            <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'programs/school.png' %}" alt="">
             <div class="card-body">
-              <h5 class="card-title">Facilitators</h5>
-              <p class="card-text">Jump in and see all the different Education technical programs identified. Don’t see yours? Add it..</p>
-              <a href={% url 'programs:facilitator_list' %} class="btn btn-primary">Go Schools</a>
+              <h5 class="card-title">צא ולמד!</h5>
+              <p class="card-text">אנחנו מציעים לכם מגוון רחב של קורסים טכנולוגיים. הכל בחינם ותוכלו לעקוב אחרי קצב ההתקדמות שלכם. ככל שתצברו יותר ידע, דרככם להיות מט"צ מתקצרת.</p>
+              <a href={% url 'learn:course_list' %} class="btn btn-primary">אל הקורסים</a>
             </div>
           </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-3">
           <div class="card">
-            <img class="card-img-top px-3 pt-2 d-none d-sm-inline" src="{% static 'programs/makers.png' %}" alt="">
+            <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'programs/makers.png' %}" alt="">
             <div class="card-body">
-              <h5 class="card-title">Facilities</h5>
-              <p class="card-text">Jump in and see all the different Education technical programs identified. Don’t see yours? Add it..</p>
+              <h5 class="card-title">מרחבי יצירה</h5>
+              <p class="card-text">מייקר ספייס. המקומות הכי כיפיים בעולם ליצירה. מדפסות תלת מימד, חותכי לייזר, נגרות, אומנות... המקום שלכם ליצירה.</p>
+              <a href={% url 'programs:facilitator_list' %} class="btn btn-primary">אל המייקרס</a>
+            </div>
+          </div>
+      </div>
+      <div class="col-sm-3">
+          <div class="card">
+            <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'main/coffee.jpg' %}" alt="">
+            <div class="card-body">
+              <h5 class="card-title">עתידי</h5>
+              <p class="card-text">אנחנו מתכוונים לבנות כאן מרחב מפגש וירטואלי. הרצאות, מפגשים, פאנלים וסתם בית קפה... או שוקו. </p>
               <a href="#" class="btn btn-warning">TBD spaces</a>
             </div>
           </div>
       </div>
+    </div>
     </div>
   </div>
 
