@@ -75,13 +75,61 @@ def courseSignView(request, pk):
     return redirect(course)
 
 
+def course_unsign(request, pk):
+    try:
+        course = Course.objects.get(pk=pk)
+        registration = Registration.objects.get(user=request.user,
+                                               course=course)
+        print('Hi')
+    except:
+        return redirect('home')
+
+    registration.delete()
+    return redirect('learn:course_list')
+
+
 class CompletionDetailView(DetailView):
     model=Completion
 
     def get_context_data(self, **kwargs):
         context = super(CompletionDetailView, self).get_context_data(**kwargs)
-        user_course_completion_set = Completion.objects.filter(user=self.request.user)
+        user_course_completion_set = \
+            Completion.objects.filter(user=self.request.user,
+                                      lesson__course = self.object.lesson.course)
         courses_registered = Registration.objects.filter(user=self.request.user)
         context['courses_registered'] = courses_registered
         context['user_course_completion_set'] = user_course_completion_set
+        try:
+            registration = Registration.objects.get(user=self.request.user,
+                                                    course=self.object.lesson.course)
+        except Registration.DoesNotExist:
+            registration = None
+
+        context['registration'] = registration
         return context
+
+
+def completion_done(request, pk):
+    try:
+        completion = Completion.objects.get(pk=pk)
+    except:
+        return redirect('home')
+    completion.completed = datetime.datetime.now()
+    completion.save()
+    try:
+        if completion.next_completion:
+            completion = Completion.objects.get(pk=completion.next_completion.id)
+    except:
+        pass
+    return redirect(completion)
+
+
+# def course_complete_message(request, registration_pk):
+#     try:
+#         registration = Registration.objects.get(pk=registration_pk)
+#     except:
+#         return redirect('home')
+#
+#     return render(request,
+#                   'learn/complete_message.html',
+#                   {'registration': registration })
