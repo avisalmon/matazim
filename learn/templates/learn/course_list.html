@@ -12,17 +12,8 @@
 <hr>
 <div class="row mb-5">
     <div class="col-2 d-none d-sm-block hebrew text-right">
-
-          <h3>אלו הקורסים שנרשמת אליהם:</h3>
-          <ul>
-            {% for registration in courses_registered %}
-              <li>
-                <a href={% url 'learn:course_detail' registration.course.id %}>{{ registration.course.title }}</a>
-              </li>
-            {% endfor %}
-          </ul>
-
-      </div>
+      {% include "learn/course_status_heb.html" %}
+    </div>
   <div class="col-sm-8 border bg-info pt-4">
 
     <div class="card-columns">

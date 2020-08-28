@@ -1,53 +1,61 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+{% if user.is_authenticated %}
+<div class="text-center bg-warning {% if not registration.need_to_message_about_completion %}d-none{% endif %}">
+  <h1>Congratulations! </h1>
+  <br>
+  <a href="#" class="btn btn-success">Rate and be certified</a>
+<p><em>TBD - implement rating here. only after the user will rate this message will go away. </em></p>
+</div>
+{% endif %}
 <div class="{% if course.hebrew %}hebrew text-right{% endif %}">
 
 <div class="row px-4">
   <div class="col-3">
-    {% if registration %}
-    <!-- Show the user completion set -->
-      {% if course.hebrew %}
-      <h2 class="text-center">אתם רשומים לקורס זה</h2>
-      <small>אלו השיעורים שעליכם להשלים. מנעול פתוח זה סימן שאתם יכולים לגשת לשיעור. מנעול סגור אומר שיש להשלים שיעורים קודמים קודם. לחלק מהשיעורים יש מטלות לביצוע לפני המעבר לשיעור הבא. תהנו. </small>
-      {% else %}
-      <h2 class='text-center'>You are registered to this course</h2>
-      <small>This are the lessone you need to complete. open lock means that you can do the lesson. closed one means there are pre-lessons you need to complete. enjoy.</small>
-      {% endif %}
-      <hr>
-      <a href={% url 'learn:course_unsign' course.id %} class="btn btn-danger">Un-register this course <i class="fas fa-exclamation-triangle"></i></a>
-      <ul>
-        {% for completion in user_course_completion_set %}
-        <li>
-          {% if completion.pre_completion.completed or not completion.pre_completion %}
-          <i class="fas fa-lock-open"></i>
+        {% if registration %}
+        <!-- Show the user completion set -->
+          {% if course.hebrew %}
+          <h2 class="text-center">אתם רשומים לקורס זה</h2>
+          <small>אלו השיעורים שעליכם להשלים. מנעול פתוח זה סימן שאתם יכולים לגשת לשיעור. מנעול סגור אומר שיש להשלים שיעורים קודמים קודם. לחלק מהשיעורים יש מטלות לביצוע לפני המעבר לשיעור הבא. תהנו. </small>
           {% else %}
-          <i class="fas fa-lock text-info"></i>
+          <h2 class='text-center'>You are registered to this course</h2>
+          <small>This are the lessone you need to complete. open lock means that you can do the lesson. closed one means there are pre-lessons you need to complete. enjoy.</small>
           {% endif %}
+          <hr>
+          <a href={% url 'learn:course_unsign' course.id %} class="btn btn-danger">Un-register this course <i class="fas fa-exclamation-triangle"></i></a>
+          <ul>
+            {% for completion in user_course_completion_set %}
+            <li>
+              {% if completion.pre_completion.completed or not completion.pre_completion %}
+              <i class="fas fa-lock-open"></i>
+              {% else %}
+              <i class="fas fa-lock text-info"></i>
+              {% endif %}
 
-          {% if completion.pre_completion.completed or not completion.pre_completion %}
-            <a class="" href={% url 'learn:completion_detail' completion.id %}>{{ completion.lesson.title }}</a>
-          {% else %}
-            {{ completion.lesson.title }}
-          {% endif %}
+              {% if completion.pre_completion.completed or not completion.pre_completion %}
+                <a class="" href={% url 'learn:completion_detail' completion.id %}>{{ completion.lesson.title }}</a>
+              {% else %}
+                {{ completion.lesson.title }}
+              {% endif %}
 
-          {% if completion.completed %}
-            <i class="far fa-check-circle fa-2x"></i>
-          {% endif %}
+              {% if completion.completed %}
+                <i class="far fa-check-circle fa-2x"></i>
+              {% endif %}
 
-        </li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <a href={% url 'learn:course_sign' course.id %} class="btn btn-info"> הרשם לקורס </a>
-      <ul class="text-muted">
-        {% for lesson in course.lessons.all %}
-        <li>
-          {{ lesson.title }}
-        </li>
-        {% endfor %}
-      </ul>
-    {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <a href={% url 'learn:course_sign' course.id %} class="btn btn-info"> הרשם לקורס </a>
+          <ul class="text-muted">
+            {% for lesson in course.lessons.all %}
+            <li>
+              {{ lesson.title }}
+            </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
 
   </div>
   <div class="col border">
@@ -69,24 +77,9 @@
   <div class="col-2">
     {% if course.hebrew %}
       <a class="btn btn-info" href={% url 'learn:course_list' %}>לרשימת כל הקורסים</a>
-      <h3>אלו הקורסים שנרשמת אליהם:</h3>
-      <ul>
-        {% for registration in courses_registered %}
-          <li>
-            <a href={% url 'learn:course_detail' registration.course.id %}>{{ registration.course.title }}</a>
-          </li>
-        {% endfor %}
-      </ul>
+        {% include "learn/course_status_heb.html" %}
     {% else %}
-      <a class="btn btn-info text-center" href={% url 'learn:course_list' %}>List of all courses</a>
-      <h3>You are registered to:</h3>
-      <ul>
-        {% for registration in courses_registered %}
-          <li>
-            <a href={% url 'learn:course_detail' registration.course.id %}>{{ registration.course.title }}</a>
-          </li>
-        {% endfor %}
-      </ul>
+        {% include "learn/course_status_en.html" %}
     {% endif %}
   </div>
 </div>

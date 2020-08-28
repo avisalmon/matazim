@@ -7807,8 +7807,9 @@ a.text-dark:hover, a.text-dark:focus {
 #programList img {
   height: 100px; }
 #programList .card-body {
-  height: 200px;
-  overflow: scroll; }
+  height: 150px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
 
 .hebrew {
   direction: rtl; }

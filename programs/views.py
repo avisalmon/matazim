@@ -23,7 +23,7 @@ class ProgramDetailView(DetailView):
 
 class ProgramCreateView(LoginRequiredMixin, CreateView):
     model=Program
-    fields = ['name', 'description', 'link', 'image']
+    fields = ['name', 'short_description', 'description', 'link', 'image']
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -34,7 +34,7 @@ class ProgramCreateView(LoginRequiredMixin, CreateView):
 
 class ProgramUpdateView(LoginRequiredMixin, UpdateView):
     model=Program
-    fields = ['name', 'description', 'link', 'image']
+    fields = ['name', 'short_description', 'description', 'link', 'image']
 
     def dispatch(self, request, *args, **kwargs):
         """" Making sure that only owners can update """
@@ -117,7 +117,7 @@ class FacilitatorDetailView(DetailView):
 
 class FacilitatorCreateView(LoginRequiredMixin, CreateView):
     model=Facilitator
-    fields = ['name', 'description', 'link', 'image']
+    fields = ['name', 'short_description', 'description', 'link', 'image']
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -128,7 +128,7 @@ class FacilitatorCreateView(LoginRequiredMixin, CreateView):
 
 class FacilitatorUpdateView(LoginRequiredMixin, UpdateView):
     model=Facilitator
-    fields = ['name', 'description', 'link', 'image']
+    fields = ['name', 'short_description', 'description', 'link', 'image']
 
     def dispatch(self, request, *args, **kwargs):
         """" Making sure that only owners can update """

@@ -23,6 +23,8 @@
   <body>
     <!-- example navbar -->
 
+<div class="border-bottom">
+
 <div class="sticky-top bg-white">
 
 
@@ -85,7 +87,7 @@
   </div>
     </nav>
 
-<div class="container">
+<div class="container pb-0 border-bottom">
       {% if user.is_authenticated %}
         <p class="pl-3">Looged in as ({{ user.username}}) <b>{{ user.first_name}} {{ user.last_name}}</b>  <a href="{% url 'logout' %}">Log out</a>
         <a href="{% url 'main:my_profile_view' %}">  |  See your profile</a>
@@ -116,7 +118,7 @@
 
 
 </div>
-
+</div>
 
         {% block content %}{% endblock %}
 

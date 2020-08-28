@@ -2,11 +2,11 @@
 
 {% block content %}
 
-<div class="text-center {% if not registration.need_to_message_about_completion %}d-none{% endif %}">
+<div class="text-center bg-warning {% if not registration.need_to_message_about_completion %}d-none{% endif %}">
   <h1>Congratulations! </h1>
   <br>
   <a href="#" class="btn btn-success">Rate and be certified</a>
-<h2>TBD - implement rating here. only after the user will rate this message will go away. </h2>
+<p><em>TBD - implement rating here. only after the user will rate this message will go away. </em></p>
 </div>
 
 
@@ -89,24 +89,9 @@
 
     {% if completion.lesson.course.hebrew %}
       <a class="btn btn-info" href={% url 'learn:course_list' %}>לרשימת כל הקורסים</a>
-      <h3>אלו הקורסים שנרשמת אליהם:</h3>
-      <ul>
-        {% for registration in courses_registered %}
-          <li>
-            <a href={% url 'learn:course_detail' registration.course.id %}>{{ registration.course.title }}</a>
-          </li>
-        {% endfor %}
-      </ul>
+        {% include "learn/course_status_heb.html" %}
     {% else %}
-      <a class="btn btn-info text-center" href={% url 'learn:course_list' %}>List of all courses</a>
-      <h3>You are registered to:</h3>
-      <ul>
-        {% for registration in courses_registered %}
-          <li>
-            <a href={% url 'learn:course_detail' registration.course.id %}>{{ registration.course.title }}</a>
-          </li>
-        {% endfor %}
-      </ul>
+        {% include "learn/course_status_en.html" %}
     {% endif %}
 
   </div>

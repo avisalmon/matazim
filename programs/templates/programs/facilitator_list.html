@@ -44,11 +44,13 @@
       <div class="card-body">
         <div class="row">
           <div class="col-2 d-none d-md-block">
-            {% if facilitator.image %}
-            <img  class="img-fluid" src="{{ facilitator.image.url }}"  alt="...">
-            {% else %}
-            <img  class="img-fluid" src="{% static 'programs/makers.png' %}"  alt="...">
-            {% endif %}
+            <a href={% url 'programs:facilitator_detail' facilitator.id %}>
+              {% if facilitator.image %}
+              <img  class="img-fluid" src="{{ facilitator.image.url }}"  alt="...">
+              {% else %}
+              <img  class="img-fluid" src="{% static 'programs/makers.png' %}"  alt="...">
+              {% endif %}
+            </a>
           </div>
           <div class="col-lg-10">
             <h5 class="card-title">owner:
@@ -56,7 +58,9 @@
                 {{ facilitator.owner.first_name}} {{ facilitator.owner.last_name}}
               </a>
             </h5>
-            <p class="card-text">{{ facilitator.description|safe}}</p>
+            <p class="card-text">{{ facilitator.short_description|safe}}
+              <a href={% url 'programs:facilitator_detail' facilitator.id %}> Read more... </a>
+            </p>
           </div>
         </div>
       </div>

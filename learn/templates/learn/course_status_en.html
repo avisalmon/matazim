@@ -1,0 +1,15 @@
+    {% if user.is_authenticated  %}
+      <h3>This are your courses</h3>
+      <ul>
+        {% for registration in courses_registered %}
+          <li>
+            <a href={% url 'learn:course_detail' registration.course.id %}>{{ registration.course.title }}
+            {% if registration.need_to_message_about_completion %}{% endif %}
+            {% if registration.complete_date %} <i class="fas fa-trophy"></i>{% endif %}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+    <p>כאם תוכל לראות את כל הקורסים אליהם אתם רשומים. אך יש צורך להתחבר לחשבון שלכם או ליצור אחד חדש</p>
+    <a href={% url 'login' %}>התחבר Log in</a>
+    {% endif %}

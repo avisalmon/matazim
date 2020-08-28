@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from .models import Course, Lesson, Registration, Completion
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 import datetime
 
 def home(request):
@@ -13,12 +14,12 @@ class CourseListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(CourseListView, self).get_context_data(**kwargs)
-        courses_registered = Registration.objects.filter(user=self.request.user)
-        context['courses_registered'] = courses_registered
+        # courses_registered = Registration.objects.filter(user=self.request.user)
+        # context['courses_registered'] = courses_registered
         return context
 
 
-class CourseDetailView(DetailView):
+class CourseDetailView(LoginRequiredMixin, DetailView):
     model=Course
 
     def get_context_data(self, **kwargs):
