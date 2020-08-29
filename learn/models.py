@@ -32,41 +32,6 @@ class Course(models.Model):
         return reverse('learn:course_detail', kwargs={'pk': self.pk})
 
 
-class Registration(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    start_date = models.DateField(auto_now_add=True)
-    complete_date = models.DateField(blank=True, null=True)
-    stars = models.IntegerField(default=0)
-    comments = HTMLField(blank=True)
-
-    class Meta:
-        unique_together = [['user', 'course']]
-
-    def __str__(self):
-        return f'{self.course} (for user: {self.user})'
-
-    @property
-    def need_to_message_about_completion(self):
-        ''' will return True only once when graduating'''
-        completions = Completion.objects.filter(user=self.user,
-                                                lesson__course=self.course)
-        done = True
-        for completion in completions:
-            if not completion.completed:
-                done = False
-
-        print('Geting in')
-        if done:
-            print('done')
-            if (self.complete_date==None or self.complete_date==''):
-                self.complete_date = datetime.datetime.now()
-                self.save()
-                return True
-            elif self.stars == 0:
-                return True
-        else:
-            return False
 
 
 class Lesson(models.Model):
@@ -116,3 +81,41 @@ class Completion(models.Model):
     def get_absolute_url(self):
         print('HI')
         return reverse('learn:completion_detail', kwargs={'pk': self.pk})
+
+
+class Registration(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    last_completion = models.ForeignKey(Completion, on_delete=models.CASCADE, blank=True, null=True, default=None)
+    start_date = models.DateField(auto_now_add=True)
+    complete_date = models.DateField(blank=True, null=True)
+    stars = models.IntegerField(default=0)
+    comments = HTMLField(blank=True)
+
+    class Meta:
+        unique_together = [['user', 'course']]
+
+        def __str__(self):
+            return f'{self.course} (for user: {self.user})'
+
+            @property
+            def need_to_message_about_completion(self):
+                ''' will return True only once when graduating'''
+                completions = Completion.objects.filter(user=self.user,
+                lesson__course=self.course)
+                done = True
+                for completion in completions:
+                    if not completion.completed:
+                        done = False
+
+                        print('Geting in')
+                        if done:
+                            print('done')
+                            if (self.complete_date==None or self.complete_date==''):
+                                self.complete_date = datetime.datetime.now()
+                                self.save()
+                                return True
+                            elif self.stars == 0:
+                                return True
+                            else:
+                                return False

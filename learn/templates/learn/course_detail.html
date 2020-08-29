@@ -23,7 +23,13 @@
           <small>This are the lessone you need to complete. open lock means that you can do the lesson. closed one means there are pre-lessons you need to complete. enjoy.</small>
           {% endif %}
           <hr>
-          <a href={% url 'learn:course_unsign' course.id %} class="btn btn-danger">Un-register this course <i class="fas fa-exclamation-triangle"></i></a>
+          <h2>השיעורים:</h2>
+          {% if registration.last_completion %}
+            <a href={% url 'learn:completion_detail' registration.last_completion.id %}>
+                השיעור האחרון שביקרתם בו: {{ registration.last_completion.lesson.title }}
+            </a>
+            <br><br>
+          {% endif %}
           <ul>
             {% for completion in user_course_completion_set %}
             <li>
@@ -45,6 +51,7 @@
 
             </li>
             {% endfor %}
+            <a  href={% url 'learn:course_unsign' course.id %} class="btn btn-danger rounded mt-5">Un-register this course <i class="fas fa-exclamation-triangle"></i></a>
           </ul>
         {% else %}
           <a href={% url 'learn:course_sign' course.id %} class="btn btn-info"> הרשם לקורס </a>
@@ -58,19 +65,30 @@
         {% endif %}
 
   </div>
-  <div class="col border">
+  <div class="col border px-5 pb-3">
     <div class="{% if course.hebrew %}hebrew text-right{% endif %}">
-      <h1>{{ course.title}}</h1>
+      <h1>{{ course.title}} - דף פתיחה</h1>
+      {% if registration.last_completion %}
+        {% if course.hebrew %}
+        <h3><a href={% url 'learn:completion_detail' registration.last_completion.id %}> לשיעור האחרון שהיית בו</a></h3>
+        {% else %}
+        <h3><a href={% url 'learn:completion_detail' registration.last_completion.id %}>Last lesson visited</a></h3>
+        {% endif %}
+      {% endif %}
       <p>{{ course.description }}</p>
     </div>
 
-    {% if course.youtube %}
-      <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ course.youtube }}?rel=0" allowfullscreen></iframe>
+    <div class="row justify-content-center">
+      <div class="col-10">
+        {% if course.youtube %}
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ course.youtube }}?rel=0" allowfullscreen></iframe>
+        </div>
+        {% else %}
+        <h3>No Youtube.... </h3>
+        {% endif %}
       </div>
-    {% else %}
-      <h3>No Youtube.... </h3>
-    {% endif %}
+    </div>
 
 
   </div>

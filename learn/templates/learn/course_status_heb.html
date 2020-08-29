@@ -3,7 +3,12 @@
       <ul>
         {% for registration in courses_registered %}
           <li>
-            <a href={% url 'learn:course_detail' registration.course.id %}>{{ registration.course.title }}
+            {% if registration.last_completion %}
+              <a href={% url 'learn:completion_detail' registration.last_completion.id %}>{{ registration.course.title }}
+            {% else %}
+              <a href={% url 'learn:course_detail' registration.course.id %}>{{ registration.course.title }}
+            {% endif %}
+
             {% if registration.complete_date %} <i class="fas fa-trophy"></i>{% endif %}</a>
           </li>
         {% endfor %}

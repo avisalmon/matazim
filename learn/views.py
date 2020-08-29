@@ -103,6 +103,8 @@ class CompletionDetailView(DetailView):
         try:
             registration = Registration.objects.get(user=self.request.user,
                                                     course=self.object.lesson.course)
+            registration.last_completion = self.object
+            registration.save()
         except Registration.DoesNotExist:
             registration = None
 
