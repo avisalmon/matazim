@@ -15,23 +15,26 @@
 <div class="row px-4">
   <div class="col-3">
     {% if completion.lesson.course.hebrew %}
-    <h2 class="text-center">אתם נמצאים בשיעור</h2>
-    <small>צפו בסרטון. לאחר שתשלימו את הצפייה ואת המטלות (אם יש) שמתחתיו, אשרו שהשלמתם את השיעור ועיברו לשיעור הבא.</small>
+    <h2 class="text-center">רשימת השיעורים </h2>
+    <!-- <small>צפו בסרטון. לאחר שתשלימו את הצפייה ואת המטלות (אם יש) שמתחתיו, אשרו שהשלמתם את השיעור ועיברו לשיעור הבא.</small> -->
+
     {% else %}
     <h2 class='text-center'>You are in a lesson</h2>
     <small>Please watch the video and complete any task bellow. After you are done, you may approve and continue to the next lesson. </small>
     {% endif %}
     <hr>
 
+    <div class="row justify-content-center">
+      <div class="col-10">
+        {% if completion.lesson.course.hebrew %}
+        <a href={% url 'learn:completion_done' completion.id %} class="btn btn-info d-block">סיימתי. יאללה, לשיעור הבא</a><br>
 
-      {% if completion.lesson.course.hebrew %}
-        <a href={% url 'learn:completion_done' completion.id %} class="btn btn-info d-block">סיימתי. יאללה, לשיעור הבא</a>
-        <a href={% url 'learn:course_detail' completion.lesson.course.id %}>חזרה לדף הראשי של הקורס</a>
-      {% else %}
-        <a href={% url 'learn:completion_done' completion.id %} class="btn btn-info d-block">Lets go to the next one.</a>
+        {% else %}
+        <a href={% url 'learn:completion_done' completion.id %} class="btn btn-info d-block">Lets go to the next one.</a><br>
         <a href={% url 'learn:course_detail' completion.lesson.course.id %}>Back to main course page</a>
-      {% endif %}
-      <p>Need to message? {{ registration.need_to_message_about_completion}}</p>
+        {% endif %}
+      </div>
+    </div>
 
       <ul>
         {% for other_completion in user_course_completion_set %}
@@ -52,29 +55,42 @@
             <i class="far fa-check-circle fa-2x"></i>
           {% endif %}
 
-
           {% if other_completion == completion %}
           <i class="fas fa-map-marker-alt text-danger"> you are here</i>
           {% endif %}
         </li>
         {% endfor %}
       </ul>
+      <br>
+      <div class="border border-top border-info">
+        <ul>
+          <li><a href={% url 'learn:course_detail' completion.lesson.course.id %}>חזרה לדף הראשי של הקורס</a></li>
+          <li><a href={% url 'learn:completion_done' completion.id %}>למעבר לשיעור הבא</a></li>
+          <li><a href={% url 'learn:course_list' %}>חזרה לרשימת כל הקורסים</a></li>
+        </ul>
+      </div>
 
   </div>
 <!--  start of middle frame -->
-  <div class="col border">
+  <div class="col border border-primary">
     <div class="{% if course.hebrew %}hebrew text-right{% endif %}">
+      <h2>אתם נמצאים בשיעור:</h2>
       <h1>{{ completion.lesson.course.title}} - {{ completion.lesson.title }}</h1>
+      <h3>כשתסיימו תלחצו על כפתור סיימתי, לשיעור הבא...</h3>
       <p>{{ completion.lesson.description }}</p>
     </div>
 
-    {% if completion.lesson.youtube %}
-      <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ completion.lesson.youtube }}?rel=0" allowfullscreen></iframe>
+    <div class="row justify-content-start">
+      <div class="col-10">
+        {% if completion.lesson.youtube %}
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ completion.lesson.youtube }}?rel=0" allowfullscreen></iframe>
+          </div>
+        {% else %}
+          <h3>No Youtube.... </h3>
+        {% endif %}
       </div>
-    {% else %}
-      <h3>No Youtube.... </h3>
-    {% endif %}
+    </div>
 
     <div class="text-center">
       <br><br>
