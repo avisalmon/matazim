@@ -27,7 +27,8 @@
     <div class="row justify-content-center">
       <div class="col-10">
         {% if completion.lesson.course.hebrew %}
-        <a href={% url 'learn:completion_done' completion.id %} class="btn btn-info d-block">סיימתי. יאללה, לשיעור הבא</a><br>
+        <p>סיימתם את השיעור הזה?</p>
+        <a href={% url 'learn:completion_done' completion.id %} class="btn btn-info d-block">יאללה, לשיעור הבא</a><br>
 
         {% else %}
         <a href={% url 'learn:completion_done' completion.id %} class="btn btn-info d-block">Lets go to the next one.</a><br>
@@ -62,13 +63,7 @@
         {% endfor %}
       </ul>
       <br>
-      <div class="border border-top border-info">
-        <ul>
-          <li><a href={% url 'learn:course_detail' completion.lesson.course.id %}>חזרה לדף הראשי של הקורס</a></li>
-          <li><a href={% url 'learn:completion_done' completion.id %}>למעבר לשיעור הבא</a></li>
-          <li><a href={% url 'learn:course_list' %}>חזרה לרשימת כל הקורסים</a></li>
-        </ul>
-      </div>
+
 
   </div>
 <!--  start of middle frame -->
@@ -80,7 +75,7 @@
       <p>{{ completion.lesson.description }}</p>
     </div>
 
-    <div class="row justify-content-start">
+    <div class="row justify-content-center">
       <div class="col-10">
         {% if completion.lesson.youtube %}
           <div class="embed-responsive embed-responsive-16by9">
@@ -95,13 +90,24 @@
     <div class="text-center">
       <br><br>
         <h3>עוד לא מימשנו משימות ומטלות. אז פשוט סמנו אם סיימתם:</h3>
-        <a href={% url 'learn:completion_done' completion.id %} class="btn btn-info">סיימתי. יאללה, לשיעור הבא</a>
+        <div class="mb-4">
+          <a href={% url 'learn:completion_done' completion.id %} class="btn btn-info">סיימתי את השיעור הזה, יאללה, לשיעור הבא</a>
+        </div>
       </div>
 
 
 
   </div>
   <div class="col-2">
+
+    <div class="border border-top border-info mb-3">
+      <ul>
+        <li><a href={% url 'learn:course_detail' completion.lesson.course.id %}>חזרה לדף הראשי של הקורס</a></li>
+        <li><a href={% url 'learn:completion_done' completion.id %}>למעבר לשיעור הבא</a></li>
+        <li><a href={% url 'learn:course_list' %}>חזרה לרשימת כל הקורסים</a></li>
+        <li><a href={% url 'learn:course_unsign' completion.lesson.course.id %}>הסר את הקורס מהרשימה שלי</a></li>
+      </ul>
+    </div>
 
     {% if completion.lesson.course.hebrew %}
       <a class="btn btn-info" href={% url 'learn:course_list' %}>לרשימת כל הקורסים</a>

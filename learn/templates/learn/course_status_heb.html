@@ -1,5 +1,8 @@
     {% if user.is_authenticated  %}
-      <h3>אלו הקורסים שנרשמת אליהם:</h3>
+      <h3>רשימת הקורסים שלי</h3>
+      {% if not courses_registered %}
+        <p>הממ... נראה שלא נרשמת לאף קורס - תרשמו לקורסים והם יופיעו ברשימה כאן :)</p>
+      {% endif %}
       <ul>
         {% for registration in courses_registered %}
           <li>
