@@ -14,8 +14,11 @@ class CourseListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(CourseListView, self).get_context_data(**kwargs)
-        courses_registered = Registration.objects.filter(user=self.request.user)
-        context['courses_registered'] = courses_registered
+        try:
+            courses_registered = Registration.objects.filter(user=self.request.user)
+            context['courses_registered'] = courses_registered
+        except:
+            pass
         return context
 
 
