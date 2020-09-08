@@ -22,24 +22,27 @@ class CourseListView(ListView):
         return context
 
 
-class CourseDetailView(LoginRequiredMixin, DetailView):
+class CourseDetailView(DetailView):
     model=Course
 
     def get_context_data(self, **kwargs):
         context = super(CourseDetailView, self).get_context_data(**kwargs)
-        user_course_completion_set = Completion.objects.filter(user=self.request.user,
-                                                               lesson__course=self.object)
-        context['user_course_completion_set'] = user_course_completion_set
-        courses_registered = Registration.objects.filter(user=self.request.user)
-        context['courses_registered'] = courses_registered
-        #print(self.object.owner)
         try:
+            user_course_completion_set = Completion.objects.filter(user=self.request.user,
+                                                                   lesson__course=self.object)
+            context['user_course_completion_set'] = user_course_completion_set
+            courses_registered = Registration.objects.filter(user=self.request.user)
+            context['courses_registered'] = courses_registered
+            #print(self.object.owner)
             registration = Registration.objects.get(user=self.request.user,
-                                                    course=self.object)
-        except Registration.DoesNotExist:
-            registration = None
+            course=self.object)
+            context['registration'] = registration
+        except:
+            pass
 
-        context['registration'] = registration
+        # except Registration.DoesNotExist:
+        #     registration = None
+
         return context
 
 

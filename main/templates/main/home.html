@@ -38,10 +38,12 @@
       <a href={% url 'learn:course_list' %}>
         <h5 class="card-title text-center">צא ולמד!</h5>
       </a>
-      <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'programs/school.png' %}" alt="">
+      <a href={% url 'learn:course_list' %}>
+        <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'programs/school.png' %}" alt="">
+      </a>
       <div class="card-body">
         <p class="card-text">אנחנו מציעים לכם מגוון רחב של קורסים טכנולוגיים. הכל בחינם ותוכלו לעקוב אחרי קצב ההתקדמות שלכם. ככל שתצברו יותר ידע, דרככם להיות מט"צ מתקצרת.</p>
-        <a href={% url 'learn:course_list' %} class="btn btn-primary">אל הקורסים</a>
+        <!-- <a href={% url 'learn:course_list' %} class="btn btn-primary">אל הקורסים</a> -->
       </div>
     </div>
   </div>
@@ -51,10 +53,12 @@
             <a href={% url 'programs:program_list' %}>
               <h5 class="card-title text-center">תוכניות ומיזמים</h5>
             </a>
-            <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'programs/programs.jpg' %}" height=300 alt="">
+            <a href={% url 'programs:program_list' %}>
+              <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'programs/programs.jpg' %}" height=300 alt="">
+            </a>
             <div class="card-body">
               <p class="card-text">רשימת תוכניות ומיזמים טכנולוגיים מגוונים הפועלים ברחבי הארץ. שפע התוכניות הוא גדול ומזמין מט"צים להצטרף להדרכה.  </p>
-              <a href={% url 'programs:program_list' %} class="btn btn-primary">לרשימת התוכניות</a>
+              <!-- <a href={% url 'programs:program_list' %} class="btn btn-primary">לרשימת התוכניות</a> -->
             </div>
           </div>
       </div>
@@ -64,10 +68,12 @@
             <a href={% url 'programs:facilitator_list' %}>
               <h5 class="card-title text-center">מרחבי יצירה</h5>
             </a>
-            <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'programs/makers.png' %}" alt="">
+            <a href={% url 'programs:facilitator_list' %}>
+              <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'programs/makers.png' %}" alt="">
+            </a>
             <div class="card-body">
               <p class="card-text">מייקר ספייס. המקומות הכי כיפיים בעולם ליצירה. מדפסות תלת מימד, חותכי לייזר, נגרות, אומנות... המקום שלכם ליצירה.</p>
-              <a href={% url 'programs:facilitator_list' %} class="btn btn-primary">אל המייקרס</a>
+              <!-- <a href={% url 'programs:facilitator_list' %} class="btn btn-primary">אל המייקרס</a> -->
             </div>
           </div>
       </div>
@@ -76,10 +82,12 @@
             <a href="#">
               <h5 class="card-title text-center">עתידי</h5>
             </a>
-            <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'main/coffee.jpg' %}" alt="">
+            <a href="#">
+              <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'main/coffee.jpg' %}" alt="">
+            </a>
             <div class="card-body">
               <p class="card-text">אנחנו מתכוונים לבנות כאן מרחב מפגש וירטואלי. הרצאות, מפגשים, פאנלים וסתם בית קפה... או שוקו. </p>
-              <a href="#" class="btn btn-warning">TBD spaces</a>
+              <!-- <a href="#" class="btn btn-warning">TBD spaces</a> -->
             </div>
           </div>
       </div>

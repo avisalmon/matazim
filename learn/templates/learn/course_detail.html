@@ -63,14 +63,20 @@
             <a  href={% url 'learn:course_unsign' course.id %} class="btn btn-danger rounded mt-5">הסר את הקורס מהרשימה שלי<i class="fas fa-exclamation-triangle"></i></a>
           </ul>
         {% else %}
-          <a href={% url 'learn:course_sign' course.id %} class="btn btn-info">הוסף את הקורס לרשימה שלי</a>
-          <ul class="text-muted">
-            {% for lesson in course.lessons.all %}
-            <li>
-              {{ lesson.title }}
-            </li>
-            {% endfor %}
-          </ul>
+          {% if user.is_authenticated %}
+            <a href={% url 'learn:course_sign' course.id %} class="btn btn-info">הוסף את הקורס לרשימה שלי</a>
+            <ul class="text-muted">
+              {% for lesson in course.lessons.all %}
+              <li>
+                {{ lesson.title }}
+              </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>כאן תוכל להרשם לקורס זה ולצפות בכל השיעורים. אבל צריך להרשם לאתר בשביל זה</p>
+            <a href={% url 'login' %} class="btn btn-info">התחבר</a>
+          {% endif %}
+
         {% endif %}
 
   </div>
