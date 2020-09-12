@@ -28,8 +28,10 @@
 <div class="sticky-top bg-white">
 
 
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-primary text-white">
-    <div class="container">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-primary text-white hebrew ">
+    <div class="container border">
+      <div class="d-flex justify-content-start">
+
       <a class="navbar-brand" href="{% url 'home' %}">
         <img src="{% static "main/Logo.png" %}" width="30" height="30" class="d-inline-block align-top" alt="Matazim Logo">
         <!-- <span>Avi Home</span> -->
@@ -79,11 +81,12 @@
             </div>
           </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2 hebrew" type="search" placeholder="אני מחפש..." aria-label="Search">
-          <button class="btn btn-success my-2 my-sm-0" type="submit">חפש</button>
-        </form>
       </div>
+    </div>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2 hebrew" type="search" placeholder="אני מחפש..." aria-label="Search">
+      <button class="btn btn-success my-2 my-sm-0" type="submit">חפש</button>
+    </form>
   </div>
     </nav>
 

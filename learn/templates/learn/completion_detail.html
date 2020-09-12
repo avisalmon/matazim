@@ -71,7 +71,7 @@
     <div class="{% if course.hebrew %}hebrew text-right{% endif %}">
       <h2>אתם נמצאים בשיעור:</h2>
       <h1>{{ completion.lesson.course.title}} - {{ completion.lesson.title }}</h1>
-      <h3>כשתסיימו תלחצו על כפתור סיימתי, לשיעור הבא...</h3>
+      <h3>כשתסיימו תלחצו על כפתור <span class="btn btn-info">יאללה, סיימתי. לשיעור הבא</span></h3>
       <p>{{ completion.lesson.description }}</p>
     </div>
 
@@ -98,7 +98,7 @@
 
 
   </div>
-  <div class="col-2">
+  <div class="col-3">
 
     <div class="border border-top border-info mb-3">
       <ul>
