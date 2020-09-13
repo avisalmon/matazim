@@ -8,9 +8,9 @@
       <!--                        -->
 
 <div class="text-center bg-warning {% if not registration.need_to_message_about_completion %}d-none{% endif %}">
-  <h1>Congratulations! </h1>
+  <h1>ברכות! סיימתם קורס זה. <span>נשאר רק לדרג ולתת משוב</span></h1>
   <br>
-  <a href="#" class="btn btn-success">Rate and be certified</a>
+  <a href="#" class="btn btn-success">דרג קורס זה</a>
 <p><em>TBD - implement rating here. only after the user will rate this message will go away. </em></p>
 </div>
 {% endif %}
@@ -55,16 +55,18 @@
               {% endif %}
 
               {% if completion.completed %}
-                <i class="far fa-check-circle fa-2x"></i>
+                <i class="far fa-check-circle"></i>
               {% endif %}
 
             </li>
             {% endfor %}
-            <a  href={% url 'learn:course_unsign' course.id %} class="btn btn-danger rounded mt-5">הסר את הקורס מהרשימה שלי<i class="fas fa-exclamation-triangle"></i></a>
           </ul>
         {% else %}
           {% if user.is_authenticated %}
-            <a href={% url 'learn:course_sign' course.id %} class="btn btn-info">הוסף את הקורס לרשימה שלי</a>
+            <!-- <a href={% url 'learn:course_sign' course.id %} class="btn btn-info">הוסף את הקורס לרשימה שלי</a> -->
+            <p>אלו השיעורים בקורס זה.
+            <a href={% url 'learn:course_sign' course.id %}> הירשמו</a>
+            </p>
             <ul class="text-muted">
               {% for lesson in course.lessons.all %}
               <li>
@@ -87,7 +89,17 @@
 
   <div class="col border border-info px-5 pb-3">
     <div class="{% if course.hebrew %}hebrew text-right{% endif %}">
-      <h1>{{ course.title}} - דף פתיחה</h1>
+      <h1>{{ course.title}} - דף פתיחה
+      {% if registration %}
+        <a class="btn btn-danger" href={% url 'learn:course_unsign' course.id %}>
+          הסר את הקורס מהרשינה שלי <i class="fas fa-exclamation-triangle"></i>
+        </a>
+      {% else %}
+      <a class="btn btn-info" href={% url 'learn:course_sign' course.id %}>
+        הוסף את הקורס לרשימה שלי
+      </a>
+      {% endif %}
+      </h1>
       {% if registration.last_completion %}
         {% if course.hebrew %}
         <h3><a href={% url 'learn:completion_detail' registration.last_completion.id %}> לשיעור האחרון שהיית בו</a></h3>

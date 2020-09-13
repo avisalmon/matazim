@@ -10,7 +10,7 @@ class Course(models.Model):
     title = models.CharField(max_length=50)
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     short_description = models.TextField(max_length=150, blank=True)
-    hebrew = models.BooleanField(default=False)
+    hebrew = models.BooleanField(default=True)
     description = HTMLField(max_length=5000, blank=True)
     image = models.ImageField(upload_to='learn/images/', blank=True)
     predecessor = models.ManyToManyField("self", blank=True, symmetrical=False)

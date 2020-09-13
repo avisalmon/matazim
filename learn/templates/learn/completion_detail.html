@@ -2,11 +2,10 @@
 
 {% block content %}
 
-
 <div class="text-center bg-warning {% if not registration.need_to_message_about_completion %}d-none{% endif %}">
-  <h1>Congratulations! </h1>
+  <h1>ברכות! סיימתם קורס זה </h1>
   <br>
-  <a href="#" class="btn btn-success">Rate and be certified</a>
+  <a href="#" class="btn btn-success">דרג קורס זה</a>
 <p><em>TBD - implement rating here. only after the user will rate this message will go away. </em></p>
 </div>
 
@@ -28,8 +27,8 @@
     <div class="row justify-content-center">
       <div class="col-10">
         {% if completion.lesson.course.hebrew %}
-        <p>סיימתם את השיעור הזה?</p>
-        <a href={% url 'learn:completion_done' completion.id %} class="btn btn-info d-block">יאללה, לשיעור הבא</a><br>
+        <!-- <p>סיימתם את השיעור הזה?</p> -->
+        <!-- <a href={% url 'learn:completion_done' completion.id %} class="btn btn-info d-block">יאללה, לשיעור הבא</a><br> -->
 
         {% else %}
         <a href={% url 'learn:completion_done' completion.id %} class="btn btn-info d-block">Lets go to the next one.</a><br>
@@ -39,6 +38,9 @@
     </div>
 
       <ul>
+        <a href={% url 'learn:course_detail' completion.lesson.course.id %}>
+          <li><i class="fas fa-lock-open"></i> לדף הפתיחה של הקורס <i class="far fa-check-circle"></i></li>
+        </a>
         {% for other_completion in user_course_completion_set %}
         <li>
           {% if other_completion.pre_completion.completed or not other_completion.pre_completion %}
@@ -54,7 +56,7 @@
           {% endif %}
 
           {% if other_completion.completed %}
-            <i class="far fa-check-circle fa-2x"></i>
+            <i class="far fa-check-circle"></i>
           {% endif %}
 
           {% if other_completion == completion %}
@@ -70,7 +72,7 @@
 <!--  start of middle frame -->
   <div class="col border border-primary">
     <div class="{% if course.hebrew %}hebrew text-right{% endif %}">
-      <h2>אתם נמצאים בשיעור:</h2>
+      <h3>אתם נמצאים בשיעור:</h3>
       <h1>{{ completion.lesson.course.title}} - {{ completion.lesson.title }}</h1>
       <h3>כשתסיימו תלחצו על כפתור <span class="btn btn-info">יאללה, סיימתי. לשיעור הבא</span></h3>
       <p>{{ completion.lesson.description }}</p>
