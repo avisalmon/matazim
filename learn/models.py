@@ -79,7 +79,6 @@ class Completion(models.Model):
         return f'Completion for {self.user}, Course: {self.lesson.course}, Lesson: {self.lesson}'
 
     def get_absolute_url(self):
-        print('HI')
         return reverse('learn:completion_detail', kwargs={'pk': self.pk})
 
 
@@ -95,27 +94,25 @@ class Registration(models.Model):
     class Meta:
         unique_together = [['user', 'course']]
 
-        def __str__(self):
-            return f'{self.course} (for user: {self.user})'
+    def __str__(self):
+        return f'{self.course} (for user: {self.user})'
 
-            @property
-            def need_to_message_about_completion(self):
-                ''' will return True only once when graduating'''
-                completions = Completion.objects.filter(user=self.user,
-                lesson__course=self.course)
-                done = True
-                for completion in completions:
-                    if not completion.completed:
-                        done = False
+    @property
+    def need_to_message_about_completion(self):
+        ''' will return True only once when graduating'''
+        completions = Completion.objects.filter(user=self.user,
+                                                lesson__course=self.course)
+        done = True
+        for completion in completions:
+            if not completion.completed:
+                done = False
 
-                        print('Geting in')
-                        if done:
-                            print('done')
-                            if (self.complete_date==None or self.complete_date==''):
-                                self.complete_date = datetime.datetime.now()
-                                self.save()
-                                return True
-                            elif self.stars == 0:
-                                return True
-                            else:
-                                return False
+        if done:
+            if (self.complete_date==None or self.complete_date==''):
+                self.complete_date = datetime.datetime.now()
+                self.save()
+                return True
+            elif self.stars == 0:
+                return True
+            else:
+                return False
