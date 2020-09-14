@@ -98,7 +98,9 @@
     <div class="{% if course.hebrew %}hebrew text-right{% endif %}">
       <h3>אתם נמצאים בשיעור:</h3>
       <h1>{{ completion.lesson.course.title}} - {{ completion.lesson.title }}</h1>
-      <h3>כשתסיימו תלחצו על כפתור <span class="btn btn-info">יאללה, סיימתי. לשיעור הבא</span></h3>
+      <h3>כשתסיימו תלחצו על כפתור
+        <a class="btn btn-info" href={% url 'learn:completion_done' completion.id %}>סיימתי - לשיעור הבא...</a>
+      </h3>
       <p>{{ completion.lesson.description }}</p>
     </div>
 
