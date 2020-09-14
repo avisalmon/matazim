@@ -33,7 +33,6 @@ class CourseDetailView(DetailView):
             context['user_course_completion_set'] = user_course_completion_set
             courses_registered = Registration.objects.filter(user=self.request.user)
             context['courses_registered'] = courses_registered
-            #print(self.object.owner)
             registration = Registration.objects.get(user=self.request.user,
             course=self.object)
             context['registration'] = registration
@@ -63,9 +62,7 @@ def courseSignView(request, pk):
     for lesson in course.lessons.all():
         completion = Completion.objects.get(user=request.user,
                                             lesson=lesson)
-        print(completion)
         if lesson.pre_lesson:
-            print('There is pre_lesson')
             pre_completion = Completion.objects.get(user=request.user,
                                                     lesson=lesson.pre_lesson)
             completion.pre_completion = pre_completion
@@ -87,7 +84,6 @@ def course_unsign(request, pk):
         course = Course.objects.get(pk=pk)
         registration = Registration.objects.get(user=request.user,
                                                course=course)
-        print('Hi')
     except:
         return redirect('home')
 
@@ -111,7 +107,6 @@ class CompletionDetailView(DetailView):
                                                     course=self.object.lesson.course)
             registration.last_completion = self.object
             registration.save()
-            print('1')
         except Registration.DoesNotExist:
             registration = None
 

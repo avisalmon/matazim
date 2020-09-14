@@ -7869,4 +7869,9 @@ a.text-dark:hover, a.text-dark:focus {
   .sidenav-lesson a:hover {
     color: #f1f1f1; }
 
+.lesson-item {
+  background-color: DarkGrey;
+  color: FloralWhite;
+  border: 1px solid Gainsboro; }
+
 /*# sourceMappingURL=site_custom.css.map */
