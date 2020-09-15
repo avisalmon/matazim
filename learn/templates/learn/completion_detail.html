@@ -14,15 +14,17 @@
 
 <div class="row px-4">
   <div class="col-3">
+    <h2 class="text-center">אתם רשומים לקורס זה</h2>
+    <small>אתה רשום לקורס הזה. הנה רשימה השיעורים שעליך להשלים. אם המנעול פתוח, כבר השלמת את השיעור והוא נגיש לך לריענון. אם המנעול נעול, השלם את השיעורים לפי הסדר כדי לקבל גישה.</small>
+    <hr>
     {% if completion.lesson.course.hebrew %}
-    <h2 class="text-center">רשימת השיעורים </h2>
+    <h2 class="">השיעורים:</h2>
     <!-- <small>צפו בסרטון. לאחר שתשלימו את הצפייה ואת המטלות (אם יש) שמתחתיו, אשרו שהשלמתם את השיעור ועיברו לשיעור הבא.</small> -->
 
     {% else %}
     <h2 class='text-center'>You are in a lesson</h2>
     <small>Please watch the video and complete any task bellow. After you are done, you may approve and continue to the next lesson. </small>
     {% endif %}
-    <hr>
 
     <div class="row justify-content-center">
       <div class="col-10">
@@ -96,7 +98,6 @@
 <!--  start of middle frame -->
   <div class="col border border-primary">
     <div class="{% if course.hebrew %}hebrew text-right{% endif %}">
-      <h3>אתם נמצאים בשיעור:</h3>
       <h1>{{ completion.lesson.course.title}} - {{ completion.lesson.title }}</h1>
       <h3>כשתסיימו תלחצו על כפתור
         <a class="btn btn-info" href={% url 'learn:completion_done' completion.id %}>סיימתי - לשיעור הבא...</a>
@@ -105,7 +106,7 @@
     </div>
 
     <div class="row justify-content-center">
-      <div class="col-10">
+      <div class="rounded-lg bg-secondary p-3 px-5 col-11">
         {% if completion.lesson.youtube %}
           <div class="embed-responsive embed-responsive-16by9">
             <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ completion.lesson.youtube }}?rel=0" allowfullscreen></iframe>
