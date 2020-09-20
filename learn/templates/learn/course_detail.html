@@ -102,14 +102,18 @@
   <div class="col border border-info px-5 pb-3">
     <div class="{% if course.hebrew %}hebrew text-right{% endif %}">
       <h1>{{ course.title}} - דף פתיחה
-      {% if registration %}
-        <a class="btn btn-danger" href={% url 'learn:course_unsign' course.id %}>
-          הסר את הקורס מהרשינה שלי <i class="fas fa-exclamation-triangle"></i>
+      {% if user.is_authenticated %}
+        {% if registration %}
+          <a class="btn btn-danger" href={% url 'learn:course_unsign' course.id %}>
+            הסר את הקורס מהרשינה שלי <i class="fas fa-exclamation-triangle"></i>
+          </a>
+        {% else %}
+        <a class="btn btn-info" href={% url 'learn:course_sign' course.id %}>
+          הוסף את הקורס לרשימה שלי
         </a>
+        {% endif %}
       {% else %}
-      <a class="btn btn-info" href={% url 'learn:course_sign' course.id %}>
-        הוסף את הקורס לרשימה שלי
-      </a>
+        <a class="btn btn-info" href={% url 'login' %}>התחבר כדי להרשם</a>
       {% endif %}
       </h1>
       {% if registration.last_completion %}
