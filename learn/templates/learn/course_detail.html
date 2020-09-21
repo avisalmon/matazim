@@ -104,9 +104,7 @@
       <h1>{{ course.title}} - דף פתיחה
       {% if user.is_authenticated %}
         {% if registration %}
-          <a class="btn btn-danger" href={% url 'learn:course_unsign' course.id %}>
-            הסר את הקורס מהרשינה שלי <i class="fas fa-exclamation-triangle"></i>
-          </a>
+
         {% else %}
         <a class="btn btn-info" href={% url 'learn:course_sign' course.id %}>
           הוסף את הקורס לרשימה שלי
@@ -116,13 +114,21 @@
         <a class="btn btn-info" href={% url 'login' %}>התחבר כדי להרשם</a>
       {% endif %}
       </h1>
-      {% if registration.last_completion %}
-        {% if course.hebrew %}
-        <h3><a href={% url 'learn:completion_detail' registration.last_completion.id %}> לשיעור האחרון שהיית בו</a></h3>
-        {% else %}
-        <h3><a href={% url 'learn:completion_detail' registration.last_completion.id %}>Last lesson visited</a></h3>
-        {% endif %}
-      {% endif %}
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-3 border border-info py-2 text-center">
+          מה שלומך?
+        </div>
+        <div class="col-3 border border-info py-2 text-center">
+          {% if registration.last_completion %}
+          <a href={% url 'learn:completion_detail' registration.last_completion.id %}> לשיעור האחרון שהיית בו <i class="far fa-caret-square-left"></i></a>
+          {% else %}
+          <p>רשימת השיעורים מימין</p>
+          {% endif %}
+        </div>
+        <div class="col-3"></div>
+      </div>
+
       <p>{{ course.description }}</p>
     </div>
 
@@ -146,7 +152,13 @@
   <div class="col-3">
 
     {% if course.hebrew %}
-      <a class="btn btn-info" href={% url 'learn:course_list' %}>לרשימת כל הקורסים</a>
+    <div class="border border-top border-info mb-3">
+      <ul>
+        <li><a href={% url 'learn:course_list' %}><i class="fas fa-list-ol"></i> חזרה לרשימת כל הקורסים</a></li>
+        <li><a href={% url 'learn:course_unsign' course.id %}><i class="far fa-trash-alt text-danger"></i> הסר את הקורס מהרשימה שלי</a></li>
+      </ul>
+    </div>
+
         {% include "learn/course_status_heb.html" %}
     {% else %}
         {% include "learn/course_status_en.html" %}

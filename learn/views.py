@@ -17,6 +17,8 @@ class CourseListView(ListView):
         try:
             courses_registered = Registration.objects.filter(user=self.request.user)
             context['courses_registered'] = courses_registered
+            courses_names_for_user = [registration.course for registration in courses_registered]
+            context['courses_names_for_user'] = courses_names_for_user
         except:
             pass
         return context

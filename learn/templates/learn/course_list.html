@@ -19,14 +19,35 @@
     <div class="card-columns">
       {% for course in course_list.all %}
 
+
+
+
       <div class="card">
+
         {% if course.image %}
         <a href={% url 'learn:course_detail' course.id %}>
+          <!-- This block will identify the last competion to send the user to -->
+          {% for registration in courses_registered %}
+            {% if registration.course == course %}
+              {% if registration.last_completion %}
+                <a href={% url 'learn:completion_detail' registration.last_completion.id %}>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+
         <img class="card-img-top p-3" src={{ course.image.url }} alt="image">
         </a>
         {% endif %}
         <div class="card-body">
           <a href={% url 'learn:course_detail' course.id %}>
+            <!-- This block will identify the last competion to send the user to -->
+            {% for registration in courses_registered %}
+              {% if registration.course == course %}
+                {% if registration.last_completion %}
+                  <a href={% url 'learn:completion_detail' registration.last_completion.id %}>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
             <h5 class="card-title{% if course.hebrew %} hebrew text-right{% endif %}">{{ course.title|safe }}</h5>
           </a>
           <p class="card-text {% if course.hebrew %} hebrew text-right{% endif %}">{{ course.short_description|safe }}</p>
