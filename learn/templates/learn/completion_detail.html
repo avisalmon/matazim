@@ -151,15 +151,14 @@
 
     <div class="border border-top border-info mb-3">
       <ul>
-        <li><a href={% url 'learn:course_detail' completion.lesson.course.id %}>חזרה לדף הראשי של הקורס</a></li>
-        <li><a href={% url 'learn:completion_done' completion.id %}>למעבר לשיעור הבא</a></li>
-        <li><a href={% url 'learn:course_list' %}>חזרה לרשימת כל הקורסים</a></li>
-        <li><a href={% url 'learn:course_unsign' completion.lesson.course.id %}>הסר את הקורס מהרשימה שלי</a></li>
+        <li><a href={% url 'learn:course_list' %}><i class="fas fa-list-ol"></i> חזרה לרשימת כל הקורסים</a></li>
+        <li><a href={% url 'learn:course_detail' completion.lesson.course.id %}><i class="far fa-caret-square-left"></i> חזרה לדף הראשי של הקורס</a></li>
+        <li><a href={% url 'learn:completion_done' completion.id %}><i class="far fa-caret-square-left"></i> מעבר לשיעור הבא</a></li>
+        <li><a class="text-danger" href={% url 'learn:course_unsign' completion.lesson.course.id %}><i class="far fa-trash-alt text-danger"></i> הסר את הקורס מהרשימה שלי</a></li>
       </ul>
     </div>
 
     {% if completion.lesson.course.hebrew %}
-      <a class="btn btn-info" href={% url 'learn:course_list' %}>לרשימת כל הקורסים</a>
         {% include "learn/course_status_heb.html" %}
     {% else %}
         {% include "learn/course_status_en.html" %}

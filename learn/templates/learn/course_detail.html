@@ -155,7 +155,17 @@
     <div class="border border-top border-info mb-3">
       <ul>
         <li><a href={% url 'learn:course_list' %}><i class="fas fa-list-ol"></i> חזרה לרשימת כל הקורסים</a></li>
-        <li><a href={% url 'learn:course_unsign' course.id %}><i class="far fa-trash-alt text-danger"></i> הסר את הקורס מהרשימה שלי</a></li>
+        {% if user.is_authenticated %}
+          {% if registration %}
+            <li><a href={% url 'learn:course_unsign' course.id %}><i class="far fa-trash-alt text-danger"></i> הסר את הקורס מהרשימה שלי</a></li>
+          {% else %}
+            <li>
+              <a class="" href={% url 'learn:course_sign' course.id %}><i class="fas fa-plus"></i> 
+            הוסף את הקורס לרשימה שלי
+              </a>
+            </li>
+          {% endif %}
+        {% endif %}
       </ul>
     </div>
 
