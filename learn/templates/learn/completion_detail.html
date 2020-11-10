@@ -3,13 +3,6 @@
 {% block content %}
 {% if user.is_authenticated %}
 <div class="text-center bg-warning {% if not registration.need_to_message_about_completion %}d-none{% endif %}">
-  <h1>ברכות! סיימתם קורס זה </h1>
-  <br>
-  <a href="#" class="btn btn-success">דרג קורס זה</a>
-<p><em>TBD - implement rating here. only after the user will rate this message will go away. </em></p>
-</div>
-
-<div class="text-center bg-warning {% if not registration.need_to_message_about_completion %}d-none{% endif %}">
   <h1>ברכות! סיימתם קורס זה. נשאר רק לדרג</h1>
   <br>
   <a href="#" class="btn btn-success">דרג קורס זה - רק ללחוץ על הכוכב הנכון</a>
