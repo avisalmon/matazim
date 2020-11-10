@@ -118,7 +118,8 @@
   <div class="col border border-primary">
     <div class="{% if course.hebrew %}hebrew text-right{% endif %}">
       <h1>{{ completion.lesson.course.title}} - {{ completion.lesson.title }}</h1>
-      <div class="row">
+      <!-- remove the bellow part later after you are sure -->
+      <div class="row d-none">
         <div class="col-3"></div>
         <div class="col-3 border border-info py-2 text-center">
           <a href={% if completion.pre_completion %}{% url 'learn:completion_detail' completion.pre_completion.id %}{% endif %}>

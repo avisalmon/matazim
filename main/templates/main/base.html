@@ -46,7 +46,7 @@
             <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home"></i><span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link border rounded" href="{% url 'learn:course_list' %}">קורסים<span class="sr-only">(current)</span></a>
+            <a class="nav-link " href="{% url 'learn:course_list' %}">קורסים<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'programs:program_list' %}">תוכניות<span class="sr-only">(current)</span></a>
@@ -90,21 +90,21 @@
   </div>
     </nav>
 
-<div class="container pb-0 border-bottom">
+<div class="container pb-0">
       {% if user.is_authenticated %}
         <p class="pl-3">Looged in as ({{ user.username}}) <b>{{ user.first_name}} {{ user.last_name}}</b>  <a href="{% url 'logout' %}">Log out</a>
         <a href="{% url 'main:my_profile_view' %}">  |  See your profile</a>
       </p>
       {% else %}
         <p>
-          <a href="{% url 'login' %}">Login</a>...
-          <a href="{% url 'signup' %}">Sign Up</a>...
+          <a href="{% url 'login' %}">Login</a> &nbsp;&nbsp;
+          <a href="{% url 'signup' %}">Sign Up</a>
           <!-- <a href="{% provider_login_url 'github' %}">Login with GitHub</a>...
           <a href="{% provider_login_url 'google' %}">Login with Google</a>...
           <a href="{% provider_login_url 'facebook' %}">Login with FaceBook</a>...
         </p> -->
       {% endif %}
-      {% if user.is_authenticated and not user.amail and not user.first_name %}
+      {% if user.is_authenticated and not user.email and not user.first_name %}
       <div class="text-danger">
         <h1 class="" > PLEASE GIVE MORE DETAILS ON YOUR PROFILE </h1>
         <h2>It is very helpfull for the network. at least add you mail and name. </h2>
@@ -114,7 +114,7 @@
         </h3>
       </div>
 </div>
-      <hr>
+
 
 
       {% endif %}
