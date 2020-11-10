@@ -116,3 +116,20 @@ class Registration(models.Model):
                 return True
             else:
                 return False
+
+    @property
+    def precentage(self):
+        completions = Completion.objects.filter(user=self.user,
+                                                lesson__course=self.course)
+        total = 0
+        completed = 0
+
+        for completion in completions:
+            total += 1
+            if completion.completed:
+                completed += 1
+
+        if total > 0:
+            return int(completed/total*100)
+        else:
+            return 0

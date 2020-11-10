@@ -2,19 +2,32 @@
 
 {% block content %}
 
+<div class="container">
 <h1>Status Report for Viki</h1>
 
 {% for profile in profiles %}
   </p><u>{{ profile.user }}<b> {{ profile.user.first_name }} {{ profile.user.last_name }}</b></u></p>
-  <ul>
-    <li>Email: {{ profile.user.email }} </li>
+
+    Email: {{ profile.user.email }}
     {% for registration in profile.user.registrations.all %}
-    <li>Course: {{ registration.course.title }} start: {{ registration.start_date }} <b>End: </b> {{ registration.complete_date}}</li>
+
+      <div class="row">
+        <div class="col-6">
+          Course: ({{ registration.precentage }}) {{ registration.course.title }} start: {{ registration.start_date }} <b>End: </b> {{ registration.complete_date}}
+        </div>
+        <div class="col-3">
+          <div class="progress">
+            <div class="progress-bar bg-success {% if registration.precentage < 60 %}bg-warning{% endif %}"
+            role="progressbar" style="width: {{ registration.precentage }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ registration.precentage }}%</div>
+          </div>
+        </div>
+      </div>
     {% endfor %}
-  </ul>
+
 
 
 {% endfor %}
+</div>
 <hr>
 {{ test.first.2 }}
 
