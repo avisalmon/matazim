@@ -27,4 +27,5 @@ urlpatterns = [
     # path('course/complete_message/<int:registration_pk>',
     #      views.course_complete_message,
     #      name='course_complete_message'),
+    path('report/', views.learnReport, name='learn_report'),
 ]

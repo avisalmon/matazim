@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1>Status Report for Viki</h1>
+
+{% for profile in profiles %}
+  </p><u>{{ profile.user }}<b> {{ profile.user.first_name }} {{ profile.user.last_name }}</b></u></p>
+  <ul>
+    <li>Email: {{ profile.user.email }} </li>
+    {% for registration in profile.user.registrations.all %}
+    <li>Course: {{ registration.course.title }} start: {{ registration.start_date }} <b>End: </b> {{ registration.complete_date}}</li>
+    {% endfor %}
+  </ul>
+
+
+{% endfor %}
+<hr>
+{{ test.first.2 }}
+
+{% endblock %}

@@ -133,7 +133,11 @@
         <!-- <h3>עוד לא מימשנו משימות ומטלות. אז פשוט סמנו אם סיימתם:</h3> -->
         <div class="row">
           <div class="col-3"></div>
-          <div class="col-3 border border-info py-2 text-center"><i class="far fa-caret-square-right"></i> לשיעור הקודם</div>
+          <div class="col-3 border border-info py-2 text-center">
+            <a href={% if completion.pre_completion %}{% url 'learn:completion_detail' completion.pre_completion.id %}{% endif %}>
+              <i class="far fa-caret-square-right"></i> לשיעור הקודם
+            </a>
+          </div>
           <div class="col-3 border border-info py-2 text-center">
             <a href={% url 'learn:completion_done' completion.id %}>
               לשיעור הבא <i class="far fa-caret-square-left"></i>

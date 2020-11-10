@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from .models import Course, Lesson, Registration, Completion
+from main.models import Profile
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 import datetime
+from django.contrib.admin.views.decorators import staff_member_required
 
 def home(request):
     return render(request, 'learn/home.html')
@@ -140,3 +142,11 @@ def completion_done(request, pk):
 #     return render(request,
 #                   'learn/complete_message.html',
 #                   {'registration': registration })
+
+@staff_member_required
+def learnReport(request):
+    context = {}
+    context['profiles'] = Profile.objects.all()
+    context['test'] = {'first': [0,1,'Hi There',3], 'second': 2}
+
+    return render(request, 'learn/report.html', context)

@@ -83,7 +83,7 @@ class Completion(models.Model):
 
 
 class Registration(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='registrations')
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     last_completion = models.ForeignKey(Completion, on_delete=models.CASCADE, blank=True, null=True, default=None)
     start_date = models.DateField(auto_now_add=True)
