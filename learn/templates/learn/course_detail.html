@@ -13,6 +13,7 @@
   <a href="#" class="btn btn-success">דרג קורס זה - רק ללחוץ על הכוכב הנכון</a>
 {% endif %}
 </div>
+{% if registration %}
 <div class="container text-center">
   <p class="hebrew">הדרוג שלך לקורס זה:</p>
   <a href={% url 'learn:course_rate' registration.course.pk 1 %}>
@@ -32,6 +33,7 @@
   </a>
 
 </div>
+{% endif %}
 <br>
 <div class="{% if course.hebrew %}hebrew text-right{% endif %}">
 
