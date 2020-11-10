@@ -119,6 +119,7 @@ class Registration(models.Model):
 
     @property
     def precentage(self):
+        '''returns precentage of completion of this registration'''
         completions = Completion.objects.filter(user=self.user,
                                                 lesson__course=self.course)
         total = 0

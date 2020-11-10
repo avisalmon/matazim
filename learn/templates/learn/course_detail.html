@@ -8,12 +8,31 @@
       <!--                        -->
 
 <div class="text-center bg-warning {% if not registration.need_to_message_about_completion %}d-none{% endif %}">
-  <h1>ברכות! סיימתם קורס זה. <span>נשאר רק לדרג ולתת משוב</span></h1>
+  <h1>ברכות! סיימתם קורס זה. נשאר רק לדרג</h1>
   <br>
-  <a href="#" class="btn btn-success">דרג קורס זה</a>
-<p><em>TBD - implement rating here. only after the user will rate this message will go away. </em></p>
-</div>
+  <a href="#" class="btn btn-success">דרג קורס זה - רק ללחוץ על הכוכב הנכון</a>
 {% endif %}
+</div>
+<div class="container text-center">
+  <p class="hebrew">הדרוג שלך לקורס זה:</p>
+  <a href={% url 'learn:course_rate' registration.course.pk 1 %}>
+  1{% if registration.stars > 0 %}<i class="fas fa-star"></i>{% else %} <i class="far fa-star"></i> {% endif %}
+  </a>
+  <a href={% url 'learn:course_rate' registration.course.pk 2 %}>
+  {% if registration.stars > 1 %}<i class="fas fa-star"></i>{% else %} <i class="far fa-star"></i> {% endif %}
+  </a>
+  <a href={% url 'learn:course_rate' registration.course.pk 3 %}>
+  {% if registration.stars > 2 %}<i class="fas fa-star"></i>{% else %} <i class="far fa-star"></i> {% endif %}
+  </a>
+  <a href={% url 'learn:course_rate' registration.course.pk 4 %}>
+  {% if registration.stars > 3 %}<i class="fas fa-star"></i>{% else %} <i class="far fa-star"></i> {% endif %}
+  </a>
+  <a href={% url 'learn:course_rate' registration.course.pk 5 %}>
+  {% if registration.stars > 4 %}<i class="fas fa-star"></i>{% else %} <i class="far fa-star"></i> {% endif %}5
+  </a>
+
+</div>
+<br>
 <div class="{% if course.hebrew %}hebrew text-right{% endif %}">
 
   <!--                        -->
@@ -160,7 +179,7 @@
             <li><a href={% url 'learn:course_unsign' course.id %}><i class="far fa-trash-alt text-danger"></i> הסר את הקורס מהרשימה שלי</a></li>
           {% else %}
             <li>
-              <a class="" href={% url 'learn:course_sign' course.id %}><i class="fas fa-plus"></i> 
+              <a class="" href={% url 'learn:course_sign' course.id %}><i class="fas fa-plus"></i>
             הוסף את הקורס לרשימה שלי
               </a>
             </li>

@@ -18,6 +18,7 @@ urlpatterns = [
     path('course/unsign/<int:pk>',
          views.course_unsign,
          name='course_unsign'),
+    path('course/rate/<int:pk>/<int:rate>', views.courseRate, name='course_rate'),
     path('completion/<int:pk>',
          views.CompletionDetailView.as_view(),
          name='completion_detail'),
