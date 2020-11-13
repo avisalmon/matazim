@@ -74,10 +74,11 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <!-- <a class="dropdown-item" href=#>Learn</a> -->
+              <a class="dropdown-item" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfdSveMs64-mPjxRccDCa0TKPQA3Kmcvn9LgtbiafIeYwsIjA/viewform?usp=sf_link">דווח על בעיה</a>
               <a class="dropdown-item" target="_blank" href="https://github.com/avisalmon/matazim">GitHub</a>
-              <a class="dropdown-item" target="_blank" href="https://airtable.com/tblzIwe7Vwt9A0qfU/viwzPk0NFxxwqlBQd?blocks=show">Report a bug</a>
+              <a class="dropdown-item" target="_blank" href="https://airtable.com/tblzIwe7Vwt9A0qfU/viwzPk0NFxxwqlBQd?blocks=show">Air table (staff only)</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Connect us</a>
+              <a class="dropdown-item" href="#">ליצירת קשר</a>
             </div>
           </li>
         </ul>
@@ -93,7 +94,7 @@
 <div class="container pb-0">
       {% if user.is_authenticated %}
         <p class="pl-3">Looged in as ({{ user.username}}) <b>{{ user.first_name}} {{ user.last_name}}</b>  <a href="{% url 'logout' %}">Log out</a>
-        <a href="{% url 'main:my_profile_view' %}">  |  See your profile</a>
+        <a href="{% url 'main:my_profile_view' %}">&nbsp;&nbsp&nbsp;&nbsp    לצפייה בפרופיל</a>
       </p>
       {% else %}
         <p>

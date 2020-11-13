@@ -75,7 +75,7 @@
 
 <!-- start col 2 -->
     <div class="col">
-      <h2>Schools/Facilitators part of this program</h2>
+      <h2 class="text-right">בתי ספר / מרחבי יצירה שמארחים את התוכנית הזו</h2>
       {% if program.owner == user %}
       <a href={% url 'programs:program_add_school' program.id %}>
       <button type="button" class="btn btn-primary">Add a school</button>

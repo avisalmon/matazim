@@ -32,8 +32,6 @@ class Course(models.Model):
         return reverse('learn:course_detail', kwargs={'pk': self.pk})
 
 
-
-
 class Lesson(models.Model):
     title = models.CharField(max_length=100)
     description = HTMLField(max_length=5000, blank=True)
