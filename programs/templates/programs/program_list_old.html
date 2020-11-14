@@ -1,0 +1,127 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Side Nav -->
+<div class="sidenav d-none d-sm-block ">
+  <a href={% url 'programs:program_create' %}><i class="fas fa-glass-cheers"></i>  Add</a>
+  <a href="#"><i class="fas fa-search"></i>  Search</a>
+  <a href="#"><i class="fas fa-coffee"></i>  Coffee</a>
+  <a href={% url 'learn:course_list' %}><i class="fas fa-graduation-cap"></i>  Learn</a>
+</div>
+
+<!-- Main area -->
+<div class="rtl hebrew mainArea p-5">
+    <h1 dir="/rtl"><i class=" text-danger fas fa-chalkboard-teacher fa-x5"></i>   תוכניות חינוכיות</h1>
+    <p>ההתמקדות היא בתוכניות בעלות אוריינטציה טכנית והיכולות להפיק תועלת באמצעות מטצים</p>
+
+
+
+  <hr>
+      <div class="d-block d-sm-none">
+        {% if user.is_authenticated %}
+        <a href={% url 'programs:program_create' %}>
+          <button type="button" class="btn btn-success">Add a new program you own</button>
+        </a>
+        {% endif %}
+      </div>
+
+      <div class="" id="programList">
+      {% for program in program_list %}
+
+      <div class="card my-4">
+        <h5 class="card-header">
+          <a href={% url 'programs:program_detail' program.id %}>
+            {{ program.name }}
+          </a>
+          {% if program.owner == user %}
+          <span class="font-weight-normal text-danger">
+            ... this is your program...
+              <a class="pr-2" href={% url 'programs:program_update' program.id %}><i class="fas fa-edit"></i></a>
+              <a href={% url 'programs:program_delete' program.id %}><i class="fas fa-trash-alt"></i></a>
+          </span>
+          {% endif %}
+        </h5>
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-2 d-none d-md-block">
+              {% if program.image %}
+              <a href={% url 'programs:program_detail' program.id %}>
+                <img class="img-fluid" src="{{ program.image.url }}"  alt="...">
+              </a>
+              {% else %}
+              <a href={% url 'programs:program_detail' program.id %}>
+                <img  class="img-fluid" src="{% static 'programs/programs.jpg' %}"  alt="...">
+              </a>
+              {% endif %}
+            </div>
+            <div class="col-lg-10">
+              <h5 class="card-title">owner:
+                <a href={% url 'main:profile' program.owner.profile.id %}>
+                  {{ program.owner.first_name}} {{ program.owner.last_name}}
+                </a>
+
+              </h5>
+              <p class="card-text">{{ program.short_description|safe}}
+                <a href={% url 'programs:program_detail' program.id %}> Read more...</a>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {% endfor %}
+      </div>
+
+</div>
+
+<!-- <div class="row"> -->
+  <!-- <div class="col-2 d-none d-lg-block" style="position:fixed" >
+
+      <ul class="list-group">
+        {%  if user.is_authenticated %}
+        <li class="list-group-item">
+          <a class="btn btn-success" href={% url 'programs:program_create' %}>
+            Add Programm
+          </a>
+        </li>
+        {% endif %}
+        <li class="list-group-item">
+          <a href="#">
+            Coffe house
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="#">
+            Search
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="#">
+            Contact us
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href="#">
+            More
+          </a>
+        </li>
+        <li class="list-group-item">Link 3</li>
+        <li class="list-group-item">Link 4</li>
+        <li class="list-group-item">Link 5</li>
+      </ul>
+  </div> -->
+
+<!-- Dummy Column for the fixed column above -->
+  <!-- <div class="col-2 d-none d-lg-block"></div> -->
+
+  <!-- <div class="col"> -->
+
+  <!-- </div> -->
+<!-- </div> -->
+
+
+
+{% endblock %}

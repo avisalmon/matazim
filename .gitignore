@@ -9,3 +9,4 @@ media
 server_settings.py
 env
 /static
+*/migrations*
