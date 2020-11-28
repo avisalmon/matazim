@@ -1,0 +1,13 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+  <h1>Main Hack page</h1>
+
+  {% for hack in hack_list %}
+    <p>
+      {{ hack }}
+    </p>
+  {% endfor %}
+</div>
+{% endblock %}

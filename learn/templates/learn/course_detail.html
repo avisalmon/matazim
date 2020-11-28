@@ -124,31 +124,32 @@
     <div class="{% if course.hebrew %}hebrew text-right{% endif %}">
       <h1>{{ course.title}} - דף פתיחה
       {% if user.is_authenticated %}
-        {% if registration %}
-
-        {% else %}
-        <a class="btn btn-info" href={% url 'learn:course_sign' course.id %}>
-          הוסף את הקורס לרשימה שלי
-        </a>
-        {% endif %}
+      
       {% else %}
         <a class="btn btn-info" href={% url 'login' %}>התחבר כדי להרשם</a>
       {% endif %}
       </h1>
-      <div class="d-none row">
+      <div class=" row">
         <!-- deleted this expiremntaly. delete later -->
-        <div class="col-3"></div>
-        <div class="col-3 border border-info py-2 text-center">
-          מה שלומך?
+        <div class="col-2"></div>
+        <div class="col-4 border border-info py-2 text-center">
+          <p>רשימת השיעורים מימין</p>
         </div>
-        <div class="col-3 border border-info py-2 text-center">
+        <div class="col-4 border border-info py-2 text-center">
           {% if registration.last_completion %}
           <a href={% url 'learn:completion_detail' registration.last_completion.id %}> לשיעור האחרון שהיית בו <i class="far fa-caret-square-left"></i></a>
           {% else %}
-          <p>רשימת השיעורים מימין</p>
+          {% if registration %}
+          <a href={% url 'learn:completion_detail' user_course_completion_set.0.pk %}>קפוץ לשיעור הראשון <i class="far fa-caret-square-left"></i></a>
+          {% else %}
+          <a class="btn btn-info" href={% url 'learn:course_sign' course.id %}>
+            הוסף את הקורס לרשימה שלי
+          </a>
+          {%  endif %}
+
           {% endif %}
         </div>
-        <div class="col-3"></div>
+        <div class="col-2"></div>
       </div>
 
       <p>{{ course.description }}</p>

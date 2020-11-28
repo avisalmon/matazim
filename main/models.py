@@ -67,7 +67,7 @@ class UserExperience(models.Model):
     experience_type = models.CharField(
         max_length=FIELD_MAX_LENGTH, default="work")
     # work, study, prize, project
-    start_year = models.IntegerField(blank=True)
+    start_year = models.IntegerField(blank=True, null=True)
     finish_year = models.IntegerField(blank=True, null=True)
     description = models.CharField(max_length=LONG_DESCRIPTION_MAX_LENGTH,
                                    blank=True,

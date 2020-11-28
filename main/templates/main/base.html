@@ -94,7 +94,7 @@
 <div class="container pb-0">
       {% if user.is_authenticated %}
         <p class="pl-3">Looged in as ({{ user.username}}) <b>{{ user.first_name}} {{ user.last_name}}</b>  <a href="{% url 'logout' %}">Log out</a>
-        <a href="{% url 'main:my_profile_view' %}">&nbsp;&nbsp&nbsp;&nbsp    לצפייה בפרופיל</a>
+        <a href="{% url 'main:profile' user.profile.pk %}">&nbsp;&nbsp&nbsp;&nbsp    לצפייה בפרופיל</a>
       </p>
       {% else %}
         <p>

@@ -23,7 +23,7 @@ class Hack(models.Model):
         match = regex.match(self.youtube)
         if match:
             self.youtube = match.group('id')
-        super(Course, self).save(*args, **kwargs)
+        super(Hack, self).save(*args, **kwargs)
 
     # def get_absolute_url(self):
     #     return reverse('hack:hack_detail', kwargs={'pk': self.pk})
@@ -39,7 +39,7 @@ class Team(models.Model):
     result = models.URLField(max_length=250, blank=True)
 
     def __str__(self):
-        return self.title + '(' + self.hack + ')'
+        return str(self.title) + '(' + str(self.hack) + ')'
 
     def save(self, *args, **kwargs):
         # parsing youtube id out of url string:
@@ -47,7 +47,7 @@ class Team(models.Model):
         match = regex.match(self.youtube)
         if match:
             self.youtube = match.group('id')
-        super(Course, self).save(*args, **kwargs)
+        super(Team, self).save(*args, **kwargs)
 
     # def get_absolute_url(self):
     #     return reverse('hack:team_detail', kwargs={'pk': self.pk})
@@ -72,7 +72,7 @@ class Rating(models.Model):
         unique_together = [['user', 'team']]
 
     def __str__(self):
-        return f'{self.user} rated {self.team}: {salf.stars}'
+        return f'{self.user} rated {self.team}: {self.stars}'
 
 
 class Comment(models.Model):
@@ -81,4 +81,4 @@ class Comment(models.Model):
     comment = models.TextField(max_length=150)
 
     def __str__(self):
-        return f'{self.user} --> {self.team}:' 
+        return f'{self.user} --> {self.team}:'

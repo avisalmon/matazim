@@ -2,16 +2,60 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
+<div class="row hebrew">
+  <div class="col-1"></div>
+  <div class="col-10">
 
-<h1>Profile page for {{ profile.user.first_name }} {{ profile.user.last_name}}</h1>
-<i>User: {{ profile.user }}<br></i>
-{% if profile.image %}
-<img src="{{ profile.image.url }}" alt="" height=100 >
-{% endif %}
-{% if profile.bio %}
-<p><u><b>Bio:</b></u></p>
-<p>  {{ profile.bio|safe }}</p>
-{% endif %}
+
+
+    <!-- BIG Wrap -->
+    <div class="row">
+      <!-- Right Col -->
+      <div class="col-4 text-right border ">
+        <h3>הדף של {{ profile.user.first_name }} {{ profile.user.last_name}}</h3>
+        <i>שם משתמש: {{ profile.user }}<br></i>
+        {% if profile == user.profile %}
+        <a href={% url 'main:edit_profile' %}>ערוך</a>
+        {% endif %}
+        {% if profile.image %}
+        <img src="{{ profile.image.url }}" alt="" height=100 >
+        {% endif %}
+        {% if profile.bio %}
+        <p><u><b>קצת עלי:</b></u></p>
+        <p>  {{ profile.bio|safe }}</p>
+        {% endif %}
+        <hr>
+        <h3>תחביבים:</h3>
+          {% for hobby in profile.user.hobbies.all %}
+          <p>{{ hobby }}</p>
+          {% endfor %}
+        <h3>רשתות:</h3>
+          {% for link in profile.user.links.all %}
+          <p>link</p>
+          {% endfor %}
+        <h3>נסיון ולימודים</h3>
+          {% for expirience in profile.user.experiences.all %}
+          <p>{{ expirience }}</p>
+          {% endfor %}
+      </div>
+      <!-- Mid Col -->
+      <div class="col-4 text-right">
+        {% include "learn/course_status_heb.html" %}
+      </div>
+      <!-- Left Col -->
+      <div class="col-4 border text-right">
+        <h3>כתבו לי על הקיר:</h3>
+      </div>
+    </div>
+    <!-- EO Big Wrap -->
+
+
+  </div>
+  <div class="col-1"></div>
 </div>
+
+
+
+
+
 {% endblock %}

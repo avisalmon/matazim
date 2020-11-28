@@ -11,6 +11,7 @@ from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.views.generic import (DetailView, UpdateView)
 from .models import Profile
+from learn.models import Registration
 from .forms import EditProfileForm, ProfileForm
 
 
@@ -74,7 +75,7 @@ def edit_profile(request):
             custom_form = profile_form.save(False)
             custom_form.user = user_form
             custom_form.save()
-            return redirect('main:my_profile_view')
+            return redirect('main:profile', profile_pk=request.user.profile.pk)
         else:
             context = {}
             context['form'] = EditProfileForm(instance=request.user)
@@ -96,5 +97,11 @@ def profile_view(request, profile_pk):
     context = {
         'profile': profile
     }
+    try:
+        courses_registered = Registration.objects.filter(user=request.user)
+        context['courses_registered'] = courses_registered
+    except:
+        pass
+
     template = 'main/profile_details.html'
     return render(request, template, context)
