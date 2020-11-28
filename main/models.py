@@ -84,12 +84,12 @@ class UserExperience(models.Model):
 class UserHobby(models.Model):
     """A User Hobby model"""
     title = models.CharField(max_length=FIELD_MAX_LENGTH,)
-    description = models.CharField(max_length=BIO_MAX_LENGTH, blank=True)
+    description = models.TextField(max_length=BIO_MAX_LENGTH, blank=True)
     icon = models.CharField(max_length=FIELD_MAX_LENGTH, default="dice-d20")
     color = models.CharField(max_length=FIELD_MAX_LENGTH, default="#4169e1")
 
     user = models.ForeignKey(get_user_model(),
-                             blank=True,
+                             #blank=True,
                              on_delete=models.CASCADE,
                              related_name='hobbies')
 

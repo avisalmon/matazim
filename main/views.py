@@ -12,7 +12,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import (DetailView, UpdateView)
 from .models import Profile
 from learn.models import Registration
-from .forms import EditProfileForm, ProfileForm
+from .forms import EditProfileForm, ProfileForm, HobbyForm
+from django.http import JsonResponse
+from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 
 
 def home(request):
@@ -69,7 +72,7 @@ def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
         profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)  # request.FILES is show the selected image or file
-        print('Hi')
+
         if form.is_valid() and profile_form.is_valid():
             user_form = form.save()
             custom_form = profile_form.save(False)
@@ -92,6 +95,7 @@ def edit_profile(request):
         context['profile_form'] = profile_form
         return render(request, 'main/edit_profile.html', context)
 
+@login_required
 def profile_view(request, profile_pk):
     profile = get_object_or_404(Profile, pk=profile_pk)
     context = {
@@ -103,5 +107,25 @@ def profile_view(request, profile_pk):
     except:
         pass
 
+    context['hobby_form'] = HobbyForm
     template = 'main/profile_details.html'
     return render(request, template, context)
+
+@login_required
+def add_hobby(request):
+    print('hi')
+    if request.is_ajax and request.method == 'POST':
+        form = HobbyForm(request.POST)
+        if form.is_valid():
+            instance = form.save(False)
+            instance.user = request.user
+            instance.save()
+            ser_instance = serializers.serialize('json', [ instance, ])
+            return JsonResponse({"instance": ser_instance}, status=200)
+        else:
+            #some form errors:
+            print('oops')
+            return JsonResponse({"error": form.errors}, status=400)
+
+    # an error accured:
+    return JsonResponse({"error": ""}, status=400)

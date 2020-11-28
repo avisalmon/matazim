@@ -12,11 +12,12 @@
     <div class="row">
       <!-- Right Col -->
       <div class="col-4 text-right border ">
-        <h3>הדף של {{ profile.user.first_name }} {{ profile.user.last_name}}</h3>
+        <h3>הדף של {{ profile.user.first_name }} {{ profile.user.last_name}}
+          {% if profile == user.profile %}
+          <a href={% url 'main:edit_profile' %}><i class="fas fa-edit"></i></a>
+          {% endif %}
+        </h3>
         <i>שם משתמש: {{ profile.user }}<br></i>
-        {% if profile == user.profile %}
-        <a href={% url 'main:edit_profile' %}>ערוך</a>
-        {% endif %}
         {% if profile.image %}
         <img src="{{ profile.image.url }}" alt="" height=100 >
         {% endif %}
@@ -25,18 +26,38 @@
         <p>  {{ profile.bio|safe }}</p>
         {% endif %}
         <hr>
-        <h3>תחביבים:</h3>
-          {% for hobby in profile.user.hobbies.all %}
-          <p>{{ hobby }}</p>
-          {% endfor %}
+        <!-- Hobby -->
+        <h3 >תחביבים:</h3>
+          <div id="hobby_section">
+            {% for hobby in profile.user.hobbies.all %}
+            <p class="hobby_item"><b>{{ hobby.title }}</b> {{ hobby.description }}</p>
+            {% endfor %}
+          </div>
+          {% if profile == user.profile %}
+          <h1 id="plus_hobby" style="cursor: pointer" class="text-center" data-toggle="tooltip" data-placement="top" title="Add a hobby"><i class="far fa-plus-square"></i></h1>
+          <div class="hobby_form d-none">
+            <form class="rtl text-right" id="hobby_form" method="post">
+              {% csrf_token %}
+              {{ hobby_form.as_p}}
+              <button type="submit">Submit</button>
+            </form>
+
+          </div>
+
+          {% endif %}
+          <hr>
+          <!-- Links -->
         <h3>רשתות:</h3>
           {% for link in profile.user.links.all %}
           <p>link</p>
           {% endfor %}
+          <hr>
+          <!-- Expirience -->
         <h3>נסיון ולימודים</h3>
           {% for expirience in profile.user.experiences.all %}
           <p>{{ expirience }}</p>
           {% endfor %}
+          <hr>
       </div>
       <!-- Mid Col -->
       <div class="col-4 text-right">
@@ -54,8 +75,52 @@
   <div class="col-1"></div>
 </div>
 
+{% endblock %}
 
+{% block javascript %}
+<script>
+$(document).ready(function(){
+  // alert("page loaded");
+  $(".hobby_form").hide();
+  $(".hobby_form").removeClass("d-none");
+  $("#plus_hobby").click(function(){
+     $(".hobby_form").toggle(500);
+   });
 
+  $("#hobby_form").submit(function (e) {
+        // preventing from page reload and default actions
+        e.preventDefault();
+        // serialize the data for sending the form data.
+        var serializedData = $(this).serialize();
+        // make POST ajax call
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'main:add_hobby' %}",
+            data: serializedData,
+            success: function (response) {
+                // on successfull creating object
+                // 1. clear the form.
+                $("#hobby_form").trigger('reset');
+                //$("#hobby_form").hide();
+                // 2. focus to nickname input
+                // $("#id_nick_name").focus();
 
+                // display the newly friend to table.
+                var instance = JSON.parse(response["instance"]);
+                var fields = instance[0]["fields"];
+                console.log(fields);
+                $("#hobby_section").append(
+                  `<b>${fields["title"]}</b> ${fields["description"]}`
+                )
+                $(".hobby_form").toggle(500);
+            },
+            error: function (response) {
+                // alert the error if any error occured
+                alert(response["responseJSON"]["error"]);
+            }
+        })
+    })
 
+  });
+  </script>
 {% endblock %}

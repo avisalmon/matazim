@@ -4,7 +4,7 @@ from django import forms
 #from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from tinymce.widgets import TinyMCE
-from .models import Profile
+from .models import Profile, UserHobby, UserExperience, UserLink
 
 class UserCreateForm(UserCreationForm):
     email = forms.EmailField(required=True,
@@ -47,3 +47,12 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ('bio', 'location', 'image') #Note that we didn't mention user field here.
         # got birthday temporary outbirth_date
+
+class HobbyForm(forms.ModelForm):
+    class Meta:
+        model = UserHobby
+        fields = ('title', 'description')
+        labels = {
+            "title": "התחביב שלך:",
+            "description": "ספר עוד:"
+            }

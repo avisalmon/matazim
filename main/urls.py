@@ -9,4 +9,5 @@ urlpatterns = [
     path('profile/<int:profile_pk>',
          views.profile_view,
          name='profile'),
+    path('profile/add_hobby/', views.add_hobby, name='add_hobby'),
 ]
