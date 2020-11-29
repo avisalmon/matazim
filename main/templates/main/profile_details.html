@@ -30,7 +30,7 @@
         <h3 >תחביבים:</h3>
           <div id="hobby_section">
             {% for hobby in profile.user.hobbies.all %}
-            <p class="hobby_item"><b>{{ hobby.title }}</b> {{ hobby.description }}</p>
+            <p class="hobby_item"><b>{{ hobby.title }}</b> {{ hobby.description|safe }}</p>
             {% endfor %}
           </div>
           {% if profile == user.profile %}
