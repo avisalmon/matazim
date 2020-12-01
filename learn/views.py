@@ -80,6 +80,7 @@ def courseSignView(request, pk):
     except:
         pass
 
+    print('redirecting to course')
     return redirect(course)
 
 
@@ -142,6 +143,8 @@ def completion_done(request, pk):
     try:
         if completion.next_completion:
             completion = Completion.objects.get(pk=completion.next_completion.id)
+            completion.completed = datetime.datetime.now()
+            completion.save()
     except:
         pass
     return redirect(completion)

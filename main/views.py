@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.views.generic.edit import DeleteView, UpdateView
 from . import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 #from django.contrib.auth.models import User
@@ -10,17 +11,19 @@ from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.views.generic import (DetailView, UpdateView)
-from .models import Profile
+from .models import Profile, UserHobby
 from learn.models import Registration
 from .forms import EditProfileForm, ProfileForm, HobbyForm
 from django.http import JsonResponse
 from django.core import serializers
-from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.mixins import LoginRequiredMixin
 
+# ******************** Home **********************
 
 def home(request):
     return render(request, 'main/home.html')
 
+# ********************* Auth *********************
 
 def signup(request):
     if request.method == 'GET':
@@ -58,14 +61,16 @@ def signup(request):
         #     return render(request, 'main/signup_local.html', {'form':UserCreationForm(), 'error':'Passwords did not match'})
 
 
-@login_required
-def my_profile_view(request):
-    profile = Profile.objects.get(user=request.user)
-    context = {
-        'profile': profile
-    }
-    template = 'main/profile.html'
-    return render(request, template, context)
+# @login_required
+# def my_profile_view(request):
+#     profile = Profile.objects.get(user=request.user)
+#     context = {
+#         'profile': profile
+#     }
+#     template = 'main/profile.html'
+#     return render(request, template, context)
+
+# ********************** Profile *********************
 
 @login_required
 def edit_profile(request):
@@ -97,12 +102,14 @@ def edit_profile(request):
 
 @login_required
 def profile_view(request, profile_pk):
+    if profile_pk == 0:
+        profile_pk = request.user.profile.pk
     profile = get_object_or_404(Profile, pk=profile_pk)
     context = {
         'profile': profile
     }
     try:
-        courses_registered = Registration.objects.filter(user=request.user)
+        courses_registered = Registration.objects.filter(user=profile.user)
         context['courses_registered'] = courses_registered
     except:
         pass
@@ -110,6 +117,8 @@ def profile_view(request, profile_pk):
     context['hobby_form'] = HobbyForm
     template = 'main/profile_details.html'
     return render(request, template, context)
+
+# **************** Hobby views *************************
 
 @login_required
 def add_hobby(request):
@@ -129,3 +138,21 @@ def add_hobby(request):
 
     # an error accured:
     return JsonResponse({"error": ""}, status=400)
+
+
+class HobbyDeleteView(LoginRequiredMixin, DeleteView):
+    model = UserHobby
+    success_url = reverse_lazy('main:profile', kwargs={'profile_pk': 0})
+
+
+class HobbyUpdateView(UpdateView):
+    model = UserHobby
+    fields = ['title', 'description']
+    template_name_suffix = '_update_form'
+
+    def dispatch(self, request, *args, **kwargs):
+        """" Making sure that only owners can update """
+        obj = self.get_object()
+        if obj.owner != self.request.user:
+            return redirect('programs:facilitator_list')
+        return super(FacilitatorUpdateView, self).dispatch(request, *args, **kwargs)

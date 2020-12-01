@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 from tinymce.models import HTMLField
+from django.shortcuts import reverse
 
 BIO_MAX_LENGTH = 12800
 DESCRIPTION_MAX_LENGTH = 120
@@ -84,7 +85,7 @@ class UserExperience(models.Model):
 class UserHobby(models.Model):
     """A User Hobby model"""
     title = models.CharField(max_length=FIELD_MAX_LENGTH,)
-    description = models.TextField(max_length=BIO_MAX_LENGTH, blank=True)
+    description = models.TextField(max_length=LONG_DESCRIPTION_MAX_LENGTH, blank=True)
     icon = models.CharField(max_length=FIELD_MAX_LENGTH, default="dice-d20")
     color = models.CharField(max_length=FIELD_MAX_LENGTH, default="#4169e1")
 
@@ -95,3 +96,6 @@ class UserHobby(models.Model):
 
     def __str__(self):
         return f'Hobby: {self.title} for user: {self.user}'
+
+    def get_absolute_url(self):
+        return reverse('main:profile', kwargs={'profile_pk': 0})

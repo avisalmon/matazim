@@ -30,7 +30,12 @@
         <h3 >תחביבים:</h3>
           <div id="hobby_section">
             {% for hobby in profile.user.hobbies.all %}
-            <p class="hobby_item"><b>{{ hobby.title }}</b> {{ hobby.description|safe }}</p>
+            <p class="hobby_item">
+            {% if hobby.user == user %}
+              <a href={% url 'main:hobby_delete' hobby.pk %}><i class="far fa-trash-alt"></i></a>
+              <a href={% url 'main:hobby_edit' hobby.pk %}><i class="fas fa-edit"></i></a>
+            {% endif %}
+            <b>{{ hobby.title }}</b> {{ hobby.description|safe }}</p>
             {% endfor %}
           </div>
           {% if profile == user.profile %}
@@ -120,6 +125,7 @@ $(document).ready(function(){
             }
         })
     })
+    $(".hooby_item").find
 
   });
   </script>
