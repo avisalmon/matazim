@@ -66,7 +66,23 @@
       </div>
       <!-- Mid Col -->
       <div class="col-4 text-right">
-        {% include "learn/course_status_heb.html" %}
+        {% if profile.user == user %}
+          {% include "learn/course_status_heb.html" %}
+        {% else %}
+          <h2>קורסים שהושלמו :</h2>
+          {% for registration in profile.user.registrations.all  %}
+            {% if registration.complete_date %}
+              <h3><a href={% url 'learn:course_detail' registration.course.id %}>{{ registration.course.title }}</a> <i class="fas fa-trophy"></i></h3>
+            {% endif %}
+          {% endfor %}
+          <br>
+          <h4>קורסים נוספים בתהליך:</h4>
+            {% for registration in profile.user.registrations.all %}
+              {% if not registration.complete_date %}
+                <a href={% url 'learn:course_detail' registration.course.id %}><p>{{ registration.course.title }}</p></a>
+              {% endif %}
+            {% endfor %}
+        {% endif %}
       </div>
       <!-- Left Col -->
       <div class="col-4 border text-right">
