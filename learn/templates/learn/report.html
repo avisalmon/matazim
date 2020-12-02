@@ -6,7 +6,9 @@
 <h1>Status Report for Viki</h1>
 
 {% for profile in profiles %}
-  </p><u>{{ profile.user }}<b> {{ profile.user.first_name }} {{ profile.user.last_name }}</b></u></p>
+  <p><u>({{ profile.user }})
+    <a href={% url 'main:profile' profile.pk %}><b> {{ profile.user.first_name }} {{ profile.user.last_name }}</b></a>
+  </u></p>
 
     Email: {{ profile.user.email }}
     {% for registration in profile.user.registrations.all %}
