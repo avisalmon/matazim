@@ -18,6 +18,7 @@
           {% endif %}
         </h3>
         <i>שם משתמש: {{ profile.user }}<br></i>
+        <a href="mailto: {{ profile.user.email }}"><i>מייל: {{ profile.user.email }}<br></i></a>
         {% if profile.image %}
         <img src="{{ profile.image.url }}" alt="" height=100 >
         {% endif %}

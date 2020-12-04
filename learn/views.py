@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from .models import Course, Lesson, Registration, Completion
@@ -6,6 +7,7 @@ from main.models import Profile
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 import datetime
 from django.contrib.admin.views.decorators import staff_member_required
+import re
 
 def home(request):
     return render(request, 'learn/home.html')
@@ -148,6 +150,30 @@ def completion_done(request, pk):
     except:
         pass
     return redirect(completion)
+
+def scratch_post(request, completion_pk):
+    if request.method == 'GET':
+        try:
+            completion = Completion.objects.get(user=request.user, pk=completion_pk)
+            completion.challenge_link = request.GET.get('sc_text')
+            try:
+                regex = re.compile(r'.*scratch.mit.edu/projects/(\d+)')
+                match = regex.match(completion.challenge_link)
+            except:
+                pass
+            
+            if match:
+                completion.challenge_link = match.group(1)
+            else:
+                completion.challenge_link = ""
+
+            print(f'completion {completion}, {match.group(1)}, {completion.challenge_link}')
+            completion.save()
+        except:
+            pass
+
+    #return reverse('learn:completion_detail', kwargs={"pk": completion_pk})
+    return redirect('learn:completion_detail', pk=completion_pk)
 
 
 # def course_complete_message(request, registration_pk):

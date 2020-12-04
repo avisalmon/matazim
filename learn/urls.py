@@ -6,6 +6,7 @@ app_name='learn'
 urlpatterns = [
     path('', views.home,
          name='home'),
+         # *** Course ******
     path('course_list/',
          views.CourseListView.as_view(),
          name='course_list'),
@@ -19,14 +20,20 @@ urlpatterns = [
          views.course_unsign,
          name='course_unsign'),
     path('course/rate/<int:pk>/<int:rate>', views.courseRate, name='course_rate'),
+    # ****** Completion ********
     path('completion/<int:pk>',
          views.CompletionDetailView.as_view(),
          name='completion_detail'),
     path('completion/complete/<int:pk>',
          views.completion_done,
          name='completion_done'),
+    path('completion/scratch_task/<int:completion_pk>',
+         views.scratch_post,
+         name='scratch_post'),
     # path('course/complete_message/<int:registration_pk>',
     #      views.course_complete_message,
     #      name='course_complete_message'),
+
+    # *********** Reports *************
     path('report/', views.learnReport, name='learn_report'),
 ]

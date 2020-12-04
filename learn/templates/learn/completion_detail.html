@@ -159,13 +159,40 @@
             </a>
           </div>
           <div class="col-3 border border-info py-2 text-center">
+            {% if completion.test_completion %}
             <a href={% url 'learn:completion_done' completion.id %}>
               לשיעור הבא <i class="far fa-caret-square-left"></i>
             </a>
+            {% else %}
+              <p>יש לבצע משימה <i class="far fa-caret-square-left"></i></p>
+            {% endif %}
           </div>
           <div class="col-3"></div>
         </div>
         <br>
+        <!-- SCRATCH TASK: -->
+        {% if completion.lesson.challenge_type == 'SC' %}
+          {% if completion.test_completion %}
+            <h2>נפלא! בצעת את המשימה</h2>
+          {% else %}
+            <h2>יש לבצע משימה לפני מעבר לשיעור הבא:</h2>
+            <h5>עליך לשתף קישור לפרוייקט סקראץ לפי ההוראות</h5>
+          {% endif %}
+          {{ completion.lesson.challenge }}<br>
+          <br>
+          <form class="" action={% url 'learn:scratch_post' completion_pk=completion.pk %} method="GET">
+            <lable for="sc_text">  הדבק כאן  </lable>
+            <input type="text" id="sc_text" name="sc_text" value="">
+            <input type="submit" value="Submit">
+          </form>
+          <br>
+          {% if completion.test_completion %}
+            <iframe src="https://scratch.mit.edu/projects/{{ completion.challenge_link }}/embed" allowtransparency="true" width="482" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            <p><a href="https://scratch.mit.edu/projects/{{ completion.challenge_link }}">Link to the project</a>
+            </p>
+          {% endif %}
+        {% endif %}
+        <!-- END OF SCRATCH TASK -->
       </div>
 
 
