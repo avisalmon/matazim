@@ -91,6 +91,9 @@ def course_unsign(request, pk):
         course = Course.objects.get(pk=pk)
         registration = Registration.objects.get(user=request.user,
                                                course=course)
+        completions = Completion.objects.filter(lesson__course=course, user=request.user )
+        for completion in completions:
+            completion.delete()
     except:
         return redirect('home')
 
@@ -161,7 +164,7 @@ def scratch_post(request, completion_pk):
                 match = regex.match(completion.challenge_link)
             except:
                 pass
-            
+
             if match:
                 completion.challenge_link = match.group(1)
             else:
