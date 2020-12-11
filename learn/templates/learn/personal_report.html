@@ -19,10 +19,13 @@
         {% endif %}
         <p>{{ completion.lesson.title }}</p>
         <!-- Tasks -->
-        {% if completion.lesson.challenge_type != 'NO' %}
+        {% if completion.lesson.challenge_type != 'NO' and completion.completed %}
           <p>משימה: {{ completion.lesson.challenge| safe }}</p>
-          <iframe src="https://scratch.mit.edu/projects/{{ completion.challenge_link }}/embed" allowtransparency="true" width="482" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
-          <p><a href="https://scratch.mit.edu/projects/{{ completion.challenge_link }}">Link to the project</a>
+            <!--  SCRATCH TASK -->
+          {% if completion.lesson.challenge_type == 'SC' %}
+            <iframe src="https://scratch.mit.edu/projects/{{ completion.challenge_link }}/embed" allowtransparency="true" width="482" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            <p><a href="https://scratch.mit.edu/projects/{{ completion.challenge_link }}">Link to the project</a>
+          {% endif %}
         {% endif %}
 
         </div>
