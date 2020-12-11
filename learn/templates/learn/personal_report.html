@@ -1,0 +1,35 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <div class="container hebrew rtl text-right">
+
+    <h1>דוח התקדמות אישית של {{ report_user.first_name }} {{ report_user.last_name }} </h1>
+    <h3>אף אחד לא יכול לראות את הדוח הזה פרט אליך.  </h3>
+    <a href="#">רוצה לשתף? (לא עובד עדיין)</a>
+
+    <br>
+    <hr>
+    {% for registration in portfolio %}
+      <h2>{{ registration.registration.course.title }} -- ({{registration.registration.precentage}}%) </h2>
+      {% for completion in registration.completions %}
+        {% if completion.completed %}
+        <div class="font-weight-bold">
+        {% else %}
+        <div class="font-weight-light">
+        {% endif %}
+        <p>{{ completion.lesson.title }}</p>
+        <!-- Tasks -->
+        {% if completion.lesson.challenge_type != 'NO' %}
+          <p>משימה: {{ completion.lesson.challenge| safe }}</p>
+          <iframe src="https://scratch.mit.edu/projects/{{ completion.challenge_link }}/embed" allowtransparency="true" width="482" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
+          <p><a href="https://scratch.mit.edu/projects/{{ completion.challenge_link }}">Link to the project</a>
+        {% endif %}
+
+        </div>
+      {% endfor %}
+    {% endfor %}
+
+
+
+    </div>
+{% endblock %}

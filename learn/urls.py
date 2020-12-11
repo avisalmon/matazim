@@ -36,4 +36,5 @@ urlpatterns = [
 
     # *********** Reports *************
     path('report/', views.learnReport, name='learn_report'),
+    path('report/<int:pk>', views.personal_report, name='personal_report'),
 ]

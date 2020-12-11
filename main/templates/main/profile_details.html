@@ -68,8 +68,14 @@
       <!-- Mid Col -->
       <div class="col-4 text-right">
         {% if profile.user == user %}
+          <a href={% url 'learn:personal_report' profile.user.pk %}>למעקב מפורט</a>
+          <br><br>
           {% include "learn/course_status_heb.html" %}
         {% else %}
+          {% if user.is_staff %}
+          <a href={% url 'learn:personal_report' profile.user.pk %}>למעקב מפורט</a>
+          <br><br>
+          {% endif %}
           <h2>קורסים שהושלמו :</h2>
           {% for registration in profile.user.registrations.all  %}
             {% if registration.complete_date %}

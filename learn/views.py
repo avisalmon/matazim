@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 import datetime
 from django.contrib.admin.views.decorators import staff_member_required
 import re
+from django.contrib.auth import get_user_model
 
 def home(request):
     return render(request, 'learn/home.html')
@@ -193,6 +194,25 @@ def scratch_post(request, completion_pk):
 def learnReport(request):
     context = {}
     context['profiles'] = Profile.objects.all()
-    context['test'] = {'first': [0,1,'Hi There',3], 'second': 2}
-
     return render(request, 'learn/report.html', context)
+
+def personal_report(request, pk): #pk for user
+    user = get_user_model().objects.get(pk=pk)
+    if user == request.user or request.user.is_staff:
+        portfolio = [] # List --> dict {registration, [completions]}
+        registrations = Registration.objects.filter(user=user)
+        for registration in registrations:
+            item = {}
+            item['registration'] = registration
+
+            item['completions'] = Completion.objects.filter(lesson__in=registration.course.lessons.all(), user=user)
+            # build completion list for each registration
+            portfolio.append(item)
+
+        context = {}
+        context['registrations'] = registrations
+        context['portfolio'] = portfolio
+        context['report_user'] = user
+        return render(request, 'learn/personal_report.html', context)
+    else:
+        return redirect('home')
