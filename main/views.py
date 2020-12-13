@@ -153,6 +153,6 @@ class HobbyUpdateView(UpdateView):
     def dispatch(self, request, *args, **kwargs):
         """" Making sure that only owners can update """
         obj = self.get_object()
-        if obj.owner != self.request.user:
+        if obj.user != self.request.user:
             return redirect('programs:facilitator_list')
-        return super(FacilitatorUpdateView, self).dispatch(request, *args, **kwargs)
+        return super(HobbyUpdateView, self).dispatch(request, *args, **kwargs)

@@ -9,6 +9,8 @@ import datetime
 from django.contrib.admin.views.decorators import staff_member_required
 import re
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
+
 
 def home(request):
     return render(request, 'learn/home.html')
@@ -52,6 +54,7 @@ class CourseDetailView(DetailView):
         return context
 
 
+@login_required
 def courseSignView(request, pk):
     try:
         course = Course.objects.get(pk=pk)
