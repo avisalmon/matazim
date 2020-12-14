@@ -70,13 +70,15 @@
           </li> -->
           <li class="nav-item dropdown font-weight-light">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             Help development
+             תעזרו לנו בשיפור האתר
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <!-- <a class="dropdown-item" href=#>Learn</a> -->
               <a class="dropdown-item" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfdSveMs64-mPjxRccDCa0TKPQA3Kmcvn9LgtbiafIeYwsIjA/viewform?usp=sf_link">דווח על בעיה</a>
+              {% if user.is_staff %}
               <a class="dropdown-item" target="_blank" href="https://github.com/avisalmon/matazim">GitHub</a>
               <a class="dropdown-item" target="_blank" href="https://airtable.com/tblzIwe7Vwt9A0qfU/viwzPk0NFxxwqlBQd?blocks=show">Air table (staff only)</a>
+              {% endif %}
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">ליצירת קשר</a>
             </div>

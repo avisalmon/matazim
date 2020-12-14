@@ -182,16 +182,29 @@ def scratch_post(request, completion_pk):
     #return reverse('learn:completion_detail', kwargs={"pk": completion_pk})
     return redirect('learn:completion_detail', pk=completion_pk)
 
+def fusion_post(request, completion_pk):
+    if request.method == 'GET':
+        try:
+            completion = Completion.objects.get(user=request.user, pk=completion_pk)
+            completion.challenge_link = request.GET.get('sc_text')
+            try:
+                regex = re.compile(r'.*scratch.mit.edu/projects/(\d+)')
+                match = regex.match(completion.challenge_link)
+            except:
+                pass
 
-# def course_complete_message(request, registration_pk):
-#     try:
-#         registration = Registration.objects.get(pk=registration_pk)
-#     except:
-#         return redirect('home')
-#
-#     return render(request,
-#                   'learn/complete_message.html',
-#                   {'registration': registration })
+            if match:
+                completion.challenge_link = match.group(1)
+            else:
+                completion.challenge_link = ""
+
+            print(f'completion {completion}, {match.group(1)}, {completion.challenge_link}')
+            completion.save()
+        except:
+            pass
+
+    #return reverse('learn:completion_detail', kwargs={"pk": completion_pk})
+    return redirect('learn:completion_detail', pk=completion_pk)
 
 @staff_member_required
 def learnReport(request):

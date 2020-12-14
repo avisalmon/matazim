@@ -74,7 +74,7 @@
     <!-- end of col 1 -->
     <!-- start col 2 -->
     <div class="col">
-      <h2>Programs participating in this School:</h2>
+      <h2>תוכניות המשתתפות בבית ספר זה</h2>
       {% if user.is_authenticated and facilitator.owner == user %}
       <a href={% url 'programs:facilitator_add_program' facilitator.id %}>
       <button type="button" class="btn btn-primary">Add a Program</button>
