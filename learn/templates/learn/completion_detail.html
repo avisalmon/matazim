@@ -33,7 +33,7 @@
 
 <div class="row px-4">
   <div class="col-3">
-    <h2 class="text-center">אתם רשומים לקורס זה</h2>
+    <h2 class="text-center">קורס {{ completion.lesson.course.title }}</h2>
     <small>אתה רשום לקורס הזה. הנה רשימה השיעורים שעליך להשלים. אם המנעול פתוח, כבר השלמת את השיעור והוא נגיש לך לריענון. אם המנעול נעול, השלם את השיעורים לפי הסדר כדי לקבל גישה.</small>
     <hr>
     {% if completion.lesson.course.hebrew %}
@@ -117,7 +117,7 @@
 <!--  start of middle frame -->
   <div class="col border border-primary">
     <div class="{% if course.hebrew %}hebrew text-right{% endif %}">
-      <h1>{{ completion.lesson.course.title}} - {{ completion.lesson.title }}</h1>
+      <h1>{{ completion.lesson.display_title }}</h1>
       <!-- remove the bellow part later after you are sure -->
       <div class="row d-none">
         <div class="col-3"></div>
@@ -150,7 +150,7 @@
 
     <div class="text-center">
       <br><br>
-        <!-- <h3>עוד לא מימשנו משימות ומטלות. אז פשוט סמנו אם סיימתם:</h3> -->
+
         <div class="row">
           <div class="col-3"></div>
           <div class="col-3 border border-info py-2 text-center">
@@ -175,12 +175,14 @@
           {% if completion.test_completion %}
             <h2>נפלא! בצעת את המשימה</h2>
           {% else %}
-            <h2>יש לבצע משימה לפני מעבר לשיעור הבא:</h2>
-            <h5>עליך לשתף קישור לפרוייקט סקראץ לפי ההוראות
-            <a href="https://youtu.be/QOxkpy5pTvM" target="_blank">
-              <i class="far fa-question-circle"></i> <small>לחץ לסרטון הסבר...</small>
-            </a>
-            </h5>
+            <h2>יש לבצע משימה לפני מעבר לשיעור הבא
+              <span><h5>
+                <a href="https://youtu.be/QOxkpy5pTvM" target="_blank">
+                  <i class="far fa-question-circle"></i>
+                </a>
+              </h5></span>
+            </h2>
+
           {% endif %}
           {{ completion.lesson.challenge }}<br>
           <br>
@@ -203,12 +205,12 @@
           {% if completion.test_completion %}
             <h2>נפלא! בצעת את המשימה</h2>
           {% else %}
-            <h2>יש לבצע משימה לפני מעבר לשיעור הבא:</h2>
-            <h5>עליך לשתף פרוייקט פיוזן לפי ההוראת
-            <a href=# target="_blank">
-              <i class="far fa-question-circle"></i> <small>לחץ לסרטון הסבר...</small>
-            </a>
-            </h5>
+            <h2>יש לבצע משימה לפני מעבר לשיעור הבא
+                <a href="https://youtu.be/gkZDgiLTYr0" target="_blank">
+                  <i class="far fa-question-circle"></i> <small></small>
+                </a>
+            </h2>
+
           {% endif %}
           {{ completion.lesson.challenge }}<br>
           <br>

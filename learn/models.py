@@ -79,6 +79,17 @@ class Lesson(models.Model):
             self.youtube = match.group('id')
         super(Lesson, self).save(*args, **kwargs)
 
+    @property
+    def display_title(self):
+        ''' cleaning the title for display '''
+        display_title = self.title
+        regex = re.compile(r'\s*\d*\s*(.*)')
+        match = regex.match(self.title)
+        if match:
+            display_title = match.group(1)
+
+        return display_title
+
 class Completion(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
