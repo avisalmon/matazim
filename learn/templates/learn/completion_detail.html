@@ -199,29 +199,28 @@
         <!-- END OF SCRATCH TASK -->
 
         <!-- FUSION TASK: -->
-        {% if completion.lesson.challenge_type == 'SC' %}
+        {% if completion.lesson.challenge_type == 'FU' %}
           {% if completion.test_completion %}
             <h2>נפלא! בצעת את המשימה</h2>
           {% else %}
             <h2>יש לבצע משימה לפני מעבר לשיעור הבא:</h2>
-            <h5>עליך לשתף קישור לפרוייקט סקראץ לפי ההוראות
-            <a href="https://youtu.be/QOxkpy5pTvM" target="_blank">
+            <h5>עליך לשתף פרוייקט פיוזן לפי ההוראת
+            <a href=# target="_blank">
               <i class="far fa-question-circle"></i> <small>לחץ לסרטון הסבר...</small>
             </a>
             </h5>
           {% endif %}
           {{ completion.lesson.challenge }}<br>
           <br>
-          <form class="" action={% url 'learn:scratch_post' completion_pk=completion.pk %} method="GET">
+          <form class="" action={% url 'learn:fusion_post' completion_pk=completion.pk %} method="GET">
             <!-- <lable for="sc_text">  הדבק כאן  </lable> -->
-            <input type="text" placeholder="הדבק קישור כאן" id="sc_text" name="sc_text" value="">
+            <input type="text" placeholder="הדבק קישור כאן" id="in_text" name="in_text" value="">
             <input type="submit" class="btn {% if completion.test_completion %}btn-success{% else %}btn-warning{% endif %}" value="שלח">
           </form>
           <br>
           {% if completion.test_completion %}
-            <iframe src="https://scratch.mit.edu/projects/{{ completion.challenge_link }}/embed" allowtransparency="true" width="482" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
-            <p><a href="https://scratch.mit.edu/projects/{{ completion.challenge_link }}">Link to the project</a>
-            </p>
+            <!-- <iframe src="https://gmail1170223.autodesk360.com/shares/public/SH56a43QTfd62c1cd96801fc00de9e49373c?mode=embed" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe> -->
+            <iframe src="https://gmail1170223.autodesk360.com/shares/public/{{ completion.challenge_link }}?mode=embed" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe>
           {% endif %}
         {% endif %}
         <!-- END OF FUSION TASK -->

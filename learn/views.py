@@ -170,11 +170,12 @@ def scratch_post(request, completion_pk):
                 pass
 
             if match:
+                print(1)
                 completion.challenge_link = match.group(1)
             else:
+                print(2)
                 completion.challenge_link = ""
 
-            print(f'completion {completion}, {match.group(1)}, {completion.challenge_link}')
             completion.save()
         except:
             pass
@@ -186,9 +187,9 @@ def fusion_post(request, completion_pk):
     if request.method == 'GET':
         try:
             completion = Completion.objects.get(user=request.user, pk=completion_pk)
-            completion.challenge_link = request.GET.get('sc_text')
+            completion.challenge_link = request.GET.get('in_text')
             try:
-                regex = re.compile(r'.*scratch.mit.edu/projects/(\d+)')
+                regex = re.compile(r'.*autodesk360.com/shares/public/(.*)\?')
                 match = regex.match(completion.challenge_link)
             except:
                 pass
@@ -198,7 +199,6 @@ def fusion_post(request, completion_pk):
             else:
                 completion.challenge_link = ""
 
-            print(f'completion {completion}, {match.group(1)}, {completion.challenge_link}')
             completion.save()
         except:
             pass

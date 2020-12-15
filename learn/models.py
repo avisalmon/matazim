@@ -38,6 +38,8 @@ class Lesson(models.Model):
     YOUTUBE = 'YO'
     LINK = 'LI'
     TEXT = 'TX'
+    FUSION = 'FU'
+    TINKERCAD = 'TI'
     NOTHING = 'NO'
     TASK_TYPE = [
         (SCRATCH, 'Scratch project link'),
@@ -45,6 +47,8 @@ class Lesson(models.Model):
         (YOUTUBE, 'YouTube link'),
         (LINK, 'general link'),
         (TEXT, 'Text answer'),
+        (FUSION, 'Fusion 360 link'),
+        (TINKERCAD, 'TinkerCad link'),
         (NOTHING, 'No task requiered'),
     ]
 
@@ -101,7 +105,7 @@ class Completion(models.Model):
     def test_completion(self):
         ''' Test that challenge succesfuly posted'''
         # TBD code that tests passing this lesson.
-        if self.lesson.challenge_type == Lesson.SCRATCH:
+        if self.lesson.challenge_type != Lesson.NOTHING:
             if not self.challenge_link:
                 return False
 
