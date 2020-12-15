@@ -206,6 +206,29 @@ def fusion_post(request, completion_pk):
     #return reverse('learn:completion_detail', kwargs={"pk": completion_pk})
     return redirect('learn:completion_detail', pk=completion_pk)
 
+def tinkercad_post(request, completion_pk):
+    if request.method == 'GET':
+        try:
+            completion = Completion.objects.get(user=request.user, pk=completion_pk)
+            completion.challenge_link = request.GET.get('in_text')
+            try:
+                regex = re.compile(r'.*www.tinkercad.com/embed/(.*)\?')
+                match = regex.match(completion.challenge_link)
+            except:
+                pass
+
+            if match:
+                completion.challenge_link = match.group(1)
+            else:
+                completion.challenge_link = ""
+
+            completion.save()
+        except:
+            pass
+
+    #return reverse('learn:completion_detail', kwargs={"pk": completion_pk})
+    return redirect('learn:completion_detail', pk=completion_pk)
+
 @staff_member_required
 def learnReport(request):
     context = {}
