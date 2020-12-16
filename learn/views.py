@@ -164,7 +164,7 @@ def scratch_post(request, completion_pk):
             completion = Completion.objects.get(user=request.user, pk=completion_pk)
             completion.challenge_link = request.GET.get('sc_text')
             try:
-                regex = re.compile(r'.*scratch.mit.edu/projects/(\d+)')
+                regex = re.compile(r'.*scratch.mit.edu/projects/(\d+)/embed')
                 match = regex.match(completion.challenge_link)
             except:
                 pass
