@@ -19,10 +19,7 @@
     <div class="card-columns">
       {% for course in course_list.all %}
 
-
-
-
-      <div class="card">
+      <div class="card {% if not course.published and not user.is_staff %}d-none{% endif %}">
 
         {% if course.image %}
         <a href={% url 'learn:course_detail' course.id %}>
@@ -49,6 +46,9 @@
               {% endif %}
             {% endfor %}
             <h5 class="card-title{% if course.hebrew %} hebrew text-right{% endif %}">{{ course.title|safe }}</h5>
+            {% if not course.published and user.is_staff %}
+              <p>Staff message: This course is not published yet</p>
+            {% endif %}
           </a>
           <p class="card-text {% if course.hebrew %} hebrew text-right{% endif %}">{{ course.short_description|safe }}</p>
         </div>
