@@ -65,6 +65,7 @@ class Lesson(models.Model):
     challenge = HTMLField(max_length=5000, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
     members = models.ManyToManyField(get_user_model(), through='Completion')
+    note = HTMLField(default='Notes for this lesson:\n...')
 
     class Meta:
         ordering = ['title']
@@ -104,6 +105,8 @@ class Completion(models.Model):
                                           related_name='next_completion',
                                           null=True,
                                           on_delete=models.SET_NULL)
+    note = HTMLField(default='Notes for this lesson:')
+
 
     class Meta:
         unique_together = [['user', 'lesson']]

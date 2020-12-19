@@ -4,17 +4,26 @@
 {% block content %}
 
 
-<div class="container">
-  <h2 class="text-center">קורסים בשבילך</h2>
-  <!-- <h3 class="text-center hebrew">צא ולמד!</h3> -->
-  <p class="hebrew text-right">ברוכים הבאים לאתר הלמידה. כאן תמצאו קורסים שיעזרו לכם ללמוד תכנים טכנולוגיים מעשיים. הרשמו ולימדו. הקורסים מסודרים בצורה שתאפשר לכם להתקדם בקצב שלכם ולסמן כל שיעור שעברתם. לחלקם יש מטלות לביצוע לפני שעוברים לשיעור הבא. המערכת מבוססת על אמון, כלומר אם סימנתם שהקשבתם לשיעור אז אנחנו מאמינים לכם. בהצלחה. תהנו ותתנו משוב.</p>
-</div>
 <hr>
-<div class="row mb-5">
-    <div class="col-2 d-none d-sm-block hebrew text-right">
-      <!-- {% include "learn/course_status_heb.html" %} -->
+<div class="container">
+  <div class="row">
+    <div class="col-9 border border-primary">
+      <h2 class="text-center">קורסים בשבילך</h2>
+      <!-- <h3 class="text-center hebrew">צא ולמד!</h3> -->
+      <p class="hebrew text-right">ברוכים הבאים לאתר הלמידה. כאן תמצאו קורסים שיעזרו לכם ללמוד תכנים טכנולוגיים מעשיים. הרשמו ולימדו. הקורסים מסודרים בצורה שתאפשר לכם להתקדם בקצב שלכם ולסמן כל שיעור שעברתם. לחלקם יש מטלות לביצוע לפני שעוברים לשיעור הבא. המערכת מבוססת על אמון, כלומר אם סימנתם שהקשבתם לשיעור אז אנחנו מאמינים לכם. בהצלחה. תהנו ותתנו משוב.</p>
+
     </div>
-  <div class="col-sm-8 border bg-info pt-4">
+    <div class="col-3 border border-primary text-right">
+      <p>כאן יהיו סטטוסים שונים</p>
+
+    </div>
+  </div>
+
+<div class="row mb-5">
+    <!-- <div class="col-2 d-none d-sm-block hebrew text-right"> -->
+      <!-- {% include "learn/course_status_heb.html" %} -->
+    <!-- </div> -->
+  <div class="col-sm-9 border bg-info pt-4">
 
     <div class="card-columns">
       {% for course in course_list.all %}
@@ -58,11 +67,12 @@
     </div>
 
   </div>
-  <div class="col-2 d-none d-sm-block hebrew text-right px-5">
+  <div class="col-3 d-none d-sm-block hebrew text-right px-5 border border-primary">
     {% include "learn/course_status_heb.html" %}
   </div>
 
 </div>
 
+</div>
 
 {% endblock %}

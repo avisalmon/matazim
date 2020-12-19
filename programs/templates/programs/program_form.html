@@ -22,8 +22,8 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body hebrew">
-תוכלו לכתוב גם בעברית בצורה מיושרת לימין. הדרך הנוחה ביותר היא לכתוב כרצונכם בתוכנת דואר או בוורד מיושר לימין, ואז לגזור ולהעתיק לשדה בטופס.            </div>
+            <div class="modal-body hebrew text-right">
+  תוכלו לכתוב גם בעברית בצורה מיושרת לימין. הדרך הנוחה ביותר היא לכתוב כרצונכם בתוכנת דואר או בוורד מיושר לימין, ואז לגזור ולהעתיק לשדה בטופס.            </div>
 
           </div>
         </div>
@@ -35,7 +35,7 @@
 
 
 <div class="row d-flex justify-content-center">
-  <div class="col-sm-8 border border-primary bg-dark text-white rounded pb-2 px-3 pt-5">
+  <div class="col-sm-8 border border-primary rounded pb-2 px-3 pt-5">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
@@ -45,4 +45,6 @@
 </div>
 
 </div>
+
+
 {% endblock %}

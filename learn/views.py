@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import UpdateView
 from .models import Course, Lesson, Registration, Completion
 from main.models import Profile
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
@@ -67,6 +68,8 @@ def courseSignView(request, pk):
             user=request.user,
             lesson=lesson)
             #defaults={'birthday': date(1940, 10, 9)},
+        completion.note = lesson.note
+        completion.save()
 
     # asign pre conditions:
     for lesson in course.lessons.all():
@@ -255,3 +258,10 @@ def personal_report(request, pk): #pk for user
         return render(request, 'learn/personal_report.html', context)
     else:
         return redirect('home')
+
+
+class NoteUpdateView(UpdateView):
+    model = Completion
+    fields = ['note']
+    template_name = 'learn/note_update.html'
+    

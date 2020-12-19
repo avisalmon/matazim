@@ -20,6 +20,10 @@ urlpatterns = [
          views.course_unsign,
          name='course_unsign'),
     path('course/rate/<int:pk>/<int:rate>', views.courseRate, name='course_rate'),
+    # ****** Lesson ************
+    path('lesson/edit_note/<int:pk>',
+         views.NoteUpdateView.as_view(),
+         name='note_update'),
     # ****** Completion ********
     path('completion/<int:pk>',
          views.CompletionDetailView.as_view(),

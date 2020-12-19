@@ -2,12 +2,17 @@ from django.shortcuts import reverse
 from django.db import models
 from django.contrib.auth import get_user_model
 from tinymce.models import HTMLField
+# from django_quill.fields import QuillField
+from froala_editor.fields import FroalaField
 from main.models import Profile
 
 class Program(models.Model):
     name = models.CharField(max_length=50)
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    description = models.TextField(max_length=5000, blank=True)
+    #description = models.TextField(max_length=5000, blank=True)
+    description = HTMLField(max_length=5000, blank=True) # Using TinyMCE
+    #description = QuillField(max_length=5000, blank=True) #using Quill (uninstalled)
+    #description = FroalaField() # Froala
     short_description = models.CharField(max_length=60, blank=True)
     link = models.URLField(max_length=200, blank=True)
     image = models.ImageField(upload_to='programs/images/', blank=True)
