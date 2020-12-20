@@ -78,7 +78,7 @@
 
     </form>
     <p>
-      <a href="{% url 'signup' %}"> or sign up</a>
+      <a href="{% url 'signup' %}?next={{ request.GET.next }}"> or sign up</a>
     </p>
     </div>
   </div>

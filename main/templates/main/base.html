@@ -70,22 +70,11 @@
               <a class="dropdown-item" href="#">Connect us</a>
             </div>
           </li> -->
-          <li class="nav-item dropdown font-weight-light">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             תעזרו לנו בשיפור האתר
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <!-- <a class="dropdown-item" href=#>Learn</a> -->
-              <a class="dropdown-item" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfdSveMs64-mPjxRccDCa0TKPQA3Kmcvn9LgtbiafIeYwsIjA/viewform?usp=sf_link">דווח על בעיה</a>
-              {% if user.is_staff %}
-              <a class="dropdown-item" target="_blank" href="https://github.com/avisalmon/matazim">GitHub</a>
-              <a class="dropdown-item" target="_blank" href="https://airtable.com/tblzIwe7Vwt9A0qfU/viwzPk0NFxxwqlBQd?blocks=show">Air table (staff only)</a>
-              <a class="dropdown-item" target="_blank" href={% url 'learn:learn_report' %}>Students report (staff only)</a>
-              {% endif %}
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">ליצירת קשר</a>
-            </div>
-          </li>
+          <!-- DELETED FULL DROPDOWN SECTION -->
+
+          <!-- You can recreate it from the main page footer -->
+
+          <!-- END OF DELETED SECTION -->
         </ul>
       </div>
     </div>
@@ -95,7 +84,7 @@
       &nbsp &nbsp
       {% if user.is_authenticated %}
         <a class="text-white" href={% url 'logout' %}><i class="fas fa-sign-out-alt" data-toggle="tooltip" data-placement="top" title="התנתק"></i></a>&nbsp &nbsp
-        <a class="text-white" href={% url 'main:profile' user.profile.pk %}><i class="fas fa-user" data-toggle="tooltip" data-placement="top" title="{{ user.first_name }} {{ user.last_name}} ({{ user.username }})"></i></a>
+        <a class="text-white" href={% url 'main:profile' user.profile.pk %}><i class="fas fa-user" data-toggle="tooltip" data-placement="top" title="קישור לדף הפרופיל האישי"></i></a>
         &nbsp {{ user.first_name }} {{ user.last_name }}
       {% else %}
       <a class="text-white" href={% url 'signup' %}><i class="fas fa-user-plus" data-toggle="tooltip" data-placement="top" title="הרשם"></i></a>&nbsp &nbsp

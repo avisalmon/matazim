@@ -30,18 +30,28 @@
 <p class="text-center">Have user/password? <a href="{% url 'login' %}">Login</a></p>
     </div>
     </div>
-    </div>
     <br><br><hr>
-<p class="text-center">-- OR --</p>
-  <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign up</button>
-  </form>
-  <br>
-  <br>
-  <br>
+    <h2 class="text-center">-- OR --</h2>
+  <div class="row ">
+    <div class="col-3"></div>
+    <div class="col-6 border border-primary">
+      <h2 class="text-center">Sign up</h2><br>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if request.GET.next %}
+          <input type="hidden" name="next" value="{{ request.GET.next }}">
+        {% endif %}
+        <button type="submit">Sign up</button>
+      </form>
+      <br>
+      <br>
+      <br>
 
+    </div>
+    <div class="col-4"></div>
+  </div>
+
+</div>
 
 {% endblock %}

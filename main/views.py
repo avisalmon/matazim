@@ -40,6 +40,9 @@ def signup(request):
             print(f'Login 0 - {user}')
             login(request, user)
             print('Login 1')
+            if request.GET.get('next'):
+                print('Got into get')
+                print(request.GET.get('next'))
             return redirect('home')
 
         else:
