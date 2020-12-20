@@ -81,6 +81,9 @@ class Lesson(models.Model):
             self.youtube = match.group('id')
         super(Lesson, self).save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse('learn:course_update', kwargs={'pk': self.course.pk})
+
     @property
     def display_title(self):
         ''' cleaning the title for display '''

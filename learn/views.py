@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, CreateView
 from .models import Course, Lesson, Registration, Completion
 from main.models import Profile
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
@@ -11,6 +11,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 import re
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from .forms import LessonUpdateForm
 
 
 def home(request):
@@ -92,7 +93,7 @@ def courseSignView(request, pk):
     print('redirecting to course')
     return redirect(course)
 
-
+@login_required
 def course_unsign(request, pk):
     try:
         course = Course.objects.get(pk=pk)
@@ -107,6 +108,7 @@ def course_unsign(request, pk):
     registration.delete()
     return redirect('learn:course_list')
 
+@login_required
 def courseRate(request, pk, rate):
     try:
         course = Course.objects.get(pk=pk)
@@ -122,7 +124,7 @@ def courseRate(request, pk, rate):
         return redirect('learn:course_detail', pk=pk)
 
 
-class CompletionDetailView(DetailView):
+class CompletionDetailView(LoginRequiredMixin, DetailView):
     model=Completion
 
     def get_context_data(self, **kwargs):
@@ -144,7 +146,26 @@ class CompletionDetailView(DetailView):
         context['registration'] = registration
         return context
 
+class CourseCreateView(LoginRequiredMixin, CreateView):
+    model = Course
+    fields = ['title', 'short_description',
+              'description', 'image', 'predecessor',
+              'youtube']
 
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.owner = self.request.user
+        obj.save()
+        return super().form_valid(form)
+
+class CourseUpdateView(LoginRequiredMixin, UpdateView):
+    model = Course
+    fields = ['title', 'short_description',
+              'description', 'image', 'predecessor',
+              'youtube']
+    template_name = 'learn/course_update.html'
+
+@login_required
 def completion_done(request, pk):
     try:
         completion = Completion.objects.get(pk=pk)
@@ -161,6 +182,7 @@ def completion_done(request, pk):
         pass
     return redirect(completion)
 
+@login_required
 def scratch_post(request, completion_pk):
     if request.method == 'GET':
         try:
@@ -186,6 +208,7 @@ def scratch_post(request, completion_pk):
     #return reverse('learn:completion_detail', kwargs={"pk": completion_pk})
     return redirect('learn:completion_detail', pk=completion_pk)
 
+@login_required
 def fusion_post(request, completion_pk):
     if request.method == 'GET':
         try:
@@ -209,6 +232,7 @@ def fusion_post(request, completion_pk):
     #return reverse('learn:completion_detail', kwargs={"pk": completion_pk})
     return redirect('learn:completion_detail', pk=completion_pk)
 
+@login_required
 def tinkercad_post(request, completion_pk):
     if request.method == 'GET':
         try:
@@ -238,6 +262,7 @@ def learnReport(request):
     context['profiles'] = Profile.objects.all()
     return render(request, 'learn/report.html', context)
 
+@login_required
 def personal_report(request, pk): #pk for user
     user = get_user_model().objects.get(pk=pk)
     if user == request.user or request.user.is_staff:
@@ -260,8 +285,25 @@ def personal_report(request, pk): #pk for user
         return redirect('home')
 
 
-class NoteUpdateView(UpdateView):
+class NoteUpdateView(LoginRequiredMixin, UpdateView):
     model = Completion
     fields = ['note']
     template_name = 'learn/note_update.html'
-    
+
+class lessonCreateView(LoginRequiredMixin, CreateView):
+    model = Lesson
+    # fields = ['title', 'description', 'pre_lesson', 'youtube',
+    #           'challenge_type', 'challenge', 'note']
+    form_class = LessonUpdateForm
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        course = Course.objects.get(pk=self.kwargs['course_pk'])
+        print(course)
+        obj.course = course
+        obj.save()
+        return super().form_valid(form)
+
+class LessonUpdateView(LoginRequiredMixin, UpdateView):
+    model = Lesson
+    form_class = LessonUpdateForm

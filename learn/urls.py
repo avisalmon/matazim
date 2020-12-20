@@ -10,6 +10,12 @@ urlpatterns = [
     path('course_list/',
          views.CourseListView.as_view(),
          name='course_list'),
+    path('course/create/',
+         views.CourseCreateView.as_view(),
+         name='course_create'),
+    path('course/admin/<int:pk>',
+         views.CourseUpdateView.as_view(),
+         name='course_update'),
     path('course/<int:pk>',
          views.CourseDetailView.as_view(),
          name='course_detail'),
@@ -20,11 +26,21 @@ urlpatterns = [
          views.course_unsign,
          name='course_unsign'),
     path('course/rate/<int:pk>/<int:rate>', views.courseRate, name='course_rate'),
+
     # ****** Lesson ************
-    path('lesson/edit_note/<int:pk>',
-         views.NoteUpdateView.as_view(),
-         name='note_update'),
+    path('lesson/create/<int:course_pk>',
+         views.lessonCreateView.as_view(),
+         name='lesson_create'),
+    # Todo Lesson update
+    path('lesson/update/<int:pk>',
+         views.LessonUpdateView.as_view(),
+         name='lesson_update'),
+    # Todo Lesson delete
+
     # ****** Completion ********
+    path('completion/edit_note/<int:pk>',
+    views.NoteUpdateView.as_view(),
+    name='note_update'),
     path('completion/<int:pk>',
          views.CompletionDetailView.as_view(),
          name='completion_detail'),

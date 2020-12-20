@@ -145,7 +145,7 @@ class HobbyDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('main:profile', kwargs={'profile_pk': 0})
 
 
-class HobbyUpdateView(UpdateView):
+class HobbyUpdateView(LoginRequiredMixin, UpdateView):
     model = UserHobby
     fields = ['title', 'description']
     template_name_suffix = '_update_form'

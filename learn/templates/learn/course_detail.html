@@ -122,10 +122,12 @@
 
   <div class="col border border-info px-5 pb-3">
     <div class="{% if course.hebrew %}hebrew text-right{% endif %}">
-      <h1>{{ course.title}} - דף פתיחה
-      {% if user.is_authenticated %}
-
-      {% else %}
+      <h1>
+        {% if course.owner == user %}
+          <a href={% url 'learn:course_update' course.pk %}><i class="fas fa-edit"></i></a>
+        {% endif %}
+        {{ course.title}} - דף פתיחה
+      {% if not user.is_authenticated %}
         <a class="btn btn-info" href={% url 'login' %}>התחבר כדי להרשם</a>
       {% endif %}
       </h1>
@@ -152,7 +154,7 @@
         <div class="col-2"></div>
       </div>
 
-      <p>{{ course.description }}</p>
+      <p>{{ course.description|safe }}</p>
     </div>
 
     <div class="row justify-content-center">

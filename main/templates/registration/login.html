@@ -68,6 +68,9 @@
       <div class="control-group">
         <div class="d-block ">
           <div class="controls border">
+            {% if request.GET.next %}
+              <input type="hidden" name="next" value="{{ request.GET.next }}">
+            {% endif %}
             <button type="submit" class="btn btn-success btn-block">Login</button>
           </div>
         </div>

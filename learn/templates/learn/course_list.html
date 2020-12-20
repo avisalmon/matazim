@@ -14,6 +14,7 @@
 
     </div>
     <div class="col-3 border border-primary text-right">
+      <p><a href={% url 'learn:course_create' %}>בנה את הקורס שלך</a></p>
       <p>כאן יהיו סטטוסים שונים</p>
 
     </div>
@@ -45,6 +46,9 @@
         </a>
         {% endif %}
         <div class="card-body">
+          {% if course.owner == user %}
+          <a href={% url 'learn:course_update' course.pk %}><i class="fas fa-edit"></i></a>
+          {% endif %}
           <a href={% url 'learn:course_detail' course.id %}>
             <!-- This block will identify the last competion to send the user to -->
             {% for registration in courses_registered %}
