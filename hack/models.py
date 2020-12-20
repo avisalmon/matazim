@@ -10,7 +10,7 @@ class Hack(models.Model):
     title = models.CharField(max_length=50)
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     short_description = models.TextField(max_length=150, blank=True)
-    description = HTMLField(max_length=5000, blank=True)
+    description = models.TextField(max_length=5000, blank=True)
     image = models.ImageField(upload_to='hack/images/', blank=True)
     youtube = models.CharField(max_length=200, blank=True)
 
@@ -33,7 +33,7 @@ class Team(models.Model):
     hack = models.ForeignKey(Hack, on_delete=models.CASCADE, related_name='teams')
     title = models.CharField(max_length=50)
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    description = HTMLField(max_length=5000, blank=True)
+    description = models.TextField(max_length=5000, blank=True)
     image = models.ImageField(upload_to='hack/images/', blank=True)
     youtube = models.CharField(max_length=200, blank=True)
     result = models.URLField(max_length=250, blank=True)

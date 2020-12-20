@@ -11,7 +11,7 @@ class Course(models.Model):
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     short_description = models.TextField(max_length=150, blank=True)
     hebrew = models.BooleanField(default=True)
-    description = HTMLField(max_length=5000, blank=True)
+    description = models.TextField(max_length=5000, blank=True)
     image = models.ImageField(upload_to='learn/images/', blank=True)
     predecessor = models.ManyToManyField("self", blank=True, symmetrical=False)
     youtube = models.CharField(max_length=200, blank=True)
@@ -54,7 +54,7 @@ class Lesson(models.Model):
     ]
 
     title = models.CharField(max_length=100)
-    description = HTMLField(max_length=5000, blank=True)
+    description = models.TextField(max_length=5000, blank=True)
     pre_lesson = models.OneToOneField('self',
                                       blank=True,
                                       related_name='next_lesson',
@@ -62,10 +62,10 @@ class Lesson(models.Model):
                                       on_delete=models.SET_NULL)
     youtube = models.CharField(max_length=200, blank=True)
     challenge_type = models.CharField(max_length=2, choices=TASK_TYPE, default=NOTHING)
-    challenge = HTMLField(max_length=5000, blank=True)
+    challenge = models.TextField(max_length=5000, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
     members = models.ManyToManyField(get_user_model(), through='Completion')
-    note = HTMLField(default='Notes for this lesson:\n...')
+    note = models.TextField(default='Notes for this lesson:\n...')
 
     class Meta:
         ordering = ['title']
@@ -102,13 +102,13 @@ class Completion(models.Model):
     completed = models.DateField(null=True, blank=True)
     challenge_answer = models.CharField(max_length=200, blank=True)
     challenge_link = models.CharField(max_length=300, blank=True)
-    notes = HTMLField(max_length=10000, blank=True)
+    notes = models.TextField(max_length=10000, blank=True)
     pre_completion = models.OneToOneField('self',
                                           blank=True,
                                           related_name='next_completion',
                                           null=True,
                                           on_delete=models.SET_NULL)
-    note = HTMLField(default='Notes for this lesson:')
+    note = models.TextField(default='Notes for this lesson:')
 
 
     class Meta:
@@ -140,7 +140,7 @@ class Registration(models.Model):
     start_date = models.DateField(auto_now_add=True)
     complete_date = models.DateField(blank=True, null=True)
     stars = models.IntegerField(default=0)
-    comments = HTMLField(blank=True)
+    comments = models.TextField(blank=True)
 
     class Meta:
         unique_together = [['user', 'course']]

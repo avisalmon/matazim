@@ -10,7 +10,7 @@ class Program(models.Model):
     name = models.CharField(max_length=50)
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     #description = models.TextField(max_length=5000, blank=True)
-    description = HTMLField(max_length=5000, blank=True) # Using TinyMCE
+    description = models.TextField(max_length=5000, blank=True) # Using TinyMCE
     #description = QuillField(max_length=5000, blank=True) #using Quill (uninstalled)
     #description = FroalaField() # Froala
     short_description = models.CharField(max_length=60, blank=True)
