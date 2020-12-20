@@ -1,7 +1,7 @@
 from django.db import models
 from django.shortcuts import reverse
 from django.contrib.auth import get_user_model
-from tinymce.models import HTMLField
+#from tinymce.models import HTMLField
 import re
 import datetime
 

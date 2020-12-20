@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
-from tinymce.models import HTMLField
+#from tinymce.models import HTMLField
 from django.shortcuts import reverse
 
 BIO_MAX_LENGTH = 12800
@@ -21,7 +21,7 @@ FIELD_DECIMAL_PLACES = 8
 
 class Profile(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
-    bio = HTMLField(max_length=500, blank=True)
+    bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True, help_text="Please use the following format: <em>YYYY-MM-DD</em>.")
     image = models.ImageField(upload_to='main/images/', blank=True, null=True)

@@ -1,7 +1,7 @@
 from django.shortcuts import reverse
 from django.db import models
 from django.contrib.auth import get_user_model
-from tinymce.models import HTMLField
+#from tinymce.models import HTMLField
 # from django_quill.fields import QuillField
 from froala_editor.fields import FroalaField
 from main.models import Profile
