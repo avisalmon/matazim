@@ -38,9 +38,9 @@ urlpatterns = [
     # Todo Lesson delete
 
     # ****** Completion ********
-    path('completion/edit_note/<int:pk>',
-    views.NoteUpdateView.as_view(),
-    name='note_update'),
+    # path('completion/edit_note/<int:pk>',
+    # views.NoteUpdateView.as_view(),
+    # name='note_update'),
     path('completion/<int:pk>',
          views.CompletionDetailView.as_view(),
          name='completion_detail'),

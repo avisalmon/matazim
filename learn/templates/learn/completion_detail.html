@@ -136,8 +136,8 @@
               <h5 class="modal-title" id="noteModalLabel">Notes</h5>
             </div>
             <div class="modal-body">
-              <p>{{ completion.note|safe }}</p>
-              <p><a href={% url 'learn:note_update' completion.pk %}>Edit and add your own notes</a></p>
+              <p>{ completion.note|safe } </p>
+              <!-- <p><a href= url 'learn:note_update' completion.pk >Edit and add your own notes</a></p> -->
             </div>
           </div>
         </div>

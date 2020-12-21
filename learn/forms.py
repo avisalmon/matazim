@@ -9,7 +9,7 @@ class LessonUpdateForm(forms.ModelForm):
     class Meta:
         model = Lesson
         fields = ['title', 'description', 'pre_lesson', 'youtube',
-                  'challenge_type', 'challenge', 'note']
+                  'challenge_type', 'challenge']
 
     def __init__(self, *args, **kwargs):
         super(LessonUpdateForm, self).__init__(*args, **kwargs)

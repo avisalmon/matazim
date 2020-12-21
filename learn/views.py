@@ -69,7 +69,7 @@ def courseSignView(request, pk):
             user=request.user,
             lesson=lesson)
             #defaults={'birthday': date(1940, 10, 9)},
-        completion.note = lesson.note
+        #completion.note = lesson.note
         completion.save()
 
     # asign pre conditions:
@@ -285,10 +285,10 @@ def personal_report(request, pk): #pk for user
         return redirect('home')
 
 
-class NoteUpdateView(LoginRequiredMixin, UpdateView):
-    model = Completion
-    fields = ['note']
-    template_name = 'learn/note_update.html'
+# class NoteUpdateView(LoginRequiredMixin, UpdateView):
+#     model = Completion
+#     fields = ['note']
+#     template_name = 'learn/note_update.html'
 
 class lessonCreateView(LoginRequiredMixin, CreateView):
     model = Lesson
