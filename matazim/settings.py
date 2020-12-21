@@ -200,9 +200,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 try:
     from .local_settings import *
 except ImportError:
-    print('Seems like there is no local_srtting.py')
+    pass
+    #print('Seems like there is no local_srtting.py')
 
 try:
     from .server_settings import *
 except ImportError:
-    print('Seems like there is no server_srtting.py')
+    #print('Seems like there is no server_srtting.py')
+    pass
