@@ -109,7 +109,7 @@
             </ul>
           {% else %}
             <p>כאן תוכל להרשם לקורס זה ולצפות בכל השיעורים. אבל צריך להרשם לאתר בשביל זה</p>
-            <a href={% url 'login' %} class="btn btn-info">התחבר</a>
+            <a href="{% url 'login' %}?next=/learn/course/{{ course.id }}" class="btn btn-info">התחבר</a>
           {% endif %}
 
         {% endif %}
