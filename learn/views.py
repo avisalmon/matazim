@@ -285,10 +285,10 @@ def personal_report(request, pk): #pk for user
         return redirect('home')
 
 
-# class NoteUpdateView(LoginRequiredMixin, UpdateView):
-#     model = Completion
-#     fields = ['note']
-#     template_name = 'learn/note_update.html'
+class NoteUpdateView(LoginRequiredMixin, UpdateView):
+    model = Completion
+    fields = ['note']
+    template_name = 'learn/note_update.html'
 
 class lessonCreateView(LoginRequiredMixin, CreateView):
     model = Lesson

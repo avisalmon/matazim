@@ -65,7 +65,7 @@ class Lesson(models.Model):
     challenge = models.TextField(max_length=5000, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
     members = models.ManyToManyField(get_user_model(), through='Completion')
-    #note = models.TextField(default='Notes for this lesson:\n...')
+    note = models.TextField(default='Notes for this lesson:\n\nYou can write your own notes here...')
 
     class Meta:
         ordering = ['title']
@@ -108,7 +108,7 @@ class Completion(models.Model):
                                           related_name='next_completion',
                                           null=True,
                                           on_delete=models.SET_NULL)
-    #note = models.TextField(default='Notes for this lesson:')
+    note = models.TextField(default='Notes for this lesson:')
 
 
     class Meta:
