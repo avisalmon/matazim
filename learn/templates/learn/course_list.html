@@ -2,81 +2,79 @@
 {% load static %}
 
 {% block content %}
+<div class="container ">
 
+  <div class="row border border-primary border-top-0">
+    <!-- This is Left Column -->
+    <div class="col-9 ">
+      <div class="bg-white sticky-offset ">
+          <h2 class="text-center">קורסים בשבילך</h2>
+          <!-- <h3 class="text-center hebrew">צא ולמד!</h3> -->
+          <p class="hebrew text-right">ברוכים הבאים לאתר הלמידה. כאן תמצאו קורסים שיעזרו לכם ללמוד תכנים טכנולוגיים מעשיים. הרשמו ולימדו. הקורסים מסודרים בצורה שתאפשר לכם להתקדם בקצב שלכם ולסמן כל שיעור שעברתם. לחלקם יש מטלות לביצוע לפני שעוברים לשיעור הבא. המערכת מבוססת על אמון, כלומר אם סימנתם שהקשבתם לשיעור אז אנחנו מאמינים לכם. בהצלחה. תהנו ותתנו משוב.</p>
+        </div>
 
-<hr>
-<div class="container">
-  <div class="row">
-    <div class="col-9 border border-primary">
-      <h2 class="text-center">קורסים בשבילך</h2>
-      <!-- <h3 class="text-center hebrew">צא ולמד!</h3> -->
-      <p class="hebrew text-right">ברוכים הבאים לאתר הלמידה. כאן תמצאו קורסים שיעזרו לכם ללמוד תכנים טכנולוגיים מעשיים. הרשמו ולימדו. הקורסים מסודרים בצורה שתאפשר לכם להתקדם בקצב שלכם ולסמן כל שיעור שעברתם. לחלקם יש מטלות לביצוע לפני שעוברים לשיעור הבא. המערכת מבוססת על אמון, כלומר אם סימנתם שהקשבתם לשיעור אז אנחנו מאמינים לכם. בהצלחה. תהנו ותתנו משוב.</p>
+        <div class="card-columns">
+          {% for course in course_list.all %}
 
-    </div>
-    <div class="col-3 border border-primary text-right">
-      <p><a href={% url 'learn:course_create' %}>בנה את הקורס שלך</a></p>
-      <p>כאן יהיו סטטוסים שונים</p>
+          <div class="card border border-primary rounded {% if not course.published and not user.is_staff %}d-none{% endif %}">
 
-    </div>
-  </div>
+            {% if course.image %}
+            <a href={% url 'learn:course_detail' course.id %}>
+              <!-- This block will identify the last competion to send the user to -->
+              {% for registration in courses_registered %}
+                {% if registration.course == course %}
+                  {% if registration.last_completion %}
+                    <a href={% url 'learn:completion_detail' registration.last_completion.id %}>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
 
-<div class="row mb-5">
-    <!-- <div class="col-2 d-none d-sm-block hebrew text-right"> -->
-      <!-- {% include "learn/course_status_heb.html" %} -->
-    <!-- </div> -->
-  <div class="col-sm-9 border bg-info pt-4">
-
-    <div class="card-columns">
-      {% for course in course_list.all %}
-
-      <div class="card {% if not course.published and not user.is_staff %}d-none{% endif %}">
-
-        {% if course.image %}
-        <a href={% url 'learn:course_detail' course.id %}>
-          <!-- This block will identify the last competion to send the user to -->
-          {% for registration in courses_registered %}
-            {% if registration.course == course %}
-              {% if registration.last_completion %}
-                <a href={% url 'learn:completion_detail' registration.last_completion.id %}>
-              {% endif %}
+            <img class="card-img-top p-3" src={{ course.image.url }} alt="image">
+            </a>
             {% endif %}
+            <div class="card-body">
+              {% if course.owner == user %}
+              <a href={% url 'learn:course_update' course.pk %}><i class="fas fa-edit"></i></a>
+              {% endif %}
+              <a href={% url 'learn:course_detail' course.id %}>
+                <!-- This block will identify the last competion to send the user to -->
+                {% for registration in courses_registered %}
+                  {% if registration.course == course %}
+                    {% if registration.last_completion %}
+                      <a href={% url 'learn:completion_detail' registration.last_completion.id %}>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+                <h5 class="card-title{% if course.hebrew %} hebrew text-right{% endif %}">{{ course.title|safe }}</h5>
+                {% if not course.published and user.is_staff %}
+                  <p>Staff message: This course is not published yet</p>
+                {% endif %}
+              </a>
+              <p class="card-text {% if course.hebrew %} hebrew text-right{% endif %}">{{ course.short_description|safe }}</p>
+            </div>
+          </div>
           {% endfor %}
 
-        <img class="card-img-top p-3" src={{ course.image.url }} alt="image">
-        </a>
-        {% endif %}
-        <div class="card-body">
-          {% if course.owner == user %}
-          <a href={% url 'learn:course_update' course.pk %}><i class="fas fa-edit"></i></a>
-          {% endif %}
-          <a href={% url 'learn:course_detail' course.id %}>
-            <!-- This block will identify the last competion to send the user to -->
-            {% for registration in courses_registered %}
-              {% if registration.course == course %}
-                {% if registration.last_completion %}
-                  <a href={% url 'learn:completion_detail' registration.last_completion.id %}>
-                {% endif %}
-              {% endif %}
-            {% endfor %}
-            <h5 class="card-title{% if course.hebrew %} hebrew text-right{% endif %}">{{ course.title|safe }}</h5>
-            {% if not course.published and user.is_staff %}
-              <p>Staff message: This course is not published yet</p>
-            {% endif %}
-          </a>
-          <p class="card-text {% if course.hebrew %} hebrew text-right{% endif %}">{{ course.short_description|safe }}</p>
         </div>
-      </div>
-      {% endfor %}
 
     </div>
+    <!-- This is Right Column -->
+      <div class="col-3 border border-primary border-top-0 bg-white">
+        <div class="sticky-offset text-right rtl">
+        <p><a href={% url 'learn:course_create' %}>בנה את הקורס שלך</a></p>
+        <p>כאן יהיו סטטוסים שונים</p>
 
-  </div>
-  <div class="col-3 d-none d-sm-block hebrew text-right px-5 border border-primary">
-    {% include "learn/course_status_heb.html" %}
+        <div class="d-none d-sm-block hebrew text-right">
+          {% include "learn/course_status_heb.html" %}
+        </div>
+
+        </div>
+      </div>
+
+
   </div>
 
 </div>
 
-</div>
 
 {% endblock %}

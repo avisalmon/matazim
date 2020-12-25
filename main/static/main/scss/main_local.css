@@ -1,0 +1,88 @@
+.navbar .nav-item {
+  font-size: 1.2rem; }
+.navbar .nav-link:hover {
+  transition: border 0.2s;
+  border-bottom: 1px solid white; }
+
+#homeCards .card-img-top {
+  width: 100%;
+  height: 100%; }
+#homeCards .card-text {
+  font-size: 0.8rem; }
+
+#programList img {
+  height: 100px; }
+#programList .card-body {
+  height: 150px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
+
+.hebrew {
+  direction: rtl; }
+
+@media (max-width: 768px) {
+  .navbar {
+    background: #1f1f1f; }
+    .navbar .nav-link:hover {
+      border-bottom: none; }
+
+  #mainJumbo h1 {
+    font-size: 2rem; } }
+.sidenav {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 80px;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px; }
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block; }
+  .sidenav a:hover {
+    color: #f1f1f1; }
+
+.mainArea {
+  margin-left: 160px;
+  /* Same as the width of the sidenav */
+  padding: 0px 10px;
+  top: 80px; }
+  @media (max-width: 576px) {
+    .mainArea {
+      margin-left: 0; } }
+
+.sidenav-lesson {
+  height: 100%;
+  width: 500px;
+  position: fixed;
+  z-index: 1;
+  top: 60px;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px; }
+  .sidenav-lesson a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block; }
+  .sidenav-lesson a:hover {
+    color: #f1f1f1; }
+
+.lesson-item {
+  background-color: DarkGrey;
+  color: FloralWhite;
+  border: 1px solid Gainsboro; }
+
+.sticky-offset {
+  top: 67px;
+  position: sticky;
+  z-index: 1; }
+
+/*# sourceMappingURL=main_local.css.map */

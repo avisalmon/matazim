@@ -7874,4 +7874,9 @@ a.text-dark:hover, a.text-dark:focus {
   color: FloralWhite;
   border: 1px solid Gainsboro; }
 
+.sticky-offset {
+  top: 67px;
+  position: sticky;
+  z-index: 1; }
+
 /*# sourceMappingURL=site_custom.css.map */
