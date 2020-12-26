@@ -111,17 +111,19 @@ def course_unsign(request, pk):
 
 @login_required
 def courseRate(request, pk, rate):
+    next = request.GET.get('next')
     try:
         course = Course.objects.get(pk=pk)
         registration = Registration.objects.get(user=request.user,
                                                 course=course)
-        print('Hi')
         if rate in range(6):
             registration.stars = rate
             registration.save()
-        return redirect('learn:course_detail', pk=pk)
+        if next:
+            return redirect(next)
+        else:
+            return redirect('learn:course_detail', pk=pk)
     except:
-        print('Whoo')
         return redirect('learn:course_detail', pk=pk)
 
 
