@@ -88,7 +88,8 @@ class Lesson(models.Model):
     def display_title(self):
         ''' cleaning the title for display '''
         display_title = self.title
-        regex = re.compile(r'\s*\d*\s*(.*)')
+        #regex = re.compile(r'\s*\d*\s*(.*)')
+        regex = re.compile(r'[\s\d\-\.]*(.*)')
         match = regex.match(self.title)
         if match:
             display_title = match.group(1)
