@@ -77,9 +77,9 @@
                     <!-- Title -->
                     <div class="col-8 text-truncate">
                       {% if other_completion.pre_completion.completed or not other_completion.pre_completion %}
-                        <a class="text-white" href={% url 'learn:completion_detail' other_completion.id %}>{{ other_completion.lesson.title }}</a>
+                        <a class="text-white" href={% url 'learn:completion_detail' other_completion.id %}>{{ other_completion.lesson.display_title }}</a>
                       {% else %}
-                        <span class="text-muted">{{ other_completion.lesson.title }}</span>
+                        <span class="text-muted">{{ other_completion.lesson.display_title }}</span>
                       {% endif %}
                     </div>
                     <!-- bookmark -->
@@ -101,7 +101,7 @@
             <ul class="text-muted">
               {% for lesson in course.lessons.all %}
               <li>
-                {{ lesson.title }}
+                {{ lesson.display_title }}
               </li>
               {% endfor %}
             </ul>
@@ -111,7 +111,7 @@
             <ul class="text-muted">
               {% for lesson in course.lessons.all %}
               <li>
-                {{ lesson.title }}
+                {{ lesson.display_title }}
               </li>
               {% endfor %}
             </ul>
