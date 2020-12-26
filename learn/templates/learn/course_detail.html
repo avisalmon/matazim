@@ -97,9 +97,7 @@
         {% else %}
           {% if user.is_authenticated %}
             <!-- <a href={% url 'learn:course_sign' course.id %} class="btn btn-info">הוסף את הקורס לרשימה שלי</a> -->
-            <p>אלו השיעורים בקורס זה.
-            <a href={% url 'learn:course_sign' course.id %}> הירשמו</a>
-            </p>
+            <p>אלו השיעורים בקורס זה.  </p>
             <ul class="text-muted">
               {% for lesson in course.lessons.all %}
               <li>
@@ -108,8 +106,16 @@
               {% endfor %}
             </ul>
           {% else %}
-            <p>כאן תוכל להרשם לקורס זה ולצפות בכל השיעורים. אבל צריך להרשם לאתר בשביל זה</p>
-            <a href="{% url 'login' %}?next=/learn/course/{{ course.id }}" class="btn btn-info">התחבר</a>
+            <p>יש להתחבר לאתר כדי לצפות בשיעורים. השיעורים לקורס זה:</p>
+
+            <ul class="text-muted">
+              {% for lesson in course.lessons.all %}
+              <li>
+                {{ lesson.title }}
+              </li>
+              {% endfor %}
+            </ul>
+
           {% endif %}
 
         {% endif %}
@@ -127,11 +133,9 @@
           <a href={% url 'learn:course_update' course.pk %}><i class="fas fa-edit"></i></a>
         {% endif %}
         {{ course.title}} - דף פתיחה
-      {% if not user.is_authenticated %}
-        <a class="btn btn-info" href="{% url 'login' %}?next=/learn/course/{{ course.id }}">התחבר כדי להרשם</a>
-      {% endif %}
       </h1>
-      <div class=" row">
+      {% if user.is_authenticated %}
+      <div class=" row {% if not registration %}d-none{% endif %}">
         <!-- deleted this expiremntaly. delete later -->
         <div class="col-2"></div>
         <div class="col-4 border border-info py-2 text-center">
@@ -153,6 +157,7 @@
         </div>
         <div class="col-2"></div>
       </div>
+      {% endif %}
 
       <p>{{ course.description|safe }}</p>
     </div>
@@ -176,24 +181,29 @@
 
   <div class="col-3">
 
-    {% if course.hebrew %}
+
     <div class="border border-top border-info mb-3">
       <ul>
-        <li><a href={% url 'learn:course_list' %}><i class="fas fa-list-ol"></i> חזרה לרשימת כל הקורסים</a></li>
+        {% if not user.is_authenticated %}
+          <a class="btn btn-info mt-3" href="{% url 'login' %}?next=/learn/course/{{ course.id }}">התחבר </a>
+          <br><br>
+        {% endif %}
         {% if user.is_authenticated %}
           {% if registration %}
             <li><a href={% url 'learn:course_unsign' course.id %}><i class="far fa-trash-alt text-danger"></i> הסר את הקורס מהרשימה שלי</a></li>
           {% else %}
-            <li>
-              <a class="" href={% url 'learn:course_sign' course.id %}><i class="fas fa-plus"></i>
-            הוסף את הקורס לרשימה שלי
+
+              <a class="btn btn-info mt-3" href={% url 'learn:course_sign' course.id %}>
+                הוסף את הקורס לרשימה שלי
               </a>
-            </li>
+              <br><br>
           {% endif %}
+          <li><a href={% url 'learn:course_list' %}><i class="fas fa-list-ol"></i> חזרה לרשימת כל הקורסים</a></li>
         {% endif %}
       </ul>
     </div>
 
+    {% if course.hebrew %}
         {% include "learn/course_status_heb.html" %}
     {% else %}
         {% include "learn/course_status_en.html" %}
