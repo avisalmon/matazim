@@ -4,14 +4,15 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, CreateView
 from .models import Course, Lesson, Registration, Completion
+from .forms import LessonUpdateForm
 from main.models import Profile
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
-import datetime
 from django.contrib.admin.views.decorators import staff_member_required
-import re
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from .forms import LessonUpdateForm
+from django.http import Http404
+import re
+import datetime
 
 
 def home(request):
@@ -165,6 +166,12 @@ class CourseUpdateView(LoginRequiredMixin, UpdateView):
               'youtube']
     template_name = 'learn/course_update.html'
 
+    def get_object(self):
+        course = super(CourseUpdateView, self).get_object()
+        if not course.owner == self.request.user:
+            raise Http404('You dontt have permission to do this. go away you hacker')
+        return course
+
 @login_required
 def completion_done(request, pk):
     try:
@@ -290,6 +297,12 @@ class NoteUpdateView(LoginRequiredMixin, UpdateView):
     fields = ['note']
     template_name = 'learn/note_update.html'
 
+    def get_object(self):
+        completion = super(NoteUpdateView, self).get_object()
+        if not completion.user == self.request.user:
+            raise Http404('You dontt have permission to do this. go away you hacker')
+        return completion
+
 class lessonCreateView(LoginRequiredMixin, CreateView):
     model = Lesson
     # fields = ['title', 'description', 'pre_lesson', 'youtube',
@@ -299,11 +312,24 @@ class lessonCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         obj = form.save(commit=False)
         course = Course.objects.get(pk=self.kwargs['course_pk'])
-        print(course)
+        if not course.owner == self.request.user:
+            raise Http404
         obj.course = course
         obj.save()
         return super().form_valid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super(lessonCreateView, self).get_form_kwargs()
+        # update the kwargs for the form init method with URL params
+        # in this case course_pk will be passed to the form __init__
+        kwargs.update(self.kwargs)  # self.kwargs contains all url conf params
+        return kwargs
+
 class LessonUpdateView(LoginRequiredMixin, UpdateView):
     model = Lesson
     form_class = LessonUpdateForm
+
+    def form_valid(self, form):
+        if not lesson.course.owner == self.request.user:
+            raise Http404
+        return super().form_valid(form)
