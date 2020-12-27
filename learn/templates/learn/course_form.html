@@ -35,11 +35,11 @@
 
 
 <div class="row d-flex justify-content-center">
-  <div class="col-sm-8 border border-primary rounded pb-2 px-3 pt-5">
+  <div class="col-sm-8 border border-primary rounded pb-2 px-3 pt-5  rtl hebrew text-right">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Save">
+        <input type="submit" value="Save New Course">
     </form>
   </div>
 </div>

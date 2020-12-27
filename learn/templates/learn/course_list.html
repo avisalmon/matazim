@@ -7,7 +7,7 @@
   <div class="row border border-primary border-top-0">
     <!-- This is Left Column -->
     <div class="col-9 ">
-      <div class="bg-white sticky-offset ">
+      <div class="bg-white sticky-offset border-primary border-bottom mb-4">
           <h2 class="text-center">קורסים בשבילך</h2>
           <!-- <h3 class="text-center hebrew">צא ולמד!</h3> -->
           <p class="hebrew text-right">ברוכים הבאים לאתר הלמידה. כאן תמצאו קורסים שיעזרו לכם ללמוד תכנים טכנולוגיים מעשיים. הרשמו ולימדו. הקורסים מסודרים בצורה שתאפשר לכם להתקדם בקצב שלכם ולסמן כל שיעור שעברתם. לחלקם יש מטלות לביצוע לפני שעוברים לשיעור הבא. המערכת מבוססת על אמון, כלומר אם סימנתם שהקשבתם לשיעור אז אנחנו מאמינים לכם. בהצלחה. תהנו ותתנו משוב.</p>
@@ -61,7 +61,9 @@
     <!-- This is Right Column -->
       <div class="col-3 border border-primary border-top-0 bg-white">
         <div class="sticky-offset text-right rtl">
-        <p><a href={% url 'learn:course_create' %}>בנה את הקורס שלך</a></p>
+          {% if user.is_staff %}
+            <p><a href={% url 'learn:course_create' %}>בנה את הקורס שלך</a></p>
+          {% endif %}
         <p>כאן יהיו סטטוסים שונים</p>
 
         <div class="d-none d-sm-block hebrew text-right">

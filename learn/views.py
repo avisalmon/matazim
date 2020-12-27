@@ -4,7 +4,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, CreateView
 from .models import Course, Lesson, Registration, Completion
-from .forms import LessonUpdateForm
+from .forms import LessonUpdateForm, CourseForm
 from main.models import Profile
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.contrib.admin.views.decorators import staff_member_required
@@ -151,9 +151,8 @@ class CompletionDetailView(LoginRequiredMixin, DetailView):
 
 class CourseCreateView(LoginRequiredMixin, CreateView):
     model = Course
-    fields = ['title', 'short_description',
-              'description', 'image', 'predecessor',
-              'youtube']
+    form_class = CourseForm
+
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -163,9 +162,7 @@ class CourseCreateView(LoginRequiredMixin, CreateView):
 
 class CourseUpdateView(LoginRequiredMixin, UpdateView):
     model = Course
-    fields = ['title', 'short_description',
-              'description', 'image', 'predecessor',
-              'youtube']
+    form_class = CourseForm
     template_name = 'learn/course_update.html'
 
     def get_object(self):
@@ -332,6 +329,9 @@ class LessonUpdateView(LoginRequiredMixin, UpdateView):
     form_class = LessonUpdateForm
 
     def form_valid(self, form):
-        if not lesson.course.owner == self.request.user:
+        obj = form.save(commit=False)
+        print(obj)
+        if not obj.course.owner == self.request.user:
             raise Http404
+        # place holder
         return super().form_valid(form)

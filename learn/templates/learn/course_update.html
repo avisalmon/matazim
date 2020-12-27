@@ -2,16 +2,15 @@
 {% load static %}
 
 {% block content %}
-<div class="container text-right rtl ">
-  <h3 class="text-center">עריכת פרטי קורס ושיעורים</h3>
-
-  <div class="row d-flex justify-content-center">
-    <div class="col-8 col-sm-5">
+<div class="container hebrew text-right">
+  <div class="row">
+    <!-- RIGHT COL FORM  -->
+    <div class="col-8">
+      <h1>הקורס: ({{ course.title }})</h1>
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      <button type="button" class="btn btn-primary my-4" data-toggle="modal" data-target="#exampleModal">
         לחץ לקבלת טיפ איך לכתוב בעברית בצורה נוחה <i class="far fa-lightbulb"></i>
       </button>
-
       <!-- Modal Tip button -->
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -28,34 +27,35 @@
           </div>
         </div>
       </div>
+      <!-- The Form -->
+
+        <div class="border border-primary rounded pb-2 px-3 pt-5 hebrew">
+          <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <input type="submit" value="Save">
+          </form>
+        </div>
+
 
     </div>
+    <!-- LEFT COL LESSONS  -->
+    <div class="col-4">
+      <div class="text-right">
+        <h2 class="text-right">השיעורים:</h2>
+        <a href={% url 'learn:lesson_create' course.pk %}>הוסף שיעור</a>
+        <br><hr>
+        {% for lesson in course.lessons.all %}
+        <p class="">
+        <a href={% url 'learn:lesson_update' lesson.pk %}><p>{{ lesson.title }}</a>
+         after--> {{ lesson.pre_lesson.title }} (Youtube: {{ lesson.youtube }})
+        {% endfor %}
 
+
+      </div>
+    </div>
   </div>
-
-
-<div class="row d-flex justify-content-center">
-  <div class="col-sm-8 border border-primary rounded pb-2 px-3 pt-5">
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save">
-    </form>
-  </div>
 </div>
 
-<br><br><hr>
-<div class="text-right">
-  <h2 class="text-right">שיעורים</h2>
-  {% for lesson in course.lessons.all %}
-  <a href={% url 'learn:lesson_update' lesson.pk %}><p>{{ lesson.title }}</p></a>
-  <p> --> pre was {{ lesson.pre_lesson.title }}</p>
-  {% endfor %}
-  <br><br><hr>
-  <a href={% url 'learn:lesson_create' course.pk %}>הוסף שיעור</a>
-
-</div>
-
-</div>
 
 {% endblock %}
