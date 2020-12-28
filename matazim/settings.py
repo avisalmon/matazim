@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'programs',
     'learn',
     'hack',
+    'projects',
 ]
 
 MIDDLEWARE = [

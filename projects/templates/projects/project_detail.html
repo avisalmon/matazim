@@ -1,0 +1,30 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container hebrew rtl text-right">
+
+
+<h1>פרוייקט:  {{ project.title }}</h1>
+<h3>{{project.short_description }}</h3>
+<p>{{ project.description}}</p>
+<br>
+<p>Prject state: {{ project.project_state }}</p>
+<p>Youtube:</p>
+{{ project.youtube }}
+
+<p>תמונות:</p>
+{% for pic in project.images.all %}
+  <img class="" src={{ pic.image.url }} width="200"  alt="image">
+{% endfor %}
+<br><br>
+
+<p>קישורים:</p>
+  <ul>
+    {% for link in project.links.all %}
+      <a href="{{ link.link }}"><li>{{ link.link }}</li></a>
+    {% endfor %}
+  </ul>
+
+</div>
+{% endblock %}

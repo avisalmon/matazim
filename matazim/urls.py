@@ -30,6 +30,7 @@ urlpatterns = [
     path('main/', include('main.urls')),
     path('programs/', include('programs.urls')),
     path('learn/', include('learn.urls')),
+    path('projects/', include('projects.urls')),
     path('hack/', include('hack.urls')),
     path('tinymce/', include('tinymce.urls')),
 ]
