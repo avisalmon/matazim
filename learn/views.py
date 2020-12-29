@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from .models import Course, Lesson, Registration, Completion
 from .forms import LessonUpdateForm, CourseForm
 from main.models import Profile
-from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -152,7 +152,6 @@ class CompletionDetailView(LoginRequiredMixin, DetailView):
 class CourseCreateView(LoginRequiredMixin, CreateView):
     model = Course
     form_class = CourseForm
-
 
     def form_valid(self, form):
         obj = form.save(commit=False)

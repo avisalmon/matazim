@@ -37,3 +37,4 @@ class CourseForm(forms.ModelForm):
                   'description': _('תאור'),
                   'image': _('תמונה'),
                   }
+ 

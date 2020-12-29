@@ -3,6 +3,8 @@
 
 {% block content %}
 <div class="container hebrew text-right rtl">
+  <h1>הפרוייקטים</h1>
+  <a href={% url 'projects:project_create' %}>הוסף פרוייקט</a>
   {% for project in project_list.all %}
     <p>
       <a href={% url 'projects:project_detail' project.pk %}>

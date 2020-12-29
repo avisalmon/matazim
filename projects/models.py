@@ -41,24 +41,24 @@ class Project(models.Model):
 
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
-    project_type = models.CharField(max_length=2, choices=PROJ_TYPE)
+    project_type = models.CharField(max_length=2, choices=PROJ_TYPE, default=NOTHING)
     project_state = models.CharField(max_length=3, choices=PROJ_STATE, default=OPEN)
-    short_description = models.TextField(max_length=140)
+    short_description = models.CharField(max_length=140)
     description = models.TextField(max_length=5000, blank=True, null=True)
-    youtube = models.CharField(max_length=200, blank=True)
-    embed_link = models.CharField(max_length=300, blank=True)
+    youtube = models.CharField(max_length=200, blank=True, null=True)
+    embed_link = models.CharField(max_length=300, blank=True, null=True)
 
     def __str__(self):
         return self.title
 
-    # def get_absolute_url(self):
-        # return reverse('learn:course_update', kwargs={'pk': self.course.pk})
+    def get_absolute_url(self):
+        return reverse('projects:project_detail', kwargs={'pk': self.pk})
 
 
 class Pic(models.Model):
     title = models.CharField(max_length=140, blank=True, null=True)
-    image = models.ImageField(upload_to='projects/images/', blank=True)
-    project = models.ForeignKey(Project, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='projects/images/')
+    project = models.ForeignKey(Project, related_name='images', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f'Image_{self.pk} - project {self.project}'
@@ -66,7 +66,7 @@ class Pic(models.Model):
 
 class Link(models.Model):
     title = models.CharField(max_length=140, blank=True, null=True)
-    project = models.ForeignKey(Project, related_name='links', on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, related_name='links', on_delete=models.CASCADE, null=True)
     link = models.URLField()
 
     def __str__(self):

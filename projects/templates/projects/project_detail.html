@@ -4,25 +4,38 @@
 {% block content %}
 <div class="container hebrew rtl text-right">
 
-
+<a href={% url 'projects:project_list' %}>חזור לרשימת הפרויקטים</a>
 <h1>פרוייקט:  {{ project.title }}</h1>
+{% if project.owner == user %}
+  <a href={% url 'projects:project_update' project.pk %}>Edit</a>
+  <a href={% url 'projects:project_delete' project.pk %}>Delete</a>
+{% endif %}
+<p>User: {{ project.owner.username }} - {{ project.owner.first_name }} {{ project.owner.last_name }}</p>
 <h3>{{project.short_description }}</h3>
-<p>{{ project.description}}</p>
+<p>{{ project.description|safe }}</p>
 <br>
 <p>Prject state: {{ project.project_state }}</p>
 <p>Youtube:</p>
 {{ project.youtube }}
 
 <p>תמונות:</p>
+<a href={% url 'projects:add_pic' project.pk %}>הוסף תמונה</a>
 {% for pic in project.images.all %}
   <img class="" src={{ pic.image.url }} width="200"  alt="image">
+  {% if project.owner == request.user %}
+    <a href={% url 'projects:image_delete' pic.pk %}>מחק</a>
+  {% endif %}
 {% endfor %}
 <br><br>
 
 <p>קישורים:</p>
+  <p><a href={% url 'projects:add_link' project.pk %}>הוסף קישור</a></p>
   <ul>
     {% for link in project.links.all %}
       <a href="{{ link.link }}"><li>{{ link.link }}</li></a>
+      {% if project.owner == request.user %}
+        <a href={% url 'projects:link_delete' link.pk %}>מחק</a>
+      {% endif %}
     {% endfor %}
   </ul>
 
