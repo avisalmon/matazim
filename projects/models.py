@@ -39,7 +39,7 @@ class Project(models.Model):
         (DONE, 'Project is done'),
     ]
 
-    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='projects')
     title = models.CharField(max_length=50)
     project_type = models.CharField(max_length=2, choices=PROJ_TYPE, default=NOTHING)
     project_state = models.CharField(max_length=3, choices=PROJ_STATE, default=OPEN)
@@ -47,6 +47,11 @@ class Project(models.Model):
     description = models.TextField(max_length=5000, blank=True, null=True)
     youtube = models.CharField(max_length=200, blank=True, null=True)
     embed_link = models.CharField(max_length=300, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+
+    class Meta:
+        ordering = ['-updated_at']
 
     def __str__(self):
         return self.title
@@ -54,6 +59,16 @@ class Project(models.Model):
     def get_absolute_url(self):
         return reverse('projects:project_detail', kwargs={'pk': self.pk})
 
+    def save(self, *args, **kwargs):
+        # parsing youtube id out of url string:
+        regex = re.compile(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?(?P<id>[A-Za-z0-9\-=_]{11})')
+        try:
+            match = regex.match(self.youtube)
+            if  match:
+                self.youtube = match.group('id')
+        except:
+            pass
+        super(Project, self).save(*args, **kwargs)
 
 class Pic(models.Model):
     title = models.CharField(max_length=140, blank=True, null=True)

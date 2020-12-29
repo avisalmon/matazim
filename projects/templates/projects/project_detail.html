@@ -2,42 +2,110 @@
 {% load static %}
 
 {% block content %}
-<div class="container hebrew rtl text-right">
+<div class="container">
+  <div class="text-center">
 
-<a href={% url 'projects:project_list' %}>חזור לרשימת הפרויקטים</a>
-<h1>פרוייקט:  {{ project.title }}</h1>
-{% if project.owner == user %}
-  <a href={% url 'projects:project_update' project.pk %}>Edit</a>
-  <a href={% url 'projects:project_delete' project.pk %}>Delete</a>
-{% endif %}
-<p>User: {{ project.owner.username }} - {{ project.owner.first_name }} {{ project.owner.last_name }}</p>
-<h3>{{project.short_description }}</h3>
-<p>{{ project.description|safe }}</p>
-<br>
-<p>Prject state: {{ project.project_state }}</p>
-<p>Youtube:</p>
-{{ project.youtube }}
+<div class="row d-flex flex-row text-info text-left">
+  <div class="col-2 "> <h4>Project stage: </h4></div>
+  <div class="col-2 border border-info bg-success text-white">
+    <p>Opened --></p>
+  </div>
+  <div class="col-2 border border-info {% if project.project_state == project.APPROVED or project.project_state == project.REVIEWED or project.project_state == project.DONE %} bg-success text-white {% endif %}">Approved --></div>
+  <div class="col-2 border border-info{% if project.project_state == project.REVIEWED or project.project_state == project.DONE %} bg-success text-white {% endif %}">Reviewed --></div>
+  <div class="col-2 border border-info {% if project.project_state == project.DONE %} bg-success text-white {% endif %}">Done!</div>
+</div>
+</div>
+</div>
 
-<p>תמונות:</p>
-<a href={% url 'projects:add_pic' project.pk %}>הוסף תמונה</a>
-{% for pic in project.images.all %}
-  <img class="" src={{ pic.image.url }} width="200"  alt="image">
-  {% if project.owner == request.user %}
-    <a href={% url 'projects:image_delete' pic.pk %}>מחק</a>
+<div class="container hebrew text-center rtl">
+    <h1>
+      פרוייקט: {{ project.title }}
+      {% if project.owner == user %}
+        <a href={% url 'projects:project_update' project.pk %}><i class="far fa-edit"></i></a>
+      {% endif %}
+    </h1>
+    <h4><a href={% url 'main:profile' project.owner.profile.pk %}>{{ project.owner.first_name }} {{ project.owner.last_name }}</a></h4>
+  </div>
+
+  <div class="container hebrew text-right rtl">
+
+  <div class="row">
+      <div class="col-3 border border-primary rounded">
+        <div class="sticky-offset mt-4">
+        <p><a href={% url 'projects:project_list' %}><i class="far fa-list-alt"></i> לרשימת כל הפרויקטים</a></p>
+        <p><a href={% url 'projects:project_create' %}><i class="far fa-plus-square"></i> הוסף פרוייקט חדש</a></p>
+        {% if project.owner == user %}
+          <p><a href={% url 'projects:project_delete' project.pk %} class="text-danger"><i class="far fa-trash-alt"></i> מחק פרוייקט זה</a></p>
+        {% endif %}
+        <p><a href={% url 'projects:project_update' project.pk %}><i class="far fa-edit"></i> ערוך פרוייקט זה</a></p>
+        <br>
+        <h4>
+          פרויקטים נוספים
+        {% if project.owner.first_name %}
+        של {{ project.owner.first_name }}:
+        {% endif %}
+        </h4>
+        <br>
+        {% for proj in project.owner.projects.all %}
+          <a href={% url 'projects:project_detail' proj.pk %}><h5>{{ proj.title}}</h5></a>
+          <p>{{ proj.short_description}}</p>
+          <hr>
+        {% endfor %}
+
+      </div>
+
+    </div>
+  <div class="col-9 px-4">
+  <p class="text-center">{{ project.description|safe }}</p>
+  <hr>
+  {% if project.youtube %}
+  <p>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ project.youtube }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </p>
   {% endif %}
-{% endfor %}
-<br><br>
-
-<p>קישורים:</p>
-  <p><a href={% url 'projects:add_link' project.pk %}>הוסף קישור</a></p>
+  <hr>
+  <h4>
+    קישורים:
+      {% if project.owner == user %}
+        <a href={% url 'projects:add_link' project.pk %}><i class="far fa-plus-square"></i></a>
+      {% endif %}
+  </h4>
   <ul>
     {% for link in project.links.all %}
-      <a href="{{ link.link }}"><li>{{ link.link }}</li></a>
-      {% if project.owner == request.user %}
-        <a href={% url 'projects:link_delete' link.pk %}>מחק</a>
-      {% endif %}
+      <li>
+        <a href="{{ link.link }}">{% if link.title %}{{ link.title}}{% else %}{{ link.link }}{% endif %}</a>
+        {% if project.owner == user %}<a href={% url 'projects:link_delete' link.pk %}><i class="far fa-trash-alt"></i></a>{% endif %}
+      </li>
     {% endfor %}
   </ul>
+  <hr>
+  <h4>
+    תמונות:
+      {% if project.owner == user %}
+        <a href={% url 'projects:add_pic' project.pk %}><i class="far fa-plus-square"></i></a>
+      {% endif %}
+  </h4>
+<div class="row">
+  {% for img in project.images.all %}
+  <div class="col-6">
+    <!-- <img class="" src={{ img.image.url }} width="100%"  alt="image"> -->
+    <div class="card p-3" style="width: 18rem;">
+      <img class="card-img-top" src="{{ img.image.url }}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{ img.title }}</h5>
+        {% if project.owner == user %}
+        <a href={% url 'projects:image_delete' img.pk %} class=""><i class="far fa-trash-alt"></i></a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
 
 </div>
+
+  </div>
+</div>
+
+
 {% endblock %}

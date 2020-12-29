@@ -2,32 +2,37 @@
 {% load static %}
 
 {% block content %}
-<div class="container hebrew text-right rtl">
+<div class="container text-center jumbotron">
   <h1>הפרוייקטים</h1>
-  <a href={% url 'projects:project_create' %}>הוסף פרוייקט</a>
-  {% for project in project_list.all %}
-    <p>
-      <a href={% url 'projects:project_detail' project.pk %}>
-        {{ project }}
-      </a>
-    </p>
-
-    <p>תמונות:</p>
-    {% for pic in project.images.all %}
-      <img class="" src={{ pic.image.url }} width="200"  alt="image">
-    {% endfor %}
-    <br><br>
-
-    <p>קישורים:</p>
-      <ul>
-        {% for link in project.links.all %}
-          <a href="{{ link.link }}"><li>{{ link.link }}</li></a>
-        {% endfor %}
-      </ul>
-
-
-
-  {% endfor %}
-
+  <h3>בעמוד זה תוכלו לצפות בפרוייקטים אשר התבצעו על ידי משתתפי האתר</h3>
+  <h5>
+  <a href={% url 'projects:project_create' %}>  ספרו לנו על הפרוייקט שלכם <i class="far fa-plus-square"></i></a>
+  </h5>
 </div>
+
+<div class="container hebrew">
+  <div class="row">
+    {% for project in project_list.all %}
+    <div class="col-3 d-flex align-items-stretch">
+
+      <div class="card border-primary hebrew text-right" >
+        {% if project.images.all %}
+        <img class="card-img-top px-4 pt-3" src="{{ project.images.all.0.image.url }}" alt="Card image cap">
+        {% else %}
+          <img class="card-img-top px-4 pt-3" src="{% static 'programs/makers.png' %}" alt="Card image cap">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title"><a href={% url 'projects:project_detail' project.pk %}>{{ project.title }}</a></h5>
+          <a href={% url 'main:profile' project.owner.profile.pk %}><p>({{ project.owner.first_name}} {{ project.owner.last_name }})</p></a>
+          <p class="card-text">{{ project.short_description }}</p>
+          <div class="text-center">
+            <a href={% url 'projects:project_detail' project.pk %} class="btn btn-primary">בקר בפרוייקט</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
 {% endblock %}

@@ -90,6 +90,31 @@
               {% endif %}
             {% endfor %}
         {% endif %}
+        <hr>
+        <h3>
+          הפרויקטים
+          {% if profile.user != user and profile.user.first_name %}
+          של {{ profile.user.first_name}}
+          {% else %}
+          שלי
+          {% endif %}
+        </h3>
+
+          <p><a href={% url 'projects:project_create' %}>הוסף פרוייקט</a></p>
+
+          {% if not projects %}
+            <p>אין פרוייקטים לשיתוף...</p>
+          {% else %}
+            <ul>
+              {% for project in projects %}
+                <li>
+                  <a href={% url 'projects:project_detail' project.pk %}>
+                    <span class="font-weight-bold">{{ project.title}}</span></a> - {{ project.short_description}}
+
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
       </div>
       <!-- Left Col -->
       <div class="col-4 border text-right">

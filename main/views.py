@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import (DetailView, UpdateView)
 from .models import Profile, UserHobby
 from learn.models import Registration
+from projects.models import Project
 from .forms import EditProfileForm, ProfileForm, HobbyForm
 from django.http import JsonResponse
 from django.core import serializers
@@ -48,30 +49,6 @@ def signup(request):
         else:
             error = form.errors
             return render(request, 'registration/signup.html', {'form':forms.UserCreateForm(), 'error': error})
-
-        # if request.POST['password1'] == request.POST['password2']:
-        #     try:
-        #         user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
-        #         user.save()
-        #         login(request, user)
-        #         return redirect('home')
-        #     except IntegrityError:
-        #         return render(request,
-        #                       'main/signuplocal.html',
-        #                       {'form':UserCreationForm(),
-        #                        'error':'That username has already been taken. Please choose a new username'})
-        # else:
-        #     return render(request, 'main/signup_local.html', {'form':UserCreationForm(), 'error':'Passwords did not match'})
-
-
-# @login_required
-# def my_profile_view(request):
-#     profile = Profile.objects.get(user=request.user)
-#     context = {
-#         'profile': profile
-#     }
-#     template = 'main/profile.html'
-#     return render(request, template, context)
 
 # ********************** Profile *********************
 
@@ -117,6 +94,12 @@ def profile_view(request, profile_pk):
     except:
         pass
 
+    try:
+        projects = Project.objects.filter(owner=profile.user)
+        context['projects'] = projects
+    except:
+        pass
+        
     context['hobby_form'] = HobbyForm
     template = 'main/profile_details.html'
     return render(request, template, context)
