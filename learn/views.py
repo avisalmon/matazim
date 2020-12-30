@@ -70,7 +70,7 @@ def courseSignView(request, pk):
             user=request.user,
             lesson=lesson)
             #defaults={'birthday': date(1940, 10, 9)},
-        #completion.note = lesson.note
+        completion.note = lesson.note
         completion.save()
 
     # asign pre conditions:
