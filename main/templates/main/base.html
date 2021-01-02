@@ -12,6 +12,7 @@
     <link rel="icon" type="image/png" href="{% static "main/Logo.png" %}">
 
     <link rel="stylesheet" href={% static 'main/css/site_custom.css' %}>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <!-- <link rel="stylesheet" href="{% static 'main/css/main_local.css' %}"> -->
   <title>מטצים</title>
 
@@ -22,10 +23,11 @@
         selector:'textarea',
         // plugins: 'directionality link',
         plugins: [
-          'advlist autolink lists link image charmap print preview anchor',
+          'advlist autolink lists link  charmap print preview anchor',
           'searchreplace visualblocks code fullscreen directionality',
-          'insertdatetime media table paste code help wordcount'
+          'insertdatetime  table paste code help wordcount'
         ],
+        // got out of plugings image media
         // toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | ltr rtl | link',
         toolbar: 'undo redo | formatselect | ' +
                   'bold italic backcolor forecolor | link | ltr rtl | alignleft aligncenter ' +
@@ -67,9 +69,11 @@
           <li class="nav-item">
             <a class="nav-link " href="{% url 'learn:course_list' %}">קורסים<span class="sr-only">(current)</span></a>
           </li>
+          {% if user.is_staff %}
           <li class="nav-item">
             <a class="nav-link " href="{% url 'projects:project_list' %}">פרויקטים<span class="sr-only">(current)</span></a>
           </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'programs:program_list' %}">תוכניות<span class="sr-only">(current)</span></a>
           </li>
