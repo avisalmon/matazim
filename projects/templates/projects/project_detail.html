@@ -17,8 +17,8 @@
               <p><a href={% url 'projects:project_create' %}><i class="far fa-plus-square"></i> הוסף פרוייקט חדש</a></p>
               {% if project.owner == user %}
               <p><a href={% url 'projects:project_delete' project.pk %} class="text-danger"><i class="far fa-trash-alt"></i> מחק פרוייקט זה</a></p>
-              {% endif %}
               <p><a href={% url 'projects:project_update' project.pk %}><i class="far fa-edit"></i> ערוך פרוייקט זה</a></p>
+              {% endif %}
               <br>
               <h4>
                 פרויקטים נוספים

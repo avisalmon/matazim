@@ -1,0 +1,39 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+  <div class="container">
+    <h1>List of Campaigns</h1>
+    <p><a href={% url 'funnel:camp_create' %}>Add a New Campaign <i class="far fa-plus-square"></i></a></p>
+    {% for camp in camp_list.all %}
+      <h4><a href={% url 'funnel:camp_detail' camp.pk %}>{{ camp.title }}</a></h4>
+    {% endfor %}
+
+    <hr>
+    <h1>Master plan</h1>
+    <hr>
+    {% for master_stage in master_stages.all %}
+    <p>{{ master_stage }}</p>
+      <ul>
+        {% for master_task in master_stage.master_tasks.all %}
+        <li>
+          {{ master_task }}
+          <ul>
+            {% for master_item in master_task.master_items.all %}
+              <li>
+                {{ master_item }}
+                <ul>
+                  {% for master_collateral in master_item.master_collaterals.all %}
+                    <li>
+                      {{ master_collateral }}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+        {% endfor %}
+      </ul>
+    {% endfor %}
+  </div>
+{% endblock %}

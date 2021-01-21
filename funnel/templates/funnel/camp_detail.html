@@ -1,0 +1,140 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+<div class="container">
+  <p><a href={% url 'funnel:camp_list' %}>Back to all Campaigns</a></p>
+  <h1>{{ camp.title }}</h1>
+  {% if camp.owner == user %}
+    <a href={% url 'funnel:camp_update' camp.pk %}>Edit this Campaign</a>
+  {% endif %}
+  <p>owner: {{ camp.owner }}</p>
+  <p>Departement: {{ camp.departement }} | expected participants: {{ camp.participating_num }}</p>
+  <p>{{ camp.description }}</p>
+  <p>Started: {{ camp.created }}</p>
+    {% for stage in camp.stages.all %}
+      <div class="row">
+        <!-- Stage -->
+        <div class="col-2 border border-primary">
+          <div class="row">
+            <h5>{{ stage.title }}
+              {% if stage.camp.owner == user %}
+                <a href={% url 'funnel:stage_update' stage.pk %}>Edit stage</a>
+              {% endif %}
+            </h5>
+          </div>
+          <div class="row">
+            <p>{{ stage.description|safe }} </p>
+            <p>Start: {{ stage.start_ww }}, end: {{ stage.end_ww }}</p>
+          </div>
+        </div>
+        <!-- Task -->
+        <div class="col-10 border border-primary">
+          <h4>Tasks:
+          <a href={% url 'funnel:task_create' stage.pk %}><i class="far fa-plus-square"></i></a></h4>
+          {% for task in stage.tasks.all %}
+            <div class="row border border-primary">
+              <div class="col-6">
+                <p class="font-weight-bold">
+                  {% if task.stage.camp.owner == user %}
+                    <a href={% url 'funnel:task_delete' task.pk %}><i class="far fa-trash-alt"></i></a>
+                  {% endif %}
+                  <a href={% url 'funnel:task_update' task.pk %}>{{ task.title }}</a>
+                  {% if task.reference %}
+                   (from BKM)
+                  {% else %}
+                   (Your addition)
+                  {% endif %}
+                  {% if task.description %}
+                  <span class="font-weight-light d-inline">
+                    {{ task.description|safe|truncatewords:10 }}
+                  </span>
+                  {% endif %}
+                </p>
+              </div>
+              <div class="col-6 border border-primary">
+                <p>
+                  Action Items
+                  {% if task.stage.camp.owner == user %}
+                    <a href={% url 'funnel:item_create' task.pk %}> <i class="far fa-plus-square"></i></a>
+                  {% endif %}
+                </p>
+                {% for item in task.items.all %}
+                  <div class="row border border-primary">
+                    <div class="col-6">
+
+                      {% if item.task.stage.camp.owner == user %}
+                        <a href={% url 'funnel:item_delete' item.pk %}> <i class="far fa-trash-alt"></i> </a>
+                      {% endif %}
+                      {% if item.complete_data %}
+                        <a href={% url 'funnel:item_decomplete' item.pk %}> <i class="far fa-check-square"></i></a>
+                      {% else %}
+                        <a href={% url 'funnel:item_complete' item.pk %}> <i class="far fa-square"></i></a>
+                      {% endif %}
+                      {% if item.reference %}
+                        <span class="font-weight-light">(BKM) </span>
+                      {% endif %}
+                      <a href={% url 'funnel:item_update' item.pk %}>
+                        {% if item.complete_data %}<del>{% endif %}
+                        {{ item.title }}
+                        {% if item.complete_data %}</del>{% endif %}
+                      </a>
+                    </div>
+                    <div class="col-6 border border-primary">
+                      {% if item.task.stage.camp.owner == user %}
+                      Collaterals. Add:
+                      <a href={% url 'funnel:add_image' item.pk %}> <i class="far fa-image"></i></a>
+                      <a href={% url 'funnel:add_file' item.pk %}> <i class="far fa-file"></i></a>
+                      <a href={% url 'funnel:add_link' item.pk %}> <i class="fas fa-link"></i></a>
+                      {% endif %}
+                      {% for collateral in item.collaterals.all %}
+                      <div class="row border border-primary">
+
+                          {% if collateral.item.task.stage.camp.owner == user %}
+                            <a href={% url 'funnel:delete_collateral' collateral.pk %}><i class="far fa-trash-alt"></i> </a>
+                          {% endif %}
+                          {% if collateral.reference %}
+                              {% if collateral.collateral_type == 'IM' %}
+                              Image: <a href="/media/{{ collateral.reference.image }}">(BKM) {{ collateral }}</a>
+                              {% endif %}
+                              {% if collateral.collateral_type == 'FI' %}
+                              File: <a href="/media/{{ collateral.reference.file }}">(BKM)  {{ collateral }}</a>
+                              {% endif %}
+                              {% if collateral.collateral_type == 'LI' %}
+                              Link: <a href="{{ collateral.reference.url }}" target="_blank">(BKM)  {{ collateral }}</a>
+                              {% endif %}
+                          {% else %}
+                              {% if collateral.collateral_type == 'IM' %}
+                                {% if collateral.item.task.stage.camp.owner == user %}
+                                  <a href={% url 'funnel:update_image' collateral.pk %}><i class="far fa-edit"></i> </a>
+                                {% endif %}
+                              Image: <a href="/media/{{ collateral.image }}">{{ collateral }}</a>
+                              {% endif %}
+                              {% if collateral.collateral_type == 'FI' %}
+                                {% if collateral.item.task.stage.camp.owner == user %}
+                                  <a href={% url 'funnel:update_file' collateral.pk %}><i class="far fa-edit"></i> </a>
+                                {% endif %}
+                              File: <a href="/media/{{ collateral.file }}">{{ collateral }}</a>
+                              {% endif %}
+                              {% if collateral.collateral_type == 'LI' %}
+                                {% if collateral.item.task.stage.camp.owner == user %}
+                                  <a href={% url 'funnel:update_link' collateral.pk %}><i class="far fa-edit"></i> </a>
+                                {% endif %}
+                              Link: <a href="{{ collateral.url }}" target="_blank">{{ collateral|truncatewords:4 }}</a>
+                              {% endif %}
+                          {% endif %}
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endfor %}
+
+              </div>
+            </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    {% endfor %}
+
+{% endblock %}
