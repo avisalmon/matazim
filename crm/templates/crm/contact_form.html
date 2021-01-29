@@ -1,0 +1,20 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+<h1>Add a New Contact</h1><br><hr>
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{{ form.media }}
+<form method="post">{% csrf_token %}
+    {% bootstrap_form form layout='inline' %}
+    {% buttons %}
+      <button type="submit" class="btn btn-primary">
+        Save
+      </button>
+    {% endbuttons %}
+</form>
+
+</div>
+{% endblock %}

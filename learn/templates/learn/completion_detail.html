@@ -240,7 +240,7 @@
 
           {% endif %}
           <p class="{% if completion.test_completion %}text-muted{% endif %}">
-          {% if completion.test_completion %}(בוצע){% endif %} {{ completion.lesson.challenge }}<br>
+          {% if completion.test_completion %}(בוצע){% endif %} {{ completion.lesson.challenge|safe }}<br>
           </p>
           <br>
           <form class="" action={% url 'learn:fusion_post' completion_pk=completion.pk %} method="GET">

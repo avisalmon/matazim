@@ -45,12 +45,15 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
+    'bootstrap4',
+    'bootstrap_datepicker_plus',
     'main',
     'programs',
     'learn',
     'hack',
     'projects',
     'funnel',
+    'crm',
 ]
 
 MIDDLEWARE = [

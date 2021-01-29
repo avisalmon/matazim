@@ -1,0 +1,25 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+  <p><a href={% url 'crm:contact_list' %}>Back to all contacts</a></p>
+  <h1>
+    <a href={% url 'crm:contact_update' contact.pk %}><i class="far fa-edit"></i> </a>
+    <a href={% url 'crm:contact_delete' contact.pk %}><i class="far fa-trash-alt"></i> </a>
+    Conatct :{{ contact.name }}
+  </h1>
+  <h3>Description</h3>
+  <p>{{ contact.description|safe }}</p>
+  <hr>
+  <ul>
+    <li>Mail: <a href="mailto:{{ contact.email }}">{{ contact.email }}</a></li>
+    <li>Phone: {{ contact.phone }}</li>
+    <li>Link <a href="{{ contact.link }}">{{ contact.link }}</a></li>
+    <li class="font-weight-bold">Strategic: {{ contact.strategic_comment }}</li>
+    <li>
+        Next Step: {{ contact.next_step|safe|truncatewords:4}}...
+        ({{ contact.tizkoret }})
+    </li>
+    </div>
+
+{% endblock %}
