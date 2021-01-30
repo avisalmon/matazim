@@ -13,9 +13,13 @@ urlpatterns = [
          name='camp_detail'),
     path('camp/update/<int:pk>', views.CampUpdateView.as_view(),
          name='camp_update'),
-    # Stage crUd
+    # Stage CrUD
+    path('stage_create/<int:camp_pk>', views.StageCreateView.as_view(),
+         name='stage_create'),
     path('stage_update/<int:pk>', views.StageUpdateView.as_view(),
          name='stage_update'),
+    path('stage_delete/<int:pk>', views.StageDeleteView.as_view(),
+         name='stage_delete'),
     # Task CrUD
     path('task_crate/<int:stage_pk>', views.TaskCreateView.as_view(),
          name='task_create'),

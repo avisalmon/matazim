@@ -112,6 +112,36 @@ class StageUpdateView(LoginRequiredMixin, UpdateView):
             raise Http404('You dontt have permission to do this. go away you hacker')
         return stage
 
+
+class StageCreateView(LoginRequiredMixin, CreateView):
+    model = Stage
+    fields = ['title', 'description', 'start_ww', 'end_ww']
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        camp = get_object_or_404(Camp, pk=self.kwargs['camp_pk'])
+        obj.camp = camp
+        if not camp.owner == self.request.user:
+            raise Http404('You dontt have permission to do this. go away you hacker')
+        obj.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('funnel:camp_detail', kwargs={'pk': self.object.camp.pk })
+
+
+class StageDeleteView(LoginRequiredMixin, DeleteView):
+    model = Stage
+
+    def dispatch(self, request, *args, **kwargs):
+            stage = get_object_or_404(Stage, pk=kwargs['pk'])
+            if request.user != stage.camp.owner:
+                raise Http404('You dontt have permission to do this. go away you hacker')
+            return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('funnel:camp_detail', kwargs={'pk': self.object.camp.pk })
+
 # *** Tasks ****
 
 # Create

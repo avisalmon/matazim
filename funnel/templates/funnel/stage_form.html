@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-<h1>Edit your stage</h1><br><hr>
+<h1>Add/Edit your stage</h1><br><hr>
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save">

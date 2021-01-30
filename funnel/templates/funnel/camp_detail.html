@@ -6,7 +6,8 @@
   <p><a href={% url 'funnel:camp_list' %}>Back to all Campaigns</a></p>
   <h1>{{ camp.title }}</h1>
   {% if camp.owner == user %}
-    <a href={% url 'funnel:camp_update' camp.pk %}>Edit this Campaign</a>
+    <p><a href={% url 'funnel:camp_update' camp.pk %}>Edit this Campaign</a></p>
+    <p><a href={% url 'funnel:stage_create' camp.pk %}>Add a Stage to this Campaign</a></p>
   {% endif %}
   <p>owner: {{ camp.owner }}</p>
   <p>Departement: {{ camp.departement }} | expected participants: {{ camp.participating_num }}</p>
@@ -20,6 +21,7 @@
             <h5>{{ stage.title }}
               {% if stage.camp.owner == user %}
                 <a href={% url 'funnel:stage_update' stage.pk %}>Edit stage</a>
+                <a href={% url 'funnel:stage_delete' stage.pk %}> | Delete </a>
               {% endif %}
             </h5>
           </div>
