@@ -65,6 +65,7 @@ class Task(models.Model):
 
 class MasterItem(models.Model):
     title = models.CharField(max_length=255)
+    description = models.TextField(max_length=1000, blank=True)
     master_task = models.ForeignKey(MasterTask, related_name='master_items', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -73,6 +74,7 @@ class MasterItem(models.Model):
 
 class Item(models.Model):
     title = models.CharField(max_length=255)
+    description = models.TextField(max_length=1000, blank=True)
     reference = models.ForeignKey(MasterItem, models.SET_NULL, blank=True, null=True)
     task = models.ForeignKey(Task, related_name='items', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)

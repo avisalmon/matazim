@@ -194,7 +194,7 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
 
 class ItemCreateView(LoginRequiredMixin, CreateView):
     model = Item
-    fields = ['title']
+    fields = ['title', 'description']
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -211,7 +211,7 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
 
 class ItemUpdateView(LoginRequiredMixin, UpdateView):
     model = Item
-    fields = ['title']
+    fields = ['title', 'description']
 
     def dispatch(self, request, *args, **kwargs):
             item = get_object_or_404(Item, pk=kwargs['pk'])

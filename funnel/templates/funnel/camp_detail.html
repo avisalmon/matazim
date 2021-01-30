@@ -80,7 +80,7 @@
                         {% if item.complete_data %}<del>{% endif %}
                         {{ item.title }}
                         {% if item.complete_data %}</del>{% endif %}
-                      </a>
+                      </a> {{ item.description|safe|truncatewords:10 }}
                     </div>
                     <div class="col-6 border border-primary">
                       {% if item.task.stage.camp.owner == user %}
