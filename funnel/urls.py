@@ -30,6 +30,8 @@ urlpatterns = [
     # Item CrUD
     path('item_create/<int:task_pk>', views.ItemCreateView.as_view(),
          name='item_create'),
+    path('item_detail/<int:pk>', views.ItemDetailView.as_view(),
+         name='item_detail'),
     path('item_update/<int:pk>', views.ItemUpdateView.as_view(),
          name='item_update'),
     path('item_delete/<int:pk>', views.ItemDeleteView.as_view(),

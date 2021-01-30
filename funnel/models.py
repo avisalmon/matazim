@@ -90,6 +90,12 @@ class Item(models.Model):
     def decomplete(self):
         self.complete_data = None
 
+    def desc_read_more(self):
+        if len(self.description) > 60:
+            return True
+        else:
+            return False
+
 class MasterCollateral(models.Model):
     FILE = 'FI'
     LINK = 'LI'

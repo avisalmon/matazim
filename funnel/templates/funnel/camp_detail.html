@@ -80,7 +80,13 @@
                         {% if item.complete_data %}<del>{% endif %}
                         {{ item.title }}
                         {% if item.complete_data %}</del>{% endif %}
-                      </a> {{ item.description|safe|truncatewords:10 }}
+                      </a>
+                      {% if item.desc_read_more %}
+                        {{ item.description|safe|truncatechars:60 }}
+                        <a href={% url 'funnel:item_detail' item.pk %}>Read more</a>
+                      {% else %}
+                        {{ item.description|safe }}
+                      {% endif %}
                     </div>
                     <div class="col-6 border border-primary">
                       {% if item.task.stage.camp.owner == user %}

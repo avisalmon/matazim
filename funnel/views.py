@@ -209,6 +209,10 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
         return reverse('funnel:camp_detail', kwargs={'pk': self.object.task.stage.camp.pk })
 
 
+class ItemDetailView(LoginRequiredMixin, DetailView):
+    model = Item
+
+
 class ItemUpdateView(LoginRequiredMixin, UpdateView):
     model = Item
     fields = ['title', 'description']
