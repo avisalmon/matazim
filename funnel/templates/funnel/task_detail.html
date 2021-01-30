@@ -1,0 +1,13 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+<h1>TASK: {{ task.title }}</h1>
+<h4>Back to <a href={% url 'funnel:camp_detail' task.stage.camp.pk %}>{{ task.stage.camp.title }}</a> Campaign</h4>
+<br>
+<p>{{ task.description|safe }}</p>
+</div>
+
+{% endblock %}

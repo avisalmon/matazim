@@ -39,9 +39,10 @@
               <div class="col-6">
                 <p class="font-weight-bold">
                   {% if task.stage.camp.owner == user %}
-                    <a href={% url 'funnel:task_delete' task.pk %}><i class="far fa-trash-alt"></i></a>
+                    <a href={% url 'funnel:task_delete' task.pk %}> <i class="far fa-trash-alt"></i></a>
+                    <a href={% url 'funnel:task_update' task.pk %}> <i class="far fa-edit"></i></a>
                   {% endif %}
-                  <a href={% url 'funnel:task_update' task.pk %}>{{ task.title }}</a>
+                  <a href={% url 'funnel:task_detail' task.pk %}>{{ task.title }}</a>
                   {% if task.reference %}
                    (from BKM)
                   {% else %}
@@ -49,7 +50,12 @@
                   {% endif %}
                   {% if task.description %}
                   <span class="font-weight-light d-inline">
-                    {{ task.description|safe|truncatewords:10 }}
+                    {% if task.desc_read_more %}
+                      {{ task.description|safe|truncatechars:100 }}
+                      <a href={% url 'funnel:task_detail' task.pk %}>Read more</a>
+                    {% else %}
+                      {{ task.description|safe }}
+                    {% endif %}
                   </span>
                   {% endif %}
                 </p>

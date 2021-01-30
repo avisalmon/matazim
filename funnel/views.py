@@ -161,6 +161,9 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('funnel:camp_detail', kwargs={'pk': self.object.stage.camp.pk })
 
+class TaskDetailView(LoginRequiredMixin,DetailView):
+    model = Task
+
 # Update
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task

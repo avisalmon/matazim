@@ -62,6 +62,12 @@ class Task(models.Model):
     def __str__(self):
         return f'{self.stage.camp.title} - {self.stage.title} - {self.title}'
 
+    def desc_read_more(self):
+        if len(self.description) > 100:
+            return True
+        else:
+            return False
+
 
 class MasterItem(models.Model):
     title = models.CharField(max_length=255)
