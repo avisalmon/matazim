@@ -1,43 +1,47 @@
 {% extends "main/base.html" %}
 {% load static %}
 {% block content %}
-<div class="container">
+<div class="container rtl hebrew text-right">
 
-{% if user.is_authenticated %}
-  {% if user.profile in facilitator.members.all %}
-    <a href={% url 'programs:facilitator_remove_member' facilitator.id user.profile.id %}>
-    <button type="button" class="btn btn-danger">Remove me from this school</button>
-    </a>
-  {% else %}
-    <a href={% url 'programs:facilitator_add_member' facilitator.id user.profile.id %}>
-    <button type="button" class="btn btn-success">Add me as a member to this school</button>
-    </a>
-  {% endif %}
-{% endif %}
+  <h1>מרחב יצירה Maker Space</h1>
 
-{% if facilitator.owner == user %}
-<a href={% url 'programs:facilitator_update' facilitator.id  %}>
-<button type="button" class="btn btn-success">Edit School details</button>
-</a>
-<a href={% url 'programs:facilitator_delete' facilitator.id %}>
-<button type="button" class="btn btn-danger">Delete this School</button>
-</a>
-{% endif %}
-<a href={% url 'programs:facilitator_list' %}>
-<button type="button" class="btn btn-success">Back to School list</button>
-</a>
 <p>
   <i class="fas fa-exclamation-triangle"></i>
 !האם תוכנית זו בבעלותך? דרוש בעלות עליה
 <span>send mail to: avi.salmon@intel.com</span>
 </p>
-<hr>
+
 
 <div class="container">
   <div class="row">
     <!-- start col 1 -->
     <div class="col border border-primary">
-      <h1>SCHOOL: {{ facilitator.name }}</h1>
+      <h1>{{ facilitator.name }}</h1>
+
+      <h4>
+
+      {% if user.profile in facilitator.members.all %}
+        <a href={% url 'programs:facilitator_remove_member' facilitator.id user.profile.id %}>
+          <i class="fas fa-user-minus" data-toggle="tooltip" data-placement="top" title="הסר אותי מבית ספר זה"></i>
+        </a>
+      {% else %}
+        <a href={% url 'programs:facilitator_add_member' facilitator.id user.profile.id %}>
+        <i class="fas fa-user-plus" data-toggle="tooltip" data-placement="top" title="הוסף אותי לבית ספר זה"></i>
+        </a>
+      {% endif %}
+      {% if facilitator.owner == user %}
+      <a href={% url 'programs:facilitator_update' facilitator.id  %}>
+      <i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="ערוך פרטי בית הספר"></i>
+      </a>
+      <a href={% url 'programs:facilitator_delete' facilitator.id %}>
+      <i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="מחק בית ספר זה"></i>
+      </a>
+      {% endif %}
+      <a href={% url 'programs:facilitator_list' %}>
+      <i class="fas fa-list" data-toggle="tooltip" data-placement="top" title="חזרה לרשימת המרחבים"></i>
+      </a>
+      </h4>
+
       <p>owner:
         <a href={% url 'main:profile' facilitator.owner.profile.id %}>
           ({{ facilitator.owner}}): {{ facilitator.owner.first_name}} {{ facilitator.owner.last_name }}
@@ -76,9 +80,11 @@
     <div class="col">
       <h2>תוכניות המשתתפות בבית ספר זה</h2>
       {% if user.is_authenticated and facilitator.owner == user %}
-      <a href={% url 'programs:facilitator_add_program' facilitator.id %}>
-      <button type="button" class="btn btn-primary">Add a Program</button>
-      </a>
+      <h2>
+        <a href={% url 'programs:facilitator_add_program' facilitator.id %}>
+          <i class="fas fa-plus-square" data-toggle="tooltip" data-placement="top" title="הוסף תוכנית המתקיימת בבית ספר זה"></i>
+        </a>
+      </h2>
       {% endif %}
       <ul>
         {% for program in facilitator.programs.all %}

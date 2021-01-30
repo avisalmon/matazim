@@ -16,8 +16,9 @@
 
 <hr>
   <div class="" id="programList">
+    <div class="row">
     {% for facilitator in facilitator_list %}
-
+    <div class="col-4">
     <div class="card my-4">
       <h5 class="card-header">
         <a href={% url 'programs:facilitator_detail' facilitator.id %}>
@@ -25,7 +26,6 @@
         </a>
         {% if facilitator.owner == user %}
         <span class="font-weight-normal text-danger">
-          ... זהו מרחב בבעלותך...
             <a class="pr-2" data-toggle="tooltip" data-placement="top" title="ערוך את פרטי התוכנית" href={% url 'programs:facilitator_update' facilitator.id %}><i class="fas fa-edit"></i></a>
             <a data-toggle="tooltip" data-placement="top" title="מחק תוכנית זו מהרשימה" href={% url 'programs:facilitator_delete' facilitator.id %}><i class="fas fa-trash-alt"></i></a>
         </span>
@@ -34,7 +34,7 @@
 
       <div class="card-body">
         <div class="row">
-          <div class="col-2 d-none d-md-block">
+          <div class="col-5 d-none d-md-block">
             <a href={% url 'programs:facilitator_detail' facilitator.id %}>
               {% if facilitator.image %}
               <img  class="img-fluid" src="{{ facilitator.image.url }}"  alt="...">
@@ -43,14 +43,9 @@
               {% endif %}
             </a>
           </div>
-          <div class="col-lg-10">
-            <h5 class="card-title">owner:
-              <a href={% url 'main:profile' facilitator.owner.profile.id %}>
-                {{ facilitator.owner.first_name}} {{ facilitator.owner.last_name}}
-                  {% if facilitator.owner.is_staff %} <small>(התוכנית נרשמה ע"י בעלי האתר באופן זמני. אם התוכנית שלכם תגיד לנו, ונעביר לכם את הבעלות)</small>{% endif %}
-              </a>
-            </h5>
-            <p class="card-text">{{ facilitator.short_description|safe}}
+          <div class="col-7">
+
+            <p class="card-text">{{ facilitator.short_description|safe|truncatewords:20 }}
               <a href={% url 'programs:facilitator_detail' facilitator.id %}> Read more... </a>
             </p>
           </div>
@@ -58,8 +53,9 @@
       </div>
 
     </div>
-
+    </div>
     {% endfor %}
+    </div>
     </div>
 
 </div>
