@@ -57,7 +57,11 @@
 
           <div class="container">
                 <!-- Go over lesson status and links  -->
-
+                <div class="row lesson-item">
+                  <div class="col-1"><i class="fas fa-lock-open"></i></div>
+                  <div class="col-1"><i class="far fa-check-circle"></i></div>
+                  <div class="col-8 text-truncate"> לדף הפתיחה של הקורס </div>
+                </div>
                 {% for other_completion in user_course_completion_set %}
                   <!-- Lock  -->
                   <div class="row lesson-item">
@@ -134,30 +138,7 @@
         {% endif %}
         {{ course.title}} - דף פתיחה
       </h1>
-      {% if user.is_authenticated %}
-      <div class=" row {% if not registration %}d-none{% endif %}">
-        <!-- deleted this expiremntaly. delete later -->
-        <div class="col-2"></div>
-        <div class="col-4 border border-info py-2 text-center">
-          <p>רשימת השיעורים מימין</p>
-        </div>
-        <div class="col-4 border border-info py-2 text-center">
-          {% if registration.last_completion %}
-            <a href={% url 'learn:completion_detail' registration.last_completion.id %}> לשיעור האחרון שהיית בו <i class="far fa-caret-square-left"></i></a>
-          {% else %}
-            {% if registration and user_course_completion_set.0 %}
-            <a href={% url 'learn:completion_detail' user_course_completion_set.0.pk %}>קפוץ לשיעור הראשון <i class="far fa-caret-square-left"></i></a>
-            {% else %}
-            <a class="btn btn-info" href={% url 'learn:course_sign' course.id %}>
-              הוסף את הקורס לרשימה שלי
-            </a>
-            {%  endif %}
-
-          {% endif %}
-        </div>
-        <div class="col-2"></div>
-      </div>
-      {% endif %}
+  
 
       <p>{{ course.description|safe }}</p>
     </div>
@@ -173,6 +154,29 @@
         {% endif %}
       </div>
     </div>
+    <br>
+    {% if user.is_authenticated %}
+    <div class=" row {% if not registration %}d-none{% endif %}">
+      <!-- deleted this expiremntaly. delete later -->
+      <div class="col-4"></div>
+      <div class="col-4 border border-info py-2 text-center">
+        {% if registration.last_completion %}
+          <a href={% url 'learn:completion_detail' registration.last_completion.id %}> לשיעור האחרון שהיית בו <i class="far fa-caret-square-left"></i></a>
+        {% else %}
+          {% if registration and user_course_completion_set.0 %}
+          <a href={% url 'learn:completion_detail' user_course_completion_set.0.pk %}>קפוץ לשיעור הראשון <i class="far fa-caret-square-left"></i></a>
+          {% else %}
+          <a class="btn btn-info" href={% url 'learn:course_sign' course.id %}>
+            הוסף את הקורס לרשימה שלי
+          </a>
+          {%  endif %}
+
+        {% endif %}
+      </div>
+      <div class="col-4"></div>
+    </div>
+    {% endif %}
+
   </div>
 
   <!--                        -->
