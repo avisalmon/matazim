@@ -73,6 +73,7 @@
 
                       {% if item.task.stage.camp.owner == user %}
                         <a href={% url 'funnel:item_delete' item.pk %}> <i class="far fa-trash-alt"></i> </a>
+                        <a href={% url 'funnel:item_update' item.pk %}> <i class="far fa-edit"></i> </a>
                       {% endif %}
                       {% if item.complete_data %}
                         <a href={% url 'funnel:item_decomplete' item.pk %}> <i class="far fa-check-square"></i></a>
@@ -82,7 +83,7 @@
                       {% if item.reference %}
                         <span class="font-weight-light">(BKM) </span>
                       {% endif %}
-                      <a href={% url 'funnel:item_update' item.pk %}>
+                      <a href={% url 'funnel:item_detail' item.pk %}>
                         {% if item.complete_data %}<del>{% endif %}
                         {{ item.title }}
                         {% if item.complete_data %}</del>{% endif %}
@@ -150,5 +151,6 @@
         </div>
       </div>
     {% endfor %}
+    <br><br><br><br>
 
 {% endblock %}
