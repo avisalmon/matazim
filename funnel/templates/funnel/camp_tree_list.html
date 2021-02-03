@@ -1,0 +1,13 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+  <div class="container">
+    <h1>Campaign Inheritance Tree</h1>
+    <br>
+    <ul>
+    {% include "funnel/tree_list.html" %}
+    </ul>
+
+    <hr>
+  </div>
+{% endblock %}

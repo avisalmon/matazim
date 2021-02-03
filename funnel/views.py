@@ -31,6 +31,25 @@ class CampListView(LoginRequiredMixin, ListView):
         return context
 
 
+class CampListTreeView(LoginRequiredMixin, ListView):
+    model = Camp
+    template_name = 'funnel/camp_tree_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CampListTreeView, self).get_context_data(**kwargs)
+        try:
+            source_camps = Camp.objects.filter(origin__isnull=True)
+            print('Hi')
+            context['source_camps'] = source_camps
+            print(source_camps)
+        except:
+            pass
+
+        # except Registration.DoesNotExist:
+        #     registration = None
+
+        return context
+
 class CampCreateView(LoginRequiredMixin, CreateView):
     model=Camp
     fields = ['title', 'departement', 'participating_num']
@@ -80,6 +99,68 @@ class CampCreateView(LoginRequiredMixin, CreateView):
 
 
         return super().form_valid(form)
+
+
+class CampCreateViewFromSource(LoginRequiredMixin, CreateView):
+    model = Camp
+    fields = ['title', 'departement', 'participating_num']
+
+    def form_valid(self, form):
+        dst_camp = form.save(commit=False)
+        dst_camp.owner = self.request.user
+        dst_camp.save()
+
+        # Populate new campaign based on source campaign
+        try:
+            print('Hi')
+            src_camp = get_object_or_404(Camp, pk=self.kwargs['source_pk'])
+            print(src_camp)
+            dst_camp.origin = src_camp
+            dst_camp.save()
+
+            src_stages = Stage.objects.filter(camp=src_camp)
+            print(src_stages)
+            for src_stage in src_stages:
+                stage = Stage.objects.create(
+                            camp=dst_camp,
+                            title=src_stage.title,
+                            description=src_stage.description,
+                            )
+                print(stage)
+
+                src_tasks = Task.objects.filter(stage=src_stage)
+                for src_task in src_tasks:
+                    task = Task.objects.create(
+                                title=src_task.title,
+                                description=src_task.description,
+                                stage=stage,
+                    )
+
+                    src_items = Item.objects.filter(task=src_task)
+                    for src_item in src_items:
+                        item = Item.objects.create(
+                                    title=src_item.title,
+                                    description=src_item.description,
+                                    task=task,
+                        )
+
+                        src_collaterals = Collateral.objects.filter(item=src_item)
+                        print(src_collaterals)
+                        for src_collateral in src_collaterals:
+                            collateral = Collateral.objects.create(
+                                    description=src_collateral.description,
+                                    item=item,
+                                    collateral_type=src_collateral.collateral_type,
+                                    url=src_collateral.url,
+                                    file=src_collateral.file,
+                                    image=src_collateral.image,
+                            )
+        except:
+            pass
+
+        return super().form_valid(form)
+
+
 
 
 class CampDetailView(LoginRequiredMixin, DetailView):

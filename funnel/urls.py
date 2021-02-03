@@ -7,8 +7,12 @@ urlpatterns = [
     # Campaign
     path('camp_list/', views.CampListView.as_view(),
          name='camp_list'),
+    path('camp_tree/', views.CampListTreeView.as_view(),
+         name='camp_tree'),
     path('create_camp/', views.CampCreateView.as_view(),
          name='camp_create'),
+    path('camp_create_from_existing/<int:source_pk>', views.CampCreateViewFromSource.as_view(),
+         name='camp_create_from_source'),
     path('camp/<int:pk>', views.CampDetailView.as_view(),
          name='camp_detail'),
     path('camp/update/<int:pk>', views.CampUpdateView.as_view(),

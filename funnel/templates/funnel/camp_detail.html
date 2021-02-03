@@ -3,16 +3,34 @@
 {% block content %}
 
 <div class="container">
-  <p><a href={% url 'funnel:camp_list' %}>Back to all Campaigns</a></p>
-  <h1>{{ camp.title }}</h1>
-  {% if camp.owner == user %}
-    <p><a href={% url 'funnel:camp_update' camp.pk %}>Edit this Campaign</a></p>
-    <p><a href={% url 'funnel:stage_create' camp.pk %}>Add a Stage to this Campaign</a></p>
-  {% endif %}
-  <p>owner: {{ camp.owner }}</p>
-  <p>Departement: {{ camp.departement }} | expected participants: {{ camp.participating_num }}</p>
-  <p>{{ camp.description }}</p>
-  <p>Started: {{ camp.created }}</p>
+  <div class="row">
+    <div class="col">
+    <h1>{{ camp.title }}</h1>
+    <p>owner: ({{ camp.owner }}) {{ camp.owner.first_name }} {{ camp.owner.last_name }}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4 border border-primary">
+      <p>Departement: {{ camp.departement }} | expected participants: {{ camp.participating_num }}</p>
+      <p>{{ camp.description }}</p>
+      <p>Started: {{ camp.created }}</p>
+      {% if camp.origin %}
+      <p>Cloned from <a href={% url 'funnel:camp_detail' camp.origin.pk %}>{{ camp.origin.title }}</a></p>
+      {% else %}
+      <p>This Funnel has no source funnel</p>
+      {% endif %}
+    </div>
+    <div class="col-4">
+      <p><a href={% url 'funnel:camp_tree' %}><i class="fas fa-list"></i> Back to Campaigns Tree</a></p>
+      {% if camp.owner == user %}
+      <p><a href={% url 'funnel:camp_update' camp.pk %}><i class="far fa-edit"></i> Edit Campaign Title</a></p>
+      <p><a href={% url 'funnel:stage_create' camp.pk %}><i class="fas fa-shoe-prints"></i> Add a Stage to this Campaign</a></p>
+      {% endif %}
+      <p><a href={% url 'funnel:camp_create_from_source' camp.pk %}><i class="far fa-copy"></i> Clone this Campaign</a></p>
+    </div>
+  </div><br>
+
+
     {% for stage in camp.stages.all %}
       <div class="row">
         <!-- Stage -->

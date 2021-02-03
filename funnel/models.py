@@ -11,6 +11,7 @@ class Camp(models.Model):
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    origin = models.ForeignKey('self', related_name='childes', null=True, on_delete=models.SET_NULL)
     departement = models.CharField(max_length=50, blank=True)
     participating_num = models.IntegerField()
 

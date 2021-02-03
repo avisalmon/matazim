@@ -1,0 +1,10 @@
+{% for camp in source_camps.all %}
+    <li>
+        <a href={% url 'funnel:camp_detail' camp.pk %}>{{ camp.title }}</a>
+        {% if camp.childes.all|length %}
+            <ul>
+                {% include "funnel/tree_list.html" with source_camps=camp.childes.all %}
+            </ul>
+        {% endif %}
+    </li>
+{% endfor %}
