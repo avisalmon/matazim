@@ -264,7 +264,7 @@ def tinkercad_post(request, completion_pk):
 @staff_member_required
 def learnReport(request):
     context = {}
-    context['profiles'] = Profile.objects.all()
+    context['profiles'] = Profile.objects.all().order_by('-pk')
     return render(request, 'learn/report.html', context)
 
 @login_required
