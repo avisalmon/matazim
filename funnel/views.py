@@ -240,7 +240,8 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('funnel:camp_detail', kwargs={'pk': self.object.stage.camp.pk })
+        return redirect(request.META['HTTP_REFERER'])
+        # return reverse('funnel:camp_detail', kwargs={'pk': self.object.stage.camp.pk })
 
 class TaskDetailView(LoginRequiredMixin,DetailView):
     model = Task
