@@ -38,6 +38,9 @@
     <hr>
     {% if completion.lesson.course.hebrew %}
     <h2 class="">השיעורים:</h2>
+    {% if registration.more_lessons %}
+    <h4><a href={% url 'learn:update_lessons' registration.pk %}>נוספו שיעורים חדשים - עדכן! <i class="far fa-plus-square"></i></a></h4>
+    {% endif %}
     <!-- <small>צפו בסרטון. לאחר שתשלימו את הצפייה ואת המטלות (אם יש) שמתחתיו, אשרו שהשלמתם את השיעור ועיברו לשיעור הבא.</small> -->
 
     {% else %}

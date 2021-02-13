@@ -56,6 +56,9 @@ urlpatterns = [
     path('completion/tinkercad_task/<int:completion_pk>',
       views.tinkercad_post,
       name='tinkercad_post'),
+    path('update_lessons/<int:registration_pk>',
+         views.update_lessons,
+         name='update_lessons'),
     # path('course/complete_message/<int:registration_pk>',
     #      views.course_complete_message,
     #      name='course_complete_message'),
@@ -63,4 +66,5 @@ urlpatterns = [
     # *********** Reports *************
     path('report/', views.learnReport, name='learn_report'),
     path('report/<int:pk>', views.personal_report, name='personal_report'),
+
 ]

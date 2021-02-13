@@ -11,6 +11,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.shortcuts import get_object_or_404
 import re
 import datetime
 
@@ -108,6 +109,38 @@ def course_unsign(request, pk):
 
     registration.delete()
     return redirect('learn:course_list')
+
+@login_required
+def update_lessons(request, registration_pk):
+    registration = get_object_or_404(Registration, pk=registration_pk)
+    if registration.user != request.user:
+        raise Http404('You dontt have permission to do this. go away you hacker')
+
+    current_completions = Completion.objects.filter(user=request.user, lesson__course=registration.course)
+    current_lessons = [completion.lesson for completion in current_completions]
+    expected_lessons = Lesson.objects.filter(course=registration.course)
+
+    for expected_lesson in expected_lessons:
+        if expected_lesson not in current_lessons:
+            #create completion
+            completion = Completion.objects.create(
+                user=request.user,
+                lesson=expected_lesson)
+                #defaults={'birthday': date(1940, 10, 9)},
+            completion.note = expected_lesson.note
+            print(f'pre_lesson {completion.lesson.pre_lesson}')
+            if completion.lesson.pre_lesson:
+                try:
+                    pre_completion = Completion.objects.get(user=request.user,
+                                                            lesson=completion.lesson.pre_lesson)
+                    completion.pre_completion = pre_completion
+                except:
+                    pass
+            completion.save()
+
+    return redirect(request.META['HTTP_REFERER'])
+
+
 
 @login_required
 def courseRate(request, pk, rate):

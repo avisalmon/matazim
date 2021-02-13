@@ -186,3 +186,13 @@ class Registration(models.Model):
             return int(completed/total*100)
         else:
             return 0
+
+    @property
+    def more_lessons(self):
+        num_completions = Completion.objects.filter(user=self.user,
+                                                   lesson__course=self.course).count()
+        num_lessons = Lesson.objects.filter(course=self.course).count()
+        if num_lessons > num_completions:
+            return True
+        else:
+            return False
