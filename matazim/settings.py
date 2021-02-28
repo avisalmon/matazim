@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'bootstrap4',
     'bootstrap_datepicker_plus',
+    'rest_framework',
+    'rest_framework.authtoken',
     'main',
     'programs',
     'learn',
@@ -55,6 +57,7 @@ INSTALLED_APPS = [
     'projects',
     'funnel',
     'crm',
+    'makerspace',
 ]
 
 MIDDLEWARE = [
@@ -89,6 +92,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'matazim.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    )
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

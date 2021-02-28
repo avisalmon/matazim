@@ -6,6 +6,7 @@
 <div class="container text-right rtl hebrew">
   <h1 dir="/rtl"><i class="fab fa-angrycreative fa-2x text-danger"></i> מרחבי יצירה ו Maker spaces</h1>
   <p>מרחבי יצירה, בתי ספר יצירתיים, מייקרספייס וכו</p>
+  <a href={% url 'makerspace:part_list' %}><p>פותחים ת'קימונו</p></a>
 
   {% if user.is_authenticated %}
     <h2>

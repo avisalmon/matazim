@@ -1,7 +1,11 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
+from rest_framework import routers
 
 app_name='learn'
+
+router = routers.DefaultRouter()
+router.register('course', views.CourseViewSet)
 
 urlpatterns = [
     path('', views.home,
@@ -63,6 +67,8 @@ urlpatterns = [
     #      views.course_complete_message,
     #      name='course_complete_message'),
 
+    # ***** API ***********************
+    path('api/', include(router.urls)),
     # *********** Reports *************
     path('report/', views.learnReport, name='learn_report'),
     path('report/<int:pk>', views.personal_report, name='personal_report'),

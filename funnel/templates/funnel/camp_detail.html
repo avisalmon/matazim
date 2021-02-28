@@ -65,29 +65,7 @@
                 <span class="font-weight-light d-inline">
                   {% if task.desc_read_more %}
                     {{ task.description|safe|truncatechars:100 }}
-                    <!-- <a href={}% url 'funnel:task_detail' task.pk %}}>Read more</a> -->
-                    <a href="#" data-toggle="modal" data-target="#task_modal_{{ forloop.counter }}"> Read more </a>
-                    <!-- Modal -->
-                        <div class="modal fade" id="task_modal_{{ forloop.counter }}" tabindex="-1" role="dialog">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Task details</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                {{ task.description|safe }}
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-
+                    <a href={% url 'funnel:task_detail' task.pk %}>Read more</a>
                   {% else %}
                     {{ task.description|safe }}
                   {% endif %}

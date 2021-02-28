@@ -1,0 +1,13 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+<form method="post">
+{% csrf_token %}
+<input type="hidden" name="program" value={{ program.pk }} >
+n<p>Are you sure you want to delete {{ part }}"?</p>
+<input type="submit" value="Confirm">
+</form>
+
+
+{% endblock %}

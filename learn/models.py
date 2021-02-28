@@ -66,7 +66,7 @@ class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
     members = models.ManyToManyField(get_user_model(), through='Completion')
     note = models.TextField(default='Notes for this lesson:\n\nYou can write your own notes here...')
-
+    
     class Meta:
         ordering = ['title']
 

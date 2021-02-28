@@ -27,6 +27,7 @@ class Profile(models.Model):
     image = models.ImageField(upload_to='main/images/', blank=True, null=True)
     mataz = models.BooleanField(default=False)
     fake = models.BooleanField(default=False)
+    store_owner = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Profile for {self.user}'

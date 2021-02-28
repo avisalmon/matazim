@@ -1,0 +1,44 @@
+{% extends  "main/base.html" %}
+
+{% block content %}
+  <div class="container">
+
+  <h1>Openning the Kimono! </h1>
+  <h2>Labspace inventory</h2>
+  <hr>
+  {% if user.profile.store_owner %}
+  <a href={% url 'makerspace:part_create' %}><i class="far fa-plus-square"></i> Add an Item</a>
+  {% endif %}
+
+  <div class="row">
+  {% for part in part_list.all %}
+    <div class="col-3 border border-primary rounded ">
+      <div class="row">
+        <p>
+          <a href={% url 'makerspace:part_detail' part.pk %}>
+            {{ part.title }}
+          </a>
+          {% if user.profile.store_owner %}
+          <a href={% url 'makerspace:part_delete' part.pk %}> <i class="far fa-trash-alt"></i></a>
+          {% endif %}
+        </p>
+        <br>
+      </div>
+      <div class="row">
+        <p>{{ part.get_location_display }}</p>
+      </div>
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+          {% if part.image %}
+          <img src="{{ part.image.url }}" width="100%" class="text-center" alt="...">
+          {% endif %}
+          <br><br>
+        </div>
+        <div class="col-1"></div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock  %}

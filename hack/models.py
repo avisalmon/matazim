@@ -7,7 +7,7 @@ import datetime
 
 
 class Hack(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50,  )
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     short_description = models.TextField(max_length=150, blank=True)
     description = models.TextField(max_length=5000, blank=True)

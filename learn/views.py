@@ -12,6 +12,10 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import get_object_or_404
+from rest_framework import viewsets
+from .serializers import CourseSerializer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 import re
 import datetime
 
@@ -367,3 +371,12 @@ class LessonUpdateView(LoginRequiredMixin, UpdateView):
             raise Http404
         # place holder
         return super().form_valid(form)
+
+# **************** API ******************
+
+class CourseViewSet(viewsets.ModelViewSet):
+    serializer_class = CourseSerializer
+    queryset = Course.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    # in postman Authorization Token blabla

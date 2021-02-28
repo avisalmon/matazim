@@ -1,0 +1,70 @@
+{% extends  "main/base.html" %}
+
+{% block content %}
+
+    <div class="container">
+    <h1>Part: {{ part.title }}</h1>
+    <p><a href={% url 'makerspace:part_list' %}>Back to full list</a></p>
+    {% if user.profile.store_owner %}
+    <p><a href={% url 'makerspace:part_update' part.pk %}>Edit me</a></p>
+    {% endif %}
+    <div class="row">
+      <div class="col-6">
+        {% if part.link %}
+        <a href={{ part.link }} target="_blank">More details</a>
+        {% endif %}
+        <p>Space: {{ part.get_location_display }}</p>
+        {% if user.profile.store_owner %}
+        <p>location: {{ part.sub_location }}</p>
+        {% endif %}
+        <p>mode: {{ part.get_mode_display }}</p>
+        {% if part.mode == 'SE' %}
+        <p>Price: {{ part.price }}</p>
+        {% endif %}
+        <p>contact: {{ part.Contact }}</p>
+        <hr>
+        {% if user.profile.store_owner %}
+            <h2>Items:
+              {% if item.many %}(We have many of them){% endif %}
+            </h2>
+            {% if not item.many %}
+            <ol>
+              {% for item in part.items.all %}
+                  <li>
+                    <a href={% url 'makerspace:item_delete' item.pk %}><i class="far fa-trash-alt"></i></a>
+                    <a href={% url 'makerspace:item_update' item.pk %}>
+                    {% if item.location %}
+                      {{ item.location }}
+                      - return: {{ item.return_date }}
+                    {% else %}
+                      In place
+                    {% endif %}
+                  </a>
+                </li>
+              {% endfor %}
+            </ol>
+            <hr>
+            <form action="/makerspace/item/create/{{ part.pk }}/">
+                <label for="num">How many items to add:</label><br>
+                <input type="text" id="num" name="num" value="1"><br>
+            <input type="submit" value="Add more items">
+            </form>
+            {% endif %}
+        {% endif %}
+      </div>
+      <div class="col-6">
+        {% if part.image %}
+        <a href={{ part.image.url }}>
+          <img class="" src="{{ part.image.url }}" width="80%" alt="image">
+        </a>
+
+        {% endif %}
+
+        <br><br><br><hr>
+
+      </div>
+    </div>
+  </div>
+
+
+{% endblock  %}

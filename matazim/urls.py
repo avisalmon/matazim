@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 from froala_editor import views
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,12 +28,14 @@ urlpatterns = [
     path('accounts/signup/', main_views.signup, name="signup"),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('allauth.urls')),
+    path('auth/', obtain_auth_token),
     path('main/', include('main.urls')),
     path('programs/', include('programs.urls')),
     path('learn/', include('learn.urls')),
     path('projects/', include('projects.urls')),
     path('funnel/', include('funnel.urls')),
     path('crm/', include('crm.urls')),
+    path('makerspace/', include('makerspace.urls')),
     path('hack/', include('hack.urls')),
     path('tinymce/', include('tinymce.urls')),
 ]
