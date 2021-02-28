@@ -5,7 +5,7 @@
     <div class="container">
     <h1>Part: {{ part.title }}</h1>
     <p><a href={% url 'makerspace:part_list' %}>Back to full list</a></p>
-    {% if user.profile.store_owner %}
+    {% if user.is_staff %}
     <p><a href={% url 'makerspace:part_update' part.pk %}>Edit me</a></p>
     {% endif %}
     <div class="row">
@@ -14,7 +14,7 @@
         <a href={{ part.link }} target="_blank">More details</a>
         {% endif %}
         <p>Space: {{ part.get_location_display }}</p>
-        {% if user.profile.store_owner %}
+        {% if user.is_staff %}
         <p>location: {{ part.sub_location }}</p>
         {% endif %}
         <p>mode: {{ part.get_mode_display }}</p>
@@ -23,7 +23,7 @@
         {% endif %}
         <p>contact: {{ part.Contact }}</p>
         <hr>
-        {% if user.profile.store_owner %}
+        {% if user.is_staff %}
             <h2>Items:
               {% if item.many %}(We have many of them){% endif %}
             </h2>

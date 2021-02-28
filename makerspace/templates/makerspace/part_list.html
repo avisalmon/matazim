@@ -6,7 +6,7 @@
   <h1>Openning the Kimono! </h1>
   <h2>Labspace inventory</h2>
   <hr>
-  {% if user.profile.store_owner %}
+  {% if user.is_staff %}
   <a href={% url 'makerspace:part_create' %}><i class="far fa-plus-square"></i> Add an Item</a>
   {% endif %}
 
@@ -18,7 +18,7 @@
           <a href={% url 'makerspace:part_detail' part.pk %}>
             {{ part.title }}
           </a>
-          {% if user.profile.store_owner %}
+          {% if user.is_staff %}
           <a href={% url 'makerspace:part_delete' part.pk %}> <i class="far fa-trash-alt"></i></a>
           {% endif %}
         </p>
