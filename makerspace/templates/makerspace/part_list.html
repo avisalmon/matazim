@@ -31,7 +31,9 @@
         <div class="col-1"></div>
         <div class="col-10">
           {% if part.image %}
-          <img src="{{ part.image.url }}" width="100%" class="text-center" alt="...">
+          <a href={{ part.image.url }}>
+            <img src="{{ part.image.url }}" width="100%" class="text-center" alt="...">
+          </a>
           {% endif %}
           <br><br>
         </div>
