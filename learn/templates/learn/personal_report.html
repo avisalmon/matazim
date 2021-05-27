@@ -6,7 +6,7 @@
     <h1>דוח התקדמות אישית של {{ report_user.first_name }} {{ report_user.last_name }} </h1>
     <h3>אף אחד לא יכול לראות את הדוח הזה פרט אליך.  </h3>
     <a href="#">רוצה לשתף? (לא עובד עדיין)</a>
-  
+
     <br>
     <hr>
     {% for registration in portfolio %}
@@ -25,6 +25,13 @@
           {% if completion.lesson.challenge_type == 'SC' %}
             <iframe src="https://scratch.mit.edu/projects/{{ completion.challenge_link }}/embed" allowtransparency="true" width="482" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
             <p><a href="https://scratch.mit.edu/projects/{{ completion.challenge_link }}">Link to the project</a>
+          {% endif %}
+          <!--  SCRATCH TASK -->
+          {% if completion.lesson.challenge_type == 'TI' %}
+          <h1>Hoppa {{ completion.challenge_link }}</h1>
+            <iframe width="725" height="453" src="https://www.tinkercad.com/embed/{{ completion.challenge_link }}?editbtn=1" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+
+            <p><a href="https://www.tinkercad.com/things/{{ completion.challenge_link }}">Link to the project</a>
           {% endif %}
         {% endif %}
 
