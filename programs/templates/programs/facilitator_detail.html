@@ -25,9 +25,11 @@
           <i class="fas fa-user-minus" data-toggle="tooltip" data-placement="top" title="הסר אותי מבית ספר זה"></i>
         </a>
       {% else %}
-        <a href={% url 'programs:facilitator_add_member' facilitator.id user.profile.id %}>
-        <i class="fas fa-user-plus" data-toggle="tooltip" data-placement="top" title="הוסף אותי לבית ספר זה"></i>
+        {% if user.is_authenticated %}
+          <a href={% url 'programs:facilitator_add_member' facilitator.id user.profile.id %}>
+          <i class="fas fa-user-plus" data-toggle="tooltip" data-placement="top" title="הוסף אותי לבית ספר זה"></i>
         </a>
+        {% endif %}
       {% endif %}
       {% if facilitator.owner == user %}
       <a href={% url 'programs:facilitator_update' facilitator.id  %}>
