@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container text-center">
+  <h1>האם באמת למחוק את {{ course }} ?</h1>
+  <h1>מהרשימה שלך</h1>
+  <h2>כל ההתקדמות שלך תמחק</h2>
+
+  <a href={% url 'learn:course_unsign' course.id %}>
+    <button type="button" class="btn btn-success">בטח. למחוק...</button>
+  </a>
+
+  <a href={% url 'learn:course_detail' course.id %}>
+    <button type="button" class="btn btn-danger">לא, מה פתאום</button>
+  </a>
+
+
+</div>
+
+{% endblock %}

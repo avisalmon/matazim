@@ -100,6 +100,23 @@ def courseSignView(request, pk):
     return redirect(course)
 
 @login_required
+def course_confirm_unsign(request, pk):
+    try:
+        course = Course.objects.get(pk=pk)
+        registration = Registration.objects.get(user=request.user,
+                                               course=course)
+    except:
+        return redirect('home')
+
+    context={}
+    context['course'] = course
+    # context['registration'] = registration
+
+
+    return render(request, 'learn/course_confirm_delete.html', context)
+
+
+@login_required
 def course_unsign(request, pk):
     try:
         course = Course.objects.get(pk=pk)
