@@ -4,6 +4,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from .models import Course, Lesson, Registration, Completion
+from programs.models import Program
 from .forms import LessonUpdateForm, CourseForm
 from main.models import Profile
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -110,7 +111,7 @@ def course_confirm_unsign(request, pk):
 
     context={}
     context['course'] = course
-    # context['registration'] = registration
+    context['registration'] = registration
 
 
     return render(request, 'learn/course_confirm_delete.html', context)
@@ -319,6 +320,17 @@ def tinkercad_post(request, completion_pk):
 def learnReport(request):
     context = {}
     context['profiles'] = Profile.objects.all().order_by('-pk')
+    return render(request, 'learn/report.html', context)
+
+@login_required
+def program_report(request, pk):
+    context = {}
+    try:
+        program = Program.objects.get(pk=pk)
+        context['program'] = program
+        context['profiles'] = Profile.objects.filter(program_conn=program).order_by('-pk')
+    except:
+        pass
     return render(request, 'learn/report.html', context)
 
 @login_required

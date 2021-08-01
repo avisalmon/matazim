@@ -4,8 +4,8 @@
 {% block content %}
 <div class="container text-right rtl hebrew">
   <div class="rtl">
-    <h1><i class=" text-danger fas fa-chalkboard-teacher fa-x5"></i>   תוכניות חינוכיות</h1>
-    <p>ההתמקדות היא בתוכניות בעלות אוריינטציה טכנולוגית והיכולות להפיק תועלת באמצעות מטצים</p>
+    <h1><i class=" text-danger fas fa-chalkboard-teacher fa-x5"></i>מסגרות מאמצות</h1>
+    <p>אלו התוכניות שאימצו את תוכנית המטצים ומגדלים מטצים לתפארת</p>
   {% if user.is_authenticated %}
     <h2>
       <a href={% url 'programs:program_create' %}><i class="fas fa-plus-square" data-toggle="tooltip" data-placement="top" title="הוסף תוכנית לרשימה"></i></i></a>
@@ -13,55 +13,54 @@
     </h2>
   {% endif %}
 
-    <div class="" id="programList">
-      {% for program in program_list %}
 
+
+    <div class="" id="programList">
+      <div class="row">
+      {% for program in program_list %}
+      <div class="col-4">
       <div class="card my-4">
         <h5 class="card-header">
           <a href={% url 'programs:program_detail' program.id %}>
             {{ program.name }}
           </a>
-          {% if program.owner == user %}
+          {% if program.owner == user or user.is_staff %}
           <span class="font-weight-normal text-danger">
-            ... זו תוכנית בבעלותך...
-            <a class="pr-2" data-toggle="tooltip" data-placement="top" title="ערוך את פרטי התוכנית" href={% url 'programs:program_update' program.id %}><i class="fas fa-edit"></i></a>
-            <a data-toggle="tooltip" data-placement="top" title="מחק תוכנית זו מהרשימה" href={% url 'programs:program_delete' program.id %}><i class="fas fa-trash-alt"></i></a>
+              <a class="pr-2" data-toggle="tooltip" data-placement="top" title="ערוך את פרטי התוכנית" href={% url 'programs:program_update' program.id %}><i class="fas fa-edit"></i></a>
+              <a data-toggle="tooltip" data-placement="top" title="מחק תוכנית זו מהרשימה" href={% url 'programs:program_delete' program.id %}><i class="fas fa-trash-alt"></i></a>
+              <a data-toggle="tooltip" data-placement="top" title="דוח פרחי מטצים" href={% url 'learn:program_report' program.id %}><i class="far fa-file-alt"></i></i></a>
           </span>
           {% endif %}
         </h5>
 
         <div class="card-body">
           <div class="row">
-            <div class="col-2 d-none d-md-block">
-              {% if program.image %}
+            <div class="col-5 d-none d-md-block">
               <a href={% url 'programs:program_detail' program.id %}>
-                <img class="img-fluid" src="{{ program.image.url }}"  alt="...">
+                {% if program.image %}
+                <img  class="img-fluid" src="{{ program.image.url }}"  alt="...">
+                {% else %}
+                <img  class="img-fluid" src="{% static 'programs/makers.png' %}"  alt="...">
+                {% endif %}
               </a>
-              {% else %}
-              <a href={% url 'programs:program_detail' program.id %}>
-                <img  class="img-fluid" src="{% static 'programs/programs.jpg' %}"  alt="...">
-              </a>
-              {% endif %}
             </div>
-            <div class="col-lg-10">
-              <h5 class="card-title">איש קשר:
-                  <a href={% url 'main:profile' program.owner.profile.id %}>
-                  {{ program.owner.first_name}} {{ program.owner.last_name}}
-                        {% if program.owner.is_staff %} <small>(התוכנית נרשמה ע"י בעלי האתר באופן זמני. אם התוכנית שלכם תגיד לנו, ונעביר לכם את הבעלות)</small>{% endif %}
-                </a>
+            <div class="col-7">
 
-              </h5>
-              <p class="card-text">{{ program.short_description|safe}}
-                <a href={% url 'programs:program_detail' program.id %}> Read more...</a>
+              <p class="card-text">{{ program.short_description|safe|truncatewords:20 }}
+                <a href={% url 'programs:program_detail' program.id %}> Read more... </a>
               </p>
             </div>
           </div>
         </div>
 
       </div>
-
+      </div>
       {% endfor %}
-    </div>
+      </div>
+      </div>
+
+
+
 
   </div>
 

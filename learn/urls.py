@@ -75,5 +75,7 @@ urlpatterns = [
     # *********** Reports *************
     path('report/', views.learnReport, name='learn_report'),
     path('report/<int:pk>', views.personal_report, name='personal_report'),
+    path('report/program/<int:pk>', views.program_report,
+         name='program_report'),
 
 ]

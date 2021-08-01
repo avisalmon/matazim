@@ -11,7 +11,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.views.generic import (DetailView, UpdateView)
-from .models import Profile, UserHobby
+from .models import Profile, UserHobby, Status
 from learn.models import Registration
 from projects.models import Project
 from .forms import EditProfileForm, ProfileForm, HobbyForm
@@ -91,6 +91,8 @@ def profile_view(request, profile_pk):
     try:
         courses_registered = Registration.objects.filter(user=profile.user)
         context['courses_registered'] = courses_registered
+        statuses = Status.objects.filter(user=profile.user)
+        context['statuses'] = statuses
     except:
         pass
 
@@ -99,7 +101,7 @@ def profile_view(request, profile_pk):
         context['projects'] = projects
     except:
         pass
-        
+
     context['hobby_form'] = HobbyForm
     template = 'main/profile_details.html'
     return render(request, template, context)

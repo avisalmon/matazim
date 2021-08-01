@@ -45,7 +45,7 @@ class EditProfileForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('bio', 'location', 'image') #Note that we didn't mention user field here.
+        fields = ('bio', 'top_goal', 'location', 'image') #Note that we didn't mention user field here.
         # got birthday temporary outbirth_date
 
 class HobbyForm(forms.ModelForm):

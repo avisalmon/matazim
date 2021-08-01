@@ -118,7 +118,39 @@
       </div>
       <!-- Left Col -->
       <div class="col-4 border text-right">
-        <h3>כתבו לי על הקיר:</h3>
+        <h3>המטרה שלי:</h3>
+        <p>{{ profile.top_goal|safe }}</p>
+        <hr>
+        {% if profile.user == user or user.is_staff or profile.program_conn.owner == user %}
+        <h4>מצב ההתקדמות שלך. רק אתה והמדריכים יכולים לראות חלק זה:</h4>
+        <br>
+
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for status in statuses %}
+              <tr>
+                <td>{{ status.created|date:"D d M Y"}}</td>
+                <td>
+                  {% if status.written_by %}
+                    ({{ status.written_by }}) 
+                  {% endif %}
+                  {{ status.text|safe }}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+
+
+        {% endif %}
       </div>
     </div>
     <!-- EO Big Wrap -->
