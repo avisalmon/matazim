@@ -26,11 +26,15 @@
             <iframe src="https://scratch.mit.edu/projects/{{ completion.challenge_link }}/embed" allowtransparency="true" width="482" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
             <p><a href="https://scratch.mit.edu/projects/{{ completion.challenge_link }}">Link to the project</a>
           {% endif %}
-          <!--  SCRATCH TASK -->
+          <!--  End of SCRATCH TASK -->
+          <!--  YOutube TASK -->
+          {% if completion.lesson.challenge_type == 'YO' %}
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ completion.challenge_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          {% endif %}
+        <!--  end of Youtube TASK -->
           {% if completion.lesson.challenge_type == 'TI' %}
-          <h1>Hoppa {{ completion.challenge_link }}</h1>
+          <h1>{{ completion.challenge_link }}</h1>
             <iframe width="725" height="453" src="https://www.tinkercad.com/embed/{{ completion.challenge_link }}?editbtn=1" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
-
             <p><a href="https://www.tinkercad.com/things/{{ completion.challenge_link }}">Link to the project</a>
           {% endif %}
         {% endif %}

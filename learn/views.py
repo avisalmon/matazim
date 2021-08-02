@@ -316,6 +316,28 @@ def tinkercad_post(request, completion_pk):
     #return reverse('learn:completion_detail', kwargs={"pk": completion_pk})
     return redirect('learn:completion_detail', pk=completion_pk)
 
+@login_required
+def youtube_post(request, completion_pk):
+    if request.method == 'GET':
+        try:
+            completion = Completion.objects.get(user=request.user, pk=completion_pk)
+            completion.challenge_link = request.GET.get('in_text')
+
+            regex = re.compile(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?(?P<id>[A-Za-z0-9\-=_]{11})')
+            match = regex.match(completion.challenge_link)
+            if  match:
+                completion.challenge_link = match.group('id')
+            else:
+                completion.challenge_link = ""
+
+            completion.save()
+        except:
+            pass
+
+    #return reverse('learn:completion_detail', kwargs={"pk": completion_pk})
+    return redirect('learn:completion_detail', pk=completion_pk)
+
+
 @staff_member_required
 def learnReport(request):
     context = {}

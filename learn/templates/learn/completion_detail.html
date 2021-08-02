@@ -285,6 +285,36 @@
           {% endif %}
         {% endif %}
         <!-- END OF TINKERCAD TASK -->
+
+        <!-- YouTube TASK: -->
+        {% if completion.lesson.challenge_type == 'YO' %}
+          {% if completion.test_completion %}
+            <h2>נפלא! בצעת את המשימה</h2>
+          {% else %}
+            <h2>יש לבצע משימה לפני מעבר לשיעור הבא
+                <a href="#">
+                  <i class="far fa-question-circle"></i> <small></small>
+                </a>
+            </h2>
+
+          {% endif %}
+          <p class="{% if completion.test_completion %}text-muted{% endif %}">
+            {% if completion.test_completion %}(בוצע){% endif %} {{ completion.lesson.challenge|safe }}<br>
+          </p>
+          <br>
+          <form class="" action={% url 'learn:youtube_post' completion_pk=completion.pk %} method="GET">
+            <input type="text" placeholder="הדבק קישור כאן" id="in_text" name="in_text" value="">
+            <input type="submit" class="btn {% if completion.test_completion %}btn-success{% else %}btn-warning{% endif %}" value="שלח">
+          </form>
+          <br>
+          {% if completion.test_completion %}
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ completion.challenge_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          {% endif %}
+        {% endif %}
+        <!-- END OF YouTube TASK -->
+
+
+
       </div>
 
 
