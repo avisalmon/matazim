@@ -21,6 +21,9 @@ urlpatterns = [
     path('profile/add_badge/<int:profile_pk>/<int:badge>',
          views.add_badge,
          name='add_badge'),
+    path('profile/add_user_to_program/<int:pk>',
+         views.AddUserToProgram.as_view(),
+         name='add_user_to_program'),
     # Status
     path('status/create/<int:for_profile_pk>',
          views.StatusCreateForm.as_view(),

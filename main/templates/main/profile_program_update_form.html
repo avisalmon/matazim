@@ -1,0 +1,16 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+  <h1>Add ({{ profile.user.username }}) {{ profile.user.first_name }} {{ profile.user.last_name }} to Program: </h1>
+
+  <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Save">
+  </form>
+</div>
+
+{% endblock %}

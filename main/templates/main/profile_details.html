@@ -13,12 +13,17 @@
       <!-- Right Col -->
       <div class="col-4 text-right border ">
         <h3>הדף של {{ profile.user.first_name }} {{ profile.user.last_name}}
+          ({{ profile.program_conn.name }})
           {% if profile == user.profile %}
           <a href={% url 'main:edit_profile' %}><i class="fas fa-edit"></i></a>
           {% endif %}
+
         </h3>
         <i>שם משתמש: {{ profile.user }}<br></i>
         <a href="mailto: {{ profile.user.email }}"><i>מייל: {{ profile.user.email }}<br></i></a>
+        {% if user.is_staff %}
+          <a href={% url 'main:add_user_to_program' profile.pk %}>Assign to Program </a>
+        {% endif %}
         {% if profile.image %}
         <img src="{{ profile.image.url }}" alt="" height=100 >
         {% endif %}

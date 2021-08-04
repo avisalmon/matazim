@@ -37,6 +37,10 @@ class Profile(models.Model):
     def __str__(self):
         return f'Profile for {self.user}'
 
+    def get_absolute_url(self):
+        return reverse('main:profile', kwargs={'profile_pk': self.user.profile.pk})
+
+
 @receiver(post_save, sender=get_user_model())
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -69,7 +73,7 @@ class Status(models.Model):
         ordering = ['-created']
 
     def get_absolute_url(self):
-        return reverse('main:profile', kwargs={'profile_pk': self.user.pk})
+        return reverse('main:profile', kwargs={'profile_pk': self.user.profile.pk})
 
 class UserLink(models.Model):
     """A User contact info model"""

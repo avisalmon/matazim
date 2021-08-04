@@ -15,6 +15,7 @@ from django.views.generic import (DetailView, UpdateView)
 from .models import Profile, UserHobby, Status
 from learn.models import Registration
 from projects.models import Project
+from programs.models import Program
 from .forms import EditProfileForm, ProfileForm, HobbyForm
 from django.http import JsonResponse
 from django.core import serializers
@@ -119,11 +120,31 @@ def add_badge(request, profile_pk, badge):
 
     return redirect('main:profile', profile_pk=profile_pk)
 
+
+class AddUserToProgram(LoginRequiredMixin, UpdateView):
+    model = Profile
+    fields = ['program_conn']
+    template_name_suffix = '_program_update_form'
+
+
+# @login_required
+# def add_user_to_program(request, profile, program):
+#     try:
+#         profile = Profile.objects.get(pk=profile)
+#         program = Program.objects.get(pk=program)
+#     except:
+#         redirect('home')
+#
+#     profile.program = program
+#     profile.save()
+#
+#     return redirect('main:profile', profile_pk=profile.pk)
+
+
 # **************** Hobby views *************************
 
 @login_required
 def add_hobby(request):
-    print('hi')
     if request.is_ajax and request.method == 'POST':
         form = HobbyForm(request.POST)
         if form.is_valid():
