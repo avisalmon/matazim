@@ -18,4 +18,17 @@ urlpatterns = [
     path('profile/edit_hobby/<int:pk>',
          views.HobbyUpdateView.as_view(),
          name='hobby_edit'),
+    path('profile/add_badge/<int:profile_pk>/<int:badge>',
+         views.add_badge,
+         name='add_badge'),
+    # Status
+    path('status/create/<int:for_profile_pk>',
+         views.StatusCreateForm.as_view(),
+         name = 'status_create'),
+    path('status/update/<int:pk>',
+         views.StatusUpdateView.as_view(),
+         name='status_update'),
+    path('status/delete/<int:pk>',
+         views.StatusDeleteView.as_view(),
+         name='status_delete'),
 ]

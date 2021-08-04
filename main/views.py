@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import Http404
 from django.contrib.auth import login, logout
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
-from django.views.generic.edit import DeleteView, UpdateView
+# from django.views.generic import
+from django.views.generic.edit import DeleteView, UpdateView, CreateView
 from . import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 #from django.contrib.auth.models import User
@@ -93,6 +94,7 @@ def profile_view(request, profile_pk):
         context['courses_registered'] = courses_registered
         statuses = Status.objects.filter(user=profile.user)
         context['statuses'] = statuses
+        context['badges'] = range(1, int(profile.level)+1)
     except:
         pass
 
@@ -105,6 +107,17 @@ def profile_view(request, profile_pk):
     context['hobby_form'] = HobbyForm
     template = 'main/profile_details.html'
     return render(request, template, context)
+
+def add_badge(request, profile_pk, badge):
+    try:
+        profile = Profile.objects.get(pk=profile_pk)
+        if badge in range(7):
+            profile.level = badge
+            profile.save()
+    except:
+        pass
+
+    return redirect('main:profile', profile_pk=profile_pk)
 
 # **************** Hobby views *************************
 
@@ -144,3 +157,40 @@ class HobbyUpdateView(LoginRequiredMixin, UpdateView):
         if obj.user != self.request.user:
             return redirect('programs:facilitator_list')
         return super(HobbyUpdateView, self).dispatch(request, *args, **kwargs)
+
+# Status Views
+
+class StatusCreateForm(LoginRequiredMixin, CreateView):
+    model = Status
+    fields = ['text', 'image']
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        for_profile = get_object_or_404(Profile, pk=self.kwargs['for_profile_pk'])
+        writer_profile = get_object_or_404(Profile, pk=self.request.user.profile.pk)
+        if not ( writer_profile.user.is_staff or writer_profile.user == self.request.user):
+            raise Http404('You dont have permission to do this.')
+        obj.written_by = writer_profile.user
+        obj.user = for_profile.user
+        obj.save()
+        return super().form_valid(form)
+
+class StatusUpdateView(LoginRequiredMixin, UpdateView):
+    model = Status
+    fields = ['text', 'image']
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        for_profile = obj.user.profile
+        writer_profile = get_object_or_404(Profile, pk=self.request.user.profile.pk)
+        if not ( writer_profile.user.is_staff or writer_profile.user == self.request.user):
+            raise Http404('You dont have permission to do this.')
+        return super().form_valid(form)
+
+class StatusDeleteView(LoginRequiredMixin, DeleteView):
+    model = Status
+
+    def get_success_url(self):
+    # Assuming there is a ForeignKey from Comment to Post in your model
+        profile = self.object.user.profile
+        return reverse_lazy( 'main:profile', kwargs={'profile_pk': profile.pk})

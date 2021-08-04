@@ -50,13 +50,13 @@ def save_user_profile(sender, instance, **kwargs):
 class Status(models.Model):
     ''' User status '''
     user = models.ForeignKey(get_user_model(),
-                             blank=True,
+                             blank=True, null=True,
                              on_delete=models.CASCADE,
                              related_name='statuses')
     written_by = models.ForeignKey(get_user_model(),
                              blank=True, null=True,
                              on_delete=models.CASCADE)
-    text = models.TextField(max_length=LONG_DESCRIPTION_MAX_LENGTH,
+    text = models.TextField(max_length=5000, blank=True,
                                 null=True)
     image = models.ImageField(upload_to='main/images/', blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -68,6 +68,8 @@ class Status(models.Model):
     class Meta:
         ordering = ['-created']
 
+    def get_absolute_url(self):
+        return reverse('main:profile', kwargs={'profile_pk': self.user.pk})
 
 class UserLink(models.Model):
     """A User contact info model"""

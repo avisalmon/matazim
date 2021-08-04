@@ -7,7 +7,28 @@
 
 {% for profile in profiles %}
   <p><u>
-    <a href={% url 'main:profile' profile.pk %}><b>({{ profile.user }}) {{ profile.user.first_name }} {{ profile.user.last_name }}</b></a>
+    <a href={% url 'main:profile' profile.pk %}><b>({{ profile.user }}) {{ profile.user.first_name }} {{ profile.user.last_name }};</b>
+      {% if profile.level %}
+        {{ profile.level }} <i class="fas fa-medal"></i>
+      {% endif %}
+      {% if profile.level > 1 %}
+        <i class="fas fa-medal"></i>
+      {% endif %}
+      {% if profile.level > 2 %}
+        <i class="fas fa-medal"></i>
+      {% endif %}
+      {% if profile.level > 3 %}
+        <i class="fas fa-medal"></i>
+      {% endif %}
+      {% if profile.level > 4 %}
+        <i class="fas fa-medal"></i>
+      {% endif %}
+      {% if profile.level > 5 %}
+        <i class="fas fa-medal"></i>
+      {% endif %}
+
+
+    </a>
   </u></p>
     {% for registration in profile.user.registrations.all %}
 
