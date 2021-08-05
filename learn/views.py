@@ -98,7 +98,10 @@ def courseSignView(request, pk):
         pass
 
     print('redirecting to course')
-    return redirect(course)
+    first_completion = Completion.objects.filter(user=request.user,
+                                                lesson__course=course)[0]
+    print(first_completion)
+    return redirect(first_completion)
 
 @login_required
 def course_confirm_unsign(request, pk):

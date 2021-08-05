@@ -101,6 +101,20 @@
         {% else %}
           {% if user.is_authenticated %}
             <!-- <a href={% url 'learn:course_sign' course.id %} class="btn btn-info">הוסף את הקורס לרשימה שלי</a> -->
+            <div class="col-6 border border-info py-2 text-center">
+              {% if registration.last_completion %}
+                <a href={% url 'learn:completion_detail' registration.last_completion.id %}> לשיעור האחרון שהיית בו <i class="far fa-caret-square-left"></i></a>
+              {% else %}
+                {% if registration and user_course_completion_set.0 %}
+                <a href={% url 'learn:completion_detail' user_course_completion_set.0.pk %}>קפוץ לשיעור הראשון <i class="far fa-caret-square-left"></i></a>
+                {% else %}
+                <a class="btn btn-info" href={% url 'learn:course_sign' course.id %}>
+                      כאן ממתחילים: הוסף את הקורס לרשימה שלי
+                </a>
+                {%  endif %}
+
+              {% endif %}
+            </div>
             <p>אלו השיעורים בקורס זה.  </p>
             <ul class="text-muted">
               {% for lesson in course.lessons.all %}
@@ -159,20 +173,7 @@
     <div class=" row {% if not registration %}d-none{% endif %}">
       <!-- deleted this expiremntaly. delete later -->
       <div class="col-4"></div>
-      <div class="col-4 border border-info py-2 text-center">
-        {% if registration.last_completion %}
-          <a href={% url 'learn:completion_detail' registration.last_completion.id %}> לשיעור האחרון שהיית בו <i class="far fa-caret-square-left"></i></a>
-        {% else %}
-          {% if registration and user_course_completion_set.0 %}
-          <a href={% url 'learn:completion_detail' user_course_completion_set.0.pk %}>קפוץ לשיעור הראשון <i class="far fa-caret-square-left"></i></a>
-          {% else %}
-          <a class="btn btn-info" href={% url 'learn:course_sign' course.id %}>
-            הוסף את הקורס לרשימה שלי
-          </a>
-          {%  endif %}
 
-        {% endif %}
-      </div>
       <div class="col-4"></div>
     </div>
     {% endif %}
