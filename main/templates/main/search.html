@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>Search results for "{{ term }}"</h2>
+  {% if profiles %}
+  <h3>Found users:</h3>
+    {% for profile in profiles %}
+      <p><a href={% url 'main:profile' profile.pk %}>
+        {% if profile.user.first_name %}
+          {{ profile.user.first_name }} {{ profile.user.last_name }}
+        {% else %}
+          {{ profile.user.username }}
+        {% endif %}
+      </a></p>
+    {% endfor %}
+  {% endif %}
+  <br>
+
+  {% if courses %}
+    <h2>Found Courses:</h2>
+    {% for course in courses %}
+    <p><a href={% url 'learn:course_detail' course.pk %}>{{ course.title }}</a></p>
+    {% endfor %}
+  {% endif %}
+
+  {% if programs %}
+    <h2>Found Programs:</h2>
+    {% for program in programs %}
+    <p><a href={% url 'programs:program_detail' program.pk %}>{{ program.name }}</a></p>
+    {% endfor %}
+  {% endif %}
+
+</div>
+
+{% endblock %}

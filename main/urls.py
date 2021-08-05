@@ -6,6 +6,7 @@ app_name='main'
 urlpatterns = [
         # Profile
     #path('profile/', views.my_profile_view, name='my_profile_view'),
+    path('search/', views.search, name='search'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('profile/<int:profile_pk>',
          views.profile_view,

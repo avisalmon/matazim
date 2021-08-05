@@ -124,8 +124,8 @@
         </ul>
       </div>
     </div>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2 hebrew" type="search" placeholder="אני מחפש..." aria-label="Search">
+    <form class="form-inline my-2 my-lg-0" action={% url 'main:search' %}>
+      <input class="form-control mr-sm-2 hebrew" type="text" id="term" name="term" placeholder="אני מחפש..." aria-label="Search">
       <button class="btn btn-info my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
       &nbsp &nbsp
       {% if user.is_authenticated %}

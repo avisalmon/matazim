@@ -13,7 +13,7 @@ from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.views.generic import (DetailView, UpdateView)
 from .models import Profile, UserHobby, Status
-from learn.models import Registration
+from learn.models import Registration, Course
 from projects.models import Project
 from programs.models import Program
 from .forms import EditProfileForm, ProfileForm, HobbyForm
@@ -25,6 +25,36 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 def home(request):
     return render(request, 'main/home.html')
+
+def search(request):
+    context = {}
+    if request.method == 'GET':
+        print('Get')
+        term = request.GET.get('term')
+        context['term'] = term
+
+        profiles1 = Profile.objects.filter(user__username__icontains=term)
+        profiles2 = Profile.objects.filter(user__email__icontains=term)
+        profiles3 = Profile.objects.filter(user__first_name__icontains=term)
+        profiles4 = Profile.objects.filter(user__last_name__icontains=term)
+        profiles = profiles1.union(profiles2).union(profiles3).union(profiles4)
+        context['profiles'] = profiles
+
+        programs1 = Program.objects.filter(name__icontains=term)
+        programs2 = Program.objects.filter(short_description__icontains=term)
+        programs = programs1.union(programs2)
+        context['programs'] = programs
+
+        courses1 = Course.objects.filter(title__icontains=term)
+        courses2 = Course.objects.filter(short_description__icontains=term)
+        courses3 = Course.objects.filter(description__icontains=term)
+        courses = courses1.union(courses2).union(courses3)
+        context['courses'] = courses
+    else:
+        print('bla')
+
+    return render(request, 'main/search.html', context )
+
 
 # ********************* Auth *********************
 
