@@ -11,6 +11,8 @@ urlpatterns = [
     path('profile/<int:profile_pk>',
          views.profile_view,
          name='profile'),
+    path('profile/stuff_edit/<int:pk>', views.ProfileStuffUpdate.as_view(),
+         name='profile_stuff_update'),
          # Hobby
     path('profile/add_hobby/', views.add_hobby, name='add_hobby'),
     path('profile/delete_hobby/<int:pk>',

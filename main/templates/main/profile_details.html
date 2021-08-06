@@ -22,7 +22,8 @@
         <i>שם משתמש: {{ profile.user }}<br></i>
         <a href="mailto: {{ profile.user.email }}"><i>מייל: {{ profile.user.email }}<br></i></a>
         {% if user.is_staff %}
-          <a href={% url 'main:add_user_to_program' profile.pk %}>Assign to Program </a>
+          <br><p class="p-3 mb-2 bg-danger text-white"><a href={% url 'main:add_user_to_program' profile.pk %}>Assign to Program </a></p>
+          <p class="p-3 mb-2 bg-danger text-white" ><a href={% url 'main:profile_stuff_update' profile.pk %}>staff edit</a></p>
         {% endif %}
         {% if profile.image %}
         <img src="{{ profile.image.url }}" alt="" height=100 >

@@ -157,18 +157,17 @@ class AddUserToProgram(LoginRequiredMixin, UpdateView):
     template_name_suffix = '_program_update_form'
 
 
-# @login_required
-# def add_user_to_program(request, profile, program):
-#     try:
-#         profile = Profile.objects.get(pk=profile)
-#         program = Program.objects.get(pk=program)
-#     except:
-#         redirect('home')
-#
-#     profile.program = program
-#     profile.save()
-#
-#     return redirect('main:profile', profile_pk=profile.pk)
+class ProfileStuffUpdate(LoginRequiredMixin, UpdateView):
+    model = Profile
+    fields = ['location', 'perach', 'mataz', 'mentor', 'top_goal', 'program_conn']
+    template_name_suffix = '_staff_form'
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        writer_profile = get_object_or_404(Profile, pk=self.request.user.profile.pk)
+        if not ( writer_profile.user.is_staff):
+            raise Http404('You dont have permission to do this.')
+        return super().form_valid(form)
 
 
 # **************** Hobby views *************************
