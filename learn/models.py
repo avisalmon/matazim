@@ -41,6 +41,7 @@ class Lesson(models.Model):
     TEXT = 'TX'
     FUSION = 'FU'
     TINKERCAD = 'TI'
+    IMAGE = 'IM'
     NOTHING = 'NO'
     TASK_TYPE = [
         (SCRATCH, 'Scratch project link'),
@@ -50,6 +51,7 @@ class Lesson(models.Model):
         (TEXT, 'Text answer'),
         (FUSION, 'Fusion 360 link'),
         (TINKERCAD, 'TinkerCad link'),
+        (IMAGE, 'image'),
         (NOTHING, 'No task requiered'),
     ]
 
@@ -66,7 +68,7 @@ class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
     members = models.ManyToManyField(get_user_model(), through='Completion')
     note = models.TextField(default='Notes for this lesson:\n\nYou can write your own notes here...')
-    
+
     class Meta:
         ordering = ['title']
 
@@ -110,7 +112,7 @@ class Completion(models.Model):
                                           null=True,
                                           on_delete=models.SET_NULL)
     note = models.TextField(default='Notes for this lesson:')
-
+    image = models.ImageField(upload_to='learn/images/', blank=True, null=True)
 
     class Meta:
         unique_together = [['user', 'lesson']]
@@ -124,6 +126,12 @@ class Completion(models.Model):
     def test_completion(self):
         ''' Test that challenge succesfuly posted'''
         # TBD code that tests passing this lesson.
+        if self.lesson.challenge_type == Lesson.IMAGE:
+            if not self.image:
+                return False
+            else:
+                return True
+
         if self.lesson.challenge_type != Lesson.NOTHING:
             if not self.challenge_link:
                 return False

@@ -313,7 +313,40 @@
         {% endif %}
         <!-- END OF YouTube TASK -->
 
+        <!-- Immage TASK: -->
+        {% if completion.lesson.challenge_type == 'IM' %}
+          {% if completion.test_completion %}
+            <h2>נפלא! בצעת את המשימה</h2>
+          {% else %}
+            <h2>יש לבצע משימה לפני מעבר לשיעור הבא
+                <a href="#">
+                  <i class="far fa-question-circle"></i> <small></small>
+                </a>
+            </h2>
 
+          {% endif %}
+          <p class="{% if completion.test_completion %}text-muted{% endif %}">
+            {{ completion.lesson.challenge|safe }} {% if completion.test_completion %}(בוצע){% endif %}<br>
+          </p>
+          <br>
+
+          <form class="border" action={% url 'learn:image_post' completion_pk=completion.pk %} method = "post" enctype="multipart/form-data">
+            <div class="form-group">
+            {% csrf_token %}
+            {{ form.as_p }}
+            </div>
+          <button type="submit">שלח קובץ תמונה {% if completion.test_completion %}אחר{% endif %}</button>
+          </form>
+
+          <br>
+
+
+          {% if completion.test_completion %}
+            <img src="{{ completion.image.url }}" alt="" width=100%>
+
+          {% endif %}
+        {% endif %}
+        <!-- END OF Immage TASK -->
 
       </div>
 

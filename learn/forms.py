@@ -1,5 +1,5 @@
 from django import forms
-from .models import Lesson, Course
+from .models import Lesson, Course, Completion
 from django.utils.translation import ugettext_lazy as _
 
 class ChallengeForm(forms.Form):
@@ -37,4 +37,9 @@ class CourseForm(forms.ModelForm):
                   'description': _('תאור'),
                   'image': _('תמונה'),
                   }
- 
+
+class FileForm(forms.ModelForm):
+
+    class Meta:
+        model = Completion
+        fields = ['image']

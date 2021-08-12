@@ -5,7 +5,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from .models import Course, Lesson, Registration, Completion
 from programs.models import Program
-from .forms import LessonUpdateForm, CourseForm
+from .forms import LessonUpdateForm, CourseForm, FileForm
 from main.models import Profile
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.admin.views.decorators import staff_member_required
@@ -196,6 +196,7 @@ class CompletionDetailView(LoginRequiredMixin, DetailView):
         courses_registered = Registration.objects.filter(user=self.request.user)
         context['courses_registered'] = courses_registered
         context['user_course_completion_set'] = user_course_completion_set
+        context['form'] = FileForm
         try:
             registration = Registration.objects.get(user=self.request.user,
                                                     course=self.object.lesson.course)
@@ -339,6 +340,33 @@ def youtube_post(request, completion_pk):
 
     #return reverse('learn:completion_detail', kwargs={"pk": completion_pk})
     return redirect('learn:completion_detail', pk=completion_pk)
+
+@login_required
+def image_post(request, completion_pk):
+    if request.method == 'POST':
+        print(1)
+        instance = Completion.objects.get(pk=completion_pk)
+        form = FileForm(request.POST, request.FILES, instance=instance)
+        print(form)
+        print(completion_pk)
+        if form.is_valid():
+            print(2)
+            form.save()
+            print(3)
+
+    return redirect('learn:completion_detail', pk=completion_pk)
+
+    #     try:
+    #         completion = Completion.objects.get(user=request.user, pk=completion_pk)
+    #         completion.image = request.FILES.get('myfile')
+    #         print(completion.image)
+    #         completion.save()
+    #         print(2)
+    #     except:
+    #         pass
+    #
+    # #return reverse('learn:completion_detail', kwargs={"pk": completion_pk})
+    # return redirect('learn:completion_detail', pk=completion_pk)
 
 
 @staff_member_required
