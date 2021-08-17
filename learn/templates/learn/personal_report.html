@@ -32,6 +32,11 @@
             <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ completion.challenge_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           {% endif %}
         <!--  end of Youtube TASK -->
+          <!--  image TASK -->
+            {% if completion.lesson.challenge_type == 'IM' %}
+              <img src="{{ completion.image.url }}" alt="" width=100%>
+            {% endif %}
+        <!--  end of image TASK -->
           {% if completion.lesson.challenge_type == 'TI' %}
           <h1>{{ completion.challenge_link }}</h1>
             <iframe width="725" height="453" src="https://www.tinkercad.com/embed/{{ completion.challenge_link }}?editbtn=1" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>

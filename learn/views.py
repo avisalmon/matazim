@@ -344,15 +344,10 @@ def youtube_post(request, completion_pk):
 @login_required
 def image_post(request, completion_pk):
     if request.method == 'POST':
-        print(1)
         instance = Completion.objects.get(pk=completion_pk)
         form = FileForm(request.POST, request.FILES, instance=instance)
-        print(form)
-        print(completion_pk)
         if form.is_valid():
-            print(2)
             form.save()
-            print(3)
 
     return redirect('learn:completion_detail', pk=completion_pk)
 
