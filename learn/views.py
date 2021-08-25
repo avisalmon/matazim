@@ -568,7 +568,8 @@ class OrderAdminList(LoginRequiredMixin, ListView):
                 batch.save()
             context['batches'] = batches
             if self.request.user.profile.is_supplier:
-                context['supplier_batches'] = Batch.objects.filter(owner=self.request.user)
+                print('Supplier quiery')
+                context['supplier_batches'] = Batch.objects.filter(suppliers__in=[self.request.user])
         except:
             pass
         return context

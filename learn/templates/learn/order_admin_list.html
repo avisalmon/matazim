@@ -12,8 +12,7 @@
 <ul>
   {% for order in ready_orders %}
     <li>
-      {{ order }}
-      <a href={% url 'learn:order_detail' order.pk %} target="_blank" >Details</a> ;
+      <a href={% url 'learn:order_detail' order.pk %} target="_blank" >{{ order }}</a> ;
     </li>
   {% endfor %}
 </ul>
@@ -29,14 +28,14 @@
     </li>
   {% endfor %}
 </ul>
-<br><hr>
+<br><hr><hr>
 {% endif %}
 
 <!-- Supplier View -->
 {% if user.profile.is_supplier %}
   <h2>Supply View for {{ user }}</h2>
   {% for batch in supplier_batches %}
-    <p><b><a href={% url 'learn:batch_detail' batch.pk  %}>{{ batch }} - {{ batch.description }}</a></b></p>
+    <h2><b><a href={% url 'learn:batch_detail' batch.pk  %}>{{ batch }}</a></b></h2>
     <p>
       <span {% if batch.done %} class="p-3 mb-2 bg-success text-white" {% endif %}>
         Batch size: {{ batch.amount }} --> left slots: {{ batch.amount_left }}
@@ -46,6 +45,7 @@
       Batch {% if not batch.done %}not{% endif %} Done
     </p>
     <h5>orders</h5>
+    {% if batch.orders.all %}
 
     <table class="table">
       <thead class="thead-dark">
@@ -56,42 +56,50 @@
           <th scope="col">Printed</th>
           <th scope="col">Sent</th>
         </tr>
-</thead>
-<tbody>
-  {% for order in batch.orders.all %}
-  <tr>
-    <td><a target="_blank" href={% url 'learn:order_detail' order.pk %}>{{ order }}</a></td>
-    <td>{{ order.address }}</td>
-    <td><a href="{{ order.file.url }}">{{ order.filename }}</a></td>
-    <td>
-      {% if not order.printed %}
-        <a href={% url 'learn:order_mark_printed' order.pk %}><i class="far fa-square"></i></a>
-      {% else %}
-        <a href={% url 'learn:order_mark_unprinted' order.pk %} ><i class="far fa-check-square"></i></a>
-      {% endif %}
-    </td>
-    <td>
-      {% if not order.sent %}
-        <a href={% url 'learn:order_mark_sent' order.pk %}><i class="far fa-square"></i></a>
-      {% else %}
-        <a href={% url 'learn:order_mark_unsent' order.pk %} ><i class="far fa-check-square"></i> {{ order.sent_date }}</a>
-      {% endif %}
-    </td>
-  </tr>
-  {% endfor %}
+    </thead>
+    <tbody>
+      {% for order in batch.orders.all %}
+      <tr>
+        <td><a target="_blank" href={% url 'learn:order_detail' order.pk %}>{{ order }}</a></td>
+        <td>{{ order.address }}</td>
+        <td><a href="{{ order.file.url }}">{{ order.filename }}</a></td>
+        <td>
+          {% if not order.printed %}
+            <a href={% url 'learn:order_mark_printed' order.pk %}><i class="far fa-square"></i></a>
+          {% else %}
+            <a href={% url 'learn:order_mark_unprinted' order.pk %} ><i class="far fa-check-square"></i></a>
+          {% endif %}
+        </td>
+        <td>
+          {% if not order.sent %}
+            <a href={% url 'learn:order_mark_sent' order.pk %}><i class="far fa-square"></i></a>
+          {% else %}
+            <a href={% url 'learn:order_mark_unsent' order.pk %} ><i class="far fa-check-square"></i> {{ order.sent_date }}</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
 
-</tbody>
-</table>
+    </tbody>
+  </table>
+
+  {% else %}
+    <h3 class="text-danger">No orders in batch yet</h3>
+  {% endif %}
 
   {% endfor %}
 {% endif %}
+<br><hr><hr>
 
 <!-- Admin Batch status -->
 {% if user.is_staff %}
   <h2>All Batches in the system (Admin View)</h2><hr><hr>
   {% for batch in batches %}
   <p><b><a href={% url 'learn:batch_detail' batch.pk  %}>{{ batch }} - {{ batch.description }}</a></b></p>
-  <p>owner: {{ batch.owner }} ;
+  <p>supplier:
+      {% for supplier in batch.suppliers.all %}
+      {{ supplier }}
+      {% endfor %};
     <span {% if batch.completed %} class="p-3 mb-2 bg-success text-white" {% endif %}>
   batch size: {{ batch.amount }} --> left slots: {{ batch.amount_left }}
     </span>
