@@ -1,0 +1,91 @@
+{% extends "main/base.html" %}
+{% block content %}
+<div class="container">
+<h1>All order status -
+  {% if user.is_staff %}
+  Admin
+  {% endif %}
+  {% if user.profile.is_supplier %} Supplier{% endif %} view</h1>
+
+{% if user.is_staff %}
+<h3>Orders ready that needs to go to a batch:</h3>
+<ul>
+  {% for order in ready_orders %}
+    <li>
+      {{ order }}
+      <a href={% url 'learn:order_detail' order.pk %} target="_blank" >Details</a> ;
+    </li>
+  {% endfor %}
+</ul>
+<br><hr>
+
+<h3>Orders NOT ready:</h3>
+<ul>
+  {% for order in not_ready_orders %}
+    <li>
+      {{ order }} ;
+      <a href={% url 'learn:order_detail' order.pk %} target="_blank" >Details</a> ;
+      {{ order.error }}
+    </li>
+  {% endfor %}
+</ul>
+<br><hr>
+{% endif %}
+
+<!-- Supplier View -->
+{% if user.profile.is_supplier %}
+  <h2>Supply View for {{ user }}</h2>
+  {% for batch in supplier_batches %}
+    <p><b><a href={% url 'learn:batch_detail' batch.pk  %}>{{ batch }}</a></b></p>
+    <p>owner: {{ batch.owner }}</p>
+    <p>amount: {{ batch.amount }} --> left: {{ batch.amount_left }}</p>
+    <p
+      {% if batch.done %} class="p-3 mb-2 bg-success text-white" {% endif %}>
+      Batch Done = {{ batch.done }}
+    </p>
+    <h5>orders</h5>
+      {% for order in batch.orders.all %}
+        <p>
+          <a href={% url 'learn:order_detail' order.pk %}>{{ order }}</a>
+            {% if not order.printed %}
+              <a href={% url 'learn:order_mark_printed' order.pk %}>Mark print</a>
+            {% else %}
+              <a href={% url 'learn:order_mark_unprinted' order.pk %} >Mark unprint</a>
+            {% endif %}
+            ;
+            {% if not order.sent %}
+              <a href={% url 'learn:order_mark_sent' order.pk %}>Mark sent</a>
+            {% else %}
+              <a href={% url 'learn:order_mark_unsent' order.pk %} >Mark unSent</a>
+            {% endif %}
+            ;
+            <a href="{{ order.file.url }}">{{ order.filename }}</a> ;
+            {{ order.address }}
+        </p>
+      {% endfor %}
+    <br>
+  {% endfor %}
+{% endif %}
+
+<!-- Admin Batch status -->
+{% if user.is_staff %}
+  <h2>All Batches in the system (Admin View)</h2>
+  {% for batch in batches %}
+  <p><b><a href={% url 'learn:batch_detail' batch.pk  %}>{{ batch }}</a></b></p>
+  <p>{{ batch.title }}</p>
+  <p>owner: {{ batch.owner }}</p>
+  <p>amount: {{ batch.amount }}</p>
+  <p>left: {{ batch.amount_left }}</p>
+  <p>completed = {{ batch.completed }}</p>
+  <h5>orders</h5>
+    {% for order in batch.orders.all %}
+      <p><a href={% url 'learn:order_detail' order.pk %}>{{ order }}</a></p>
+    {% endfor %}
+  <br>
+  {% endfor %}
+{% endif %}
+
+</div>
+
+
+{% endblock %}

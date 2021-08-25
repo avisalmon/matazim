@@ -1,0 +1,19 @@
+{% extends "main/base.html" %}
+{% block content %}
+<div class="container">
+  <h2>{{ batch }}</h2>
+  <p>owner: {{ batch.owner }} - {{ batch.owner_mail }}</p>
+  <p>Description: {{ batch.description|safe }}</p>
+  <p>UUID: {{ batch.unique_id }}</p>
+  <p>Refere mail to: https://www.matazim.co.il/batch/new_order/{{ batch.unique_id }}</p>
+  <p>Size of batch: {{ batch.amount }}</p>
+  <p>Left: {{ batch.amount_left }}</p>
+  <p>Program: {{ batch.program }}</p>
+  <p>Course: {{ batch.course }}</p>
+  <br><hr>
+  <h2>Orders:</h2>
+  {% for order in orders %}
+    {{ order }}
+  {% endfor %}
+</div>
+{% endblock content %}

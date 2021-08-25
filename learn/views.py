@@ -3,9 +3,9 @@ from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
-from .models import Course, Lesson, Registration, Completion
+from .models import Course, Lesson, Registration, Completion, Batch, Order
 from programs.models import Program
-from .forms import LessonUpdateForm, CourseForm, FileForm
+from .forms import LessonUpdateForm, CourseForm, FileForm, BatchForm
 from main.models import Profile
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.admin.views.decorators import staff_member_required
@@ -457,3 +457,212 @@ class CourseViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     # in postman Authorization Token blabla
+
+# ********* Batches and orders ***********
+class BatchListView(LoginRequiredMixin, ListView):
+    model = Batch
+
+    def get_context_data(self, **kwargs):
+        context = super(BatchListView, self).get_context_data(**kwargs)
+        try:
+            context['my_batches_orders'] = Batch.objects.filter(owner=self.request.user)
+            context['my_batches_manufactor'] = Batch.objects.filter(suppliers__in=[self.request.user])
+        except:
+            pass
+        return context
+
+
+class BatchDetailView(LoginRequiredMixin, DetailView):
+    model = Batch
+
+    def get_context_data(self, **kwargs):
+        context = super(BatchDetailView, self).get_context_data(**kwargs)
+        try:
+            context['orders'] = Order.objects.filter(batch=self.object)
+        except:
+            pass
+        return context
+
+
+class OrderCreateView(LoginRequiredMixin, CreateView):
+    model = Order
+    fields = ['address', 'email', 'phone', 'file' ]
+
+    def dispatch(self, *args, **kwargs):
+        print('dispatch')
+        try:
+            course = Course.objects.get(pk=self.kwargs['course_pk'])
+            existing_order = Order.objects.get(user=self.request.user, course=course)
+            if existing_order:
+                print(f'found existing order {existing_order}')
+                return redirect('learn:order_detail', pk=existing_order.pk)
+        except:
+            pass
+        return super().dispatch(*args, **kwargs)
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.user = self.request.user
+        try:
+            course = Course.objects.get(pk=self.kwargs['course_pk'])
+        except:
+            raise Http404
+
+        obj.course = course
+
+        obj.check_if_approved()
+        obj.save()
+
+        return super().form_valid(form)
+
+class OrderDetailView(LoginRequiredMixin, DetailView):
+    model = Order
+
+    def get_object(self):
+        order = super(OrderDetailView, self).get_object()
+        order.check_if_approved()
+        order.save()
+        return order
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderDetailView, self).get_context_data(**kwargs)
+        # self.object.check_if_approved()
+        context['form'] = BatchForm
+
+        return context
+
+
+class OrderUpdateView(LoginRequiredMixin, UpdateView):
+    model=Order
+    fields = ['address', 'email', 'phone', 'file']
+
+    def get_object(self):
+        order = super(OrderUpdateView, self).get_object()
+        if not order.user == self.request.user:
+            raise Http404('You dontt have permission to do this. go away you hacker')
+        return order
+
+
+class OrderAdminList(LoginRequiredMixin, ListView):
+    model=Order
+    template_name = 'learn/order_admin_list.html'
+
+    def dispatch(self, *args, **kwargs):
+        if not (self.request.user.is_staff or self.request.user.profile.is_supplier):
+            return redirect('/')
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderAdminList, self).get_context_data(**kwargs)
+        try:
+            context['ready_orders'] = Order.objects.filter(error='', batch=None)
+            context['not_ready_orders'] = Order.objects.exclude(error='')
+            batches = Batch.objects.all()
+            for batch in batches:
+                batch.update_batch()
+                batch.save()
+            context['batches'] = batches
+            if self.request.user.profile.is_supplier:
+                context['supplier_batches'] = Batch.objects.filter(owner=self.request.user)
+        except:
+            pass
+        return context
+
+def assign_to_batch(request, order_pk):
+    if request.method == 'POST':
+        print('**** starting updates...')
+        try:
+            order = Order.objects.get(pk=order_pk)
+            print(f'the order to process {order} ')
+        except:
+            print('Cound not find the order')
+            return redirect('learn:order_detail', pk=order_pk)
+
+        print('checking for old batch')
+        old_batch = False
+        if order.batch:
+            try:
+                old_batch = Batch.objects.get(pk=order.batch.pk)
+                print(f'got the old batch {old_batch}')
+            except:
+                print('Could not find old batch')
+                return redirect('learn:order_detail', pk=order_pk)
+
+        form = BatchForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            # order now has the new batch updated.
+            try:
+                print('updating batches...')
+                new_batch = Batch.objects.get(pk=order.batch.pk)
+                print(f'the new batch is now {new_batch}')
+                orders_of_new_batch = Order.objects.filter(batch=order.batch)
+                len_of_new_batch = len(orders_of_new_batch)
+                print('Updating new batch')
+                new_batch.update_batch()
+                new_batch.save()
+                if old_batch:
+                    print('updating old batch')
+                    old_batch.update_batch()
+                    old_batch.save()
+            except:
+                print('Error in updating batches')
+
+    return redirect('learn:order_admin_list')
+
+def order_remove_batch(request, order_pk):
+    try:
+        order = Order.objects.get(pk=order_pk)
+        if order.batch:
+            order.batch = None
+        order.save()
+    except:
+        pass
+
+    return redirect('learn:order_admin_list')
+
+def order_mark_printed(request, order_pk):
+    try:
+        print(order_pk)
+        order = Order.objects.get(pk=order_pk)
+        print('whh')
+        order.printed = True
+        order.save()
+    except:
+        pass
+
+    return redirect('learn:order_admin_list')
+
+def order_mark_unprinted(request, order_pk):
+    try:
+        print(order_pk)
+        order = Order.objects.get(pk=order_pk)
+        order.printed = False
+        order.save()
+    except:
+        pass
+
+    return redirect('learn:order_admin_list')
+
+def order_mark_sent(request, order_pk):
+    try:
+        print(order_pk)
+        order = Order.objects.get(pk=order_pk)
+        print('whh')
+        order.sent = True
+        order.save()
+    except:
+        pass
+
+    return redirect('learn:order_admin_list')
+
+def order_mark_unsent(request, order_pk):
+    try:
+        print(order_pk)
+        order = Order.objects.get(pk=order_pk)
+        order.sent = False
+        order.save()
+    except:
+        pass
+
+    return redirect('learn:order_admin_list')

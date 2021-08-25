@@ -33,6 +33,7 @@ class Profile(models.Model):
     fake = models.BooleanField(default=False)
     top_goal = models.TextField(max_length=5000, blank=True)
     program_conn = models.ForeignKey("programs.Program", blank=True, null=True, on_delete=models.CASCADE)
+    is_supplier = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Profile for {self.user}'

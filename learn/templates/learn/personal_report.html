@@ -33,7 +33,7 @@
           {% endif %}
         <!--  end of Youtube TASK -->
           <!--  image TASK -->
-            {% if completion.lesson.challenge_type == 'IM' %}
+            {% if completion.lesson.challenge_type == 'IM' and completion.image.url %}
               <img src="{{ completion.image.url }}" alt="" width=100%>
             {% endif %}
         <!--  end of image TASK -->

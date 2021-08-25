@@ -1,5 +1,5 @@
 from django import forms
-from .models import Lesson, Course, Completion
+from .models import Lesson, Course, Completion, Order, Batch
 from django.utils.translation import ugettext_lazy as _
 
 class ChallengeForm(forms.Form):
@@ -43,3 +43,13 @@ class FileForm(forms.ModelForm):
     class Meta:
         model = Completion
         fields = ['image']
+
+class BatchForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['batch']
+
+    def __init__(self, *args, **kwargs):
+        super(BatchForm, self).__init__(*args, **kwargs)
+        self.fields['batch'] = forms.ModelChoiceField(queryset=Batch.objects.filter(completed=False))
+        # instance is the Lesson object passed here. you can filter upon it. -- filter(course=kwargs['instance'].course

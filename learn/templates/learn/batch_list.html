@@ -1,0 +1,35 @@
+{% extends "main/base.html" %}
+{% block content %}
+
+<div class="container">
+  {% if my_batches_orders or my_batches_manufactor %}
+    {% if user.is_staff %}
+      <h2>As Staff member you can see all batches in the system:</h2>
+        {% for batch in batch_list.all %}
+          <a href={% url 'learn:batch_detail' batch.id %}>{{ batch }}</a>  
+        {% endfor %}
+    {% else  %}
+
+      {% if my_batches_orders %}
+        <h2>Your ordered Batches</h2>
+        {% for batch in my_batches_orders %}
+          {{ batch }}
+        {% endfor %}
+      {% endif %}
+
+      {% if my_batches_manufactor %}
+        <h2>You manufactor these orders</h2>
+        {% for batch in my_batches_manufactor %}
+          {{ batach}}
+        {% endfor %}
+      {% endif %}
+
+    {% endif %}
+
+  {% else %}
+  <h1>You have no related orders or batchs</h1>
+  {% endif %}
+
+</div>
+
+{% endblock %}

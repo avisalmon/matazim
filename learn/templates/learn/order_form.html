@@ -1,0 +1,17 @@
+{% extends "main/base.html" %}
+{% block content %}
+<div class="container hebrew text-right">
+  <h1>בקשת הדפסה</h1>
+  <p>You are invited to ask for a print if you are ready</p>
+
+  <form class="border" method = "post" enctype="multipart/form-data">
+    <div class="form-group">
+    {% csrf_token %}
+    {{ form.as_p }}
+    </div>
+  <button type="submit">שלח בקשה</button>
+  </form>
+
+</div>
+
+{% endblock %}

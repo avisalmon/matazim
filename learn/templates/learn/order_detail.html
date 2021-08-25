@@ -1,0 +1,52 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container hebrew text-right">
+
+  <h1>פרטי בקשת הזמנת הדפסה</h1>
+  <h3>לקורס {{ order.course }}</h3>
+  <p>User {{ order.user }}</p>
+
+  {% if order.error %}
+    <h2 class="text-danger">{{ order.error }}</h2>
+    <h3><a href={% url 'learn:course_detail' order.course.pk %}>לקורס</a></h3>
+
+  {% else %}
+    {% if order.batch %}
+      <h3>
+        הבקשה אושרה ונשלחה להדפסה אצל
+      {{ order.batch.owner_mail }}
+      </h3>
+    {% else %}
+      <h3>הבקשה שלך תקינה ומלאה - לאחר שנבדוק נדפיס ונשלח לפי הכתובת </h3>
+    {% endif %}
+
+    <p>כתובת: {{ order.address }}</p>
+    <p>טלפון לברורים: {{ order.phone }}</p>
+    <p>email: <a href="mailto: {{ order.email }}">{{ order.email }}</a></p>
+    <p><a href="{{ order.file.url }}">{{ order.filename }}</a></p>
+    <p>תמיד תוכלו לחזור לדף זה לסטטוס ועדכון</p>
+  {% endif %}
+  <h3><a href={% url 'learn:order_update' order.pk %}>לעדכון הזמנה</a></h3>
+  <hr>
+  {% if user.is_staff %}
+    <form class="border" action={% url 'learn:assign_to_batch' order_pk=order.pk %} method = "post" enctype="multipart/form-data">
+      <div class="form-group">
+      {% csrf_token %}
+      {{ form.as_p }}
+      </div>
+    <button type="submit">send</button>
+    </form>
+    {% if order.batch %}
+    <h3>Your order is directed to batch:</h3>
+    <p><a href={% url 'learn:batch_detail' order.batch.pk %}>{{ order.batch }}</a></p>
+    <p><a href={% url 'learn:remove_batch_from_order' order.pk %}>Remove from batches</a></p>
+    {% endif %}
+
+  {% endif %}
+
+
+
+
+</div>
+{% endblock %}

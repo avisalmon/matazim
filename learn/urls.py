@@ -84,6 +84,29 @@ urlpatterns = [
     path('report/program/<int:pk>', views.program_report,
          name='program_report'),
 
-    
-
+    # *** Batch and orders
+    path('batch/', views.BatchListView.as_view(),
+         name='batch_list'),
+    path('batch/<int:pk>', views.BatchDetailView.as_view(),
+         name='batch_detail'),
+    path('order/create/<int:course_pk>', views.OrderCreateView.as_view(),
+         name='order_create'),
+    path('order/<int:pk>', views.OrderDetailView.as_view(),
+         name='order_detail'),
+    path('order/update/<int:pk>', views.OrderUpdateView.as_view(),
+         name='order_update'),
+    path('order/admin/list/', views.OrderAdminList.as_view(),
+         name='order_admin_list'),
+    path('order/assign_to_batch/<int:order_pk>', views.assign_to_batch,
+         name='assign_to_batch'),
+    path('order/remove_batch/<int:order_pk>', views.order_remove_batch,
+         name='remove_batch_from_order'),
+    path('order/mark_printed/<int:order_pk>', views.order_mark_printed,
+         name='order_mark_printed'),
+    path('order/mark_unprinted/<int:order_pk>', views.order_mark_unprinted,
+         name='order_mark_unprinted'),
+    path('order/mark_sent/<int:order_pk>', views.order_mark_sent,
+         name='order_mark_sent'),
+    path('order/mark_unsent/<int:order_pk>', views.order_mark_unsent,
+         name='order_mark_unsent'),
 ]

@@ -7,7 +7,7 @@
 
 {% for profile in profiles %}
   <p><u>
-    <a href={% url 'main:profile' profile.pk %}><b>({{ profile.user }}) {{ profile.user.first_name }} {{ profile.user.last_name }};</b>
+    <a href={% url 'main:profile' profile.pk %} target="_blank" ><b>({{ profile.user }}) {{ profile.user.first_name }} {{ profile.user.last_name }};</b>
       {% if profile.level %}
         {{ profile.level }} <i class="fas fa-medal"></i>
       {% endif %}

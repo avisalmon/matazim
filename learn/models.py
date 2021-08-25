@@ -1,9 +1,12 @@
 from django.db import models
 from django.shortcuts import reverse
 from django.contrib.auth import get_user_model
+from programs.models import Program
 #from tinymce.models import HTMLField
 import re
 import datetime
+import uuid
+import os
 
 
 class Course(models.Model):
@@ -204,3 +207,111 @@ class Registration(models.Model):
             return True
         else:
             return False
+
+
+class Batch(models.Model):
+    ''' bulk order of several items '''
+    title = models.CharField(max_length=50)
+    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    owner_mail = models.EmailField(max_length=250, blank=True)
+    description = models.TextField(max_length=150, blank=True)
+    unique_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    amount = models.IntegerField(default=1)
+    amount_left = models.IntegerField(default=999)
+    suppliers = models.ManyToManyField(get_user_model(), related_name='batches')
+    program = models.ForeignKey(Program, null=True, blank=True, on_delete=models.SET_NULL)
+    course = models.ForeignKey(Course, null=True, blank=True, on_delete=models.SET_NULL)
+    completed = models.BooleanField(default=False)
+    done = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('learn:batch_detail', kwargs={'pk': self.pk})
+
+    # @property
+    # def aligable(self):
+    #     return True
+
+    def update_batch(self):
+        print(f' updating batch {self}')
+        orders = Order.objects.filter(batch=self)
+        print(f'orders are {orders}')
+        print(f'len of orders {len(orders)}')
+        print(f'amount={self.amount}')
+        self.amount_left = self.amount - len(orders)
+        print(f'amount left = {self.amount_left}')
+        if self.amount_left <= 0:
+            self.completed = True
+        else:
+            self.completed = False
+        if self.completed:
+            #check for Does
+            self.done = True
+            for order in orders:
+                if not (order.printed and order.sent):
+                    self.done = False
+                    break
+
+        print(f'complitted flag = {self.completed}')
+
+class Order(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
+    batch = models.ForeignKey(Batch, null=True, on_delete=models.SET_NULL, related_name='orders')
+    order_date = models.DateField(null=True, blank=True)
+    address = models.CharField(max_length=500, verbose_name=u"כתובת למשלוח", blank=False)
+    email = models.EmailField(max_length=250, verbose_name=u"דואר אלקטרוני", blank=False)
+    phone = models.CharField(max_length=15, verbose_name=u"טלפון", blank=False)
+    file = models.FileField(upload_to='learn/files/', verbose_name=u"צרף קובץ", blank=True, null=True)
+    printed = models.BooleanField(default=False)
+    sent = models.BooleanField(default=False)
+    supplier_comment = models.CharField(max_length=150, blank=True, null=True)
+    error = models.CharField(max_length=250, default='')
+
+    def __str__(self):
+        return f'Order for: {self.user} - course: {self.course}'
+
+    def get_absolute_url(self):
+        return reverse('learn:order_detail', kwargs={'pk': self.pk})
+
+    def check_if_approved(self):
+        self.error= ''
+        print(f'checking approval for order {self}')
+        try:
+            registration = Registration.objects.get(user=self.user, course=self.course)
+        except:
+            self.error = f'You did not register yet to the training - { self.course }'
+            if self.batch:
+                self.batch = None
+            return False
+        if not registration.complete_date:
+            self.error = f'You have to complete the course {{ self.batch.course }} - you did so far {{ registration.precentage }}% of it'
+            if self.batch:
+                self.batch = None
+            return False
+        if not self.file:
+            self.error = f'You need to upload a file for printing. stl format'
+            if self.batch:
+                self.batch = None
+            return False
+
+        filename = str(self.file)
+        if not '.stl' in filename:
+            self.error = 'The file you attache must be an .stl file'
+            if self.batch:
+                self.batch = None
+            return False
+
+        if not (self.address and self.email and self.phone and self.file):
+            print(1)
+            self.error = 'You can get your print but you need to fill all details (address, phone, email and a file)'
+            if self.batch:
+                self.batch = None
+            return False
+        return True
+
+    @property
+    def filename(self):
+        return os.path.basename(self.file.name)
