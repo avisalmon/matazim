@@ -36,52 +36,73 @@
 {% if user.profile.is_supplier %}
   <h2>Supply View for {{ user }}</h2>
   {% for batch in supplier_batches %}
-    <p><b><a href={% url 'learn:batch_detail' batch.pk  %}>{{ batch }}</a></b></p>
-    <p>owner: {{ batch.owner }}</p>
-    <p>amount: {{ batch.amount }} --> left: {{ batch.amount_left }}</p>
+    <p><b><a href={% url 'learn:batch_detail' batch.pk  %}>{{ batch }} - {{ batch.description }}</a></b></p>
+    <p>
+      <span {% if batch.done %} class="p-3 mb-2 bg-success text-white" {% endif %}>
+        Batch size: {{ batch.amount }} --> left slots: {{ batch.amount_left }}
+      </span></p>
     <p
       {% if batch.done %} class="p-3 mb-2 bg-success text-white" {% endif %}>
-      Batch Done = {{ batch.done }}
+      Batch {% if not batch.done %}not{% endif %} Done
     </p>
     <h5>orders</h5>
-      {% for order in batch.orders.all %}
-        <p>
-          <a href={% url 'learn:order_detail' order.pk %}>{{ order }}</a>
-            {% if not order.printed %}
-              <a href={% url 'learn:order_mark_printed' order.pk %}>Mark print</a>
-            {% else %}
-              <a href={% url 'learn:order_mark_unprinted' order.pk %} >Mark unprint</a>
-            {% endif %}
-            ;
-            {% if not order.sent %}
-              <a href={% url 'learn:order_mark_sent' order.pk %}>Mark sent</a>
-            {% else %}
-              <a href={% url 'learn:order_mark_unsent' order.pk %} >Mark unSent</a>
-            {% endif %}
-            ;
-            <a href="{{ order.file.url }}">{{ order.filename }}</a> ;
-            {{ order.address }}
-        </p>
-      {% endfor %}
-    <br>
+
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">User</th>
+          <th scope="col">Address</th>
+          <th scope="col">File</th>
+          <th scope="col">Printed</th>
+          <th scope="col">Sent</th>
+        </tr>
+</thead>
+<tbody>
+  {% for order in batch.orders.all %}
+  <tr>
+    <td><a target="_blank" href={% url 'learn:order_detail' order.pk %}>{{ order }}</a></td>
+    <td>{{ order.address }}</td>
+    <td><a href="{{ order.file.url }}">{{ order.filename }}</a></td>
+    <td>
+      {% if not order.printed %}
+        <a href={% url 'learn:order_mark_printed' order.pk %}><i class="far fa-square"></i></a>
+      {% else %}
+        <a href={% url 'learn:order_mark_unprinted' order.pk %} ><i class="far fa-check-square"></i></a>
+      {% endif %}
+    </td>
+    <td>
+      {% if not order.sent %}
+        <a href={% url 'learn:order_mark_sent' order.pk %}><i class="far fa-square"></i></a>
+      {% else %}
+        <a href={% url 'learn:order_mark_unsent' order.pk %} ><i class="far fa-check-square"></i> {{ order.sent_date }}</a>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+
+</tbody>
+</table>
+
   {% endfor %}
 {% endif %}
 
 <!-- Admin Batch status -->
 {% if user.is_staff %}
-  <h2>All Batches in the system (Admin View)</h2>
+  <h2>All Batches in the system (Admin View)</h2><hr><hr>
   {% for batch in batches %}
-  <p><b><a href={% url 'learn:batch_detail' batch.pk  %}>{{ batch }}</a></b></p>
-  <p>{{ batch.title }}</p>
-  <p>owner: {{ batch.owner }}</p>
-  <p>amount: {{ batch.amount }}</p>
-  <p>left: {{ batch.amount_left }}</p>
-  <p>completed = {{ batch.completed }}</p>
+  <p><b><a href={% url 'learn:batch_detail' batch.pk  %}>{{ batch }} - {{ batch.description }}</a></b></p>
+  <p>owner: {{ batch.owner }} ;
+    <span {% if batch.completed %} class="p-3 mb-2 bg-success text-white" {% endif %}>
+  batch size: {{ batch.amount }} --> left slots: {{ batch.amount_left }}
+    </span>
+  </p>
   <h5>orders</h5>
     {% for order in batch.orders.all %}
-      <p><a href={% url 'learn:order_detail' order.pk %}>{{ order }}</a></p>
+      <a href={% url 'learn:order_detail' order.pk %}>{{ order }}</a>
+      {% if order.printed %} printed ; {% endif %} {% if order.sent %} sent: {{ order.sent_date }} {% endif %}
+       <br>
     {% endfor %}
-  <br>
+  <br><hr><hr>
   {% endfor %}
 {% endif %}
 

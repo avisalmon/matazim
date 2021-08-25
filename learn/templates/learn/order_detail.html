@@ -27,9 +27,17 @@
     <p><a href="{{ order.file.url }}">{{ order.filename }}</a></p>
     <p>תמיד תוכלו לחזור לדף זה לסטטוס ועדכון</p>
   {% endif %}
+  {% if order.user == user %}
   <h3><a href={% url 'learn:order_update' order.pk %}>לעדכון הזמנה</a></h3>
+  {% endif %}
   <hr>
-  {% if user.is_staff %}
+  {% if order.printed %}
+    <h3>ההזמנה הודפסה</h3>
+  {% endif %}
+  {% if order.sent %}
+    <h3>ההזמנה נשלחה</h3>
+  {% endif %}
+  {% if user.is_staff and not order.printed and not order.sent %}
     <form class="border" action={% url 'learn:assign_to_batch' order_pk=order.pk %} method = "post" enctype="multipart/form-data">
       <div class="form-group">
       {% csrf_token %}
@@ -42,6 +50,13 @@
     <p><a href={% url 'learn:batch_detail' order.batch.pk %}>{{ order.batch }}</a></p>
     <p><a href={% url 'learn:remove_batch_from_order' order.pk %}>Remove from batches</a></p>
     {% endif %}
+    <h4>Status of other batches</h4>
+    {% for batch in batches %}
+      {% if batch != order.batch %}
+        {{ batch }}: {{ batch.amount_left }}/{{ batch.amount }}<br>
+      {% endif  %}
+    {% endfor %}
+
 
   {% endif %}
 

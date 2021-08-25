@@ -528,6 +528,11 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
         context = super(OrderDetailView, self).get_context_data(**kwargs)
         # self.object.check_if_approved()
         context['form'] = BatchForm
+        try:
+            batches = Batch.objects.all()
+            context['batches'] = batches
+        except:
+            pass
 
         return context
 
@@ -648,8 +653,8 @@ def order_mark_sent(request, order_pk):
     try:
         print(order_pk)
         order = Order.objects.get(pk=order_pk)
-        print('whh')
         order.sent = True
+        order.sent_date = datetime.datetime.now()
         order.save()
     except:
         pass
@@ -661,6 +666,7 @@ def order_mark_unsent(request, order_pk):
         print(order_pk)
         order = Order.objects.get(pk=order_pk)
         order.sent = False
+        order.sent_date = None
         order.save()
     except:
         pass

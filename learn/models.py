@@ -267,6 +267,7 @@ class Order(models.Model):
     file = models.FileField(upload_to='learn/files/', verbose_name=u"צרף קובץ", blank=True, null=True)
     printed = models.BooleanField(default=False)
     sent = models.BooleanField(default=False)
+    sent_date = models.DateField(null=True, blank=True, default=None)
     supplier_comment = models.CharField(max_length=150, blank=True, null=True)
     error = models.CharField(max_length=250, default='')
 
