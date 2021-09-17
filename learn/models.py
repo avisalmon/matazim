@@ -288,7 +288,7 @@ class Order(models.Model):
                 self.batch = None
             return False
         if not registration.complete_date:
-            self.error = f'You have to complete the course { self.batch.course } - you did so far { registration.precentage }% of it'
+            self.error = f'You have to complete the course {self.course} - you did so far {registration.precentage}% of it'
             if self.batch:
                 self.batch = None
             return False
