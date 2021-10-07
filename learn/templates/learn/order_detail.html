@@ -21,6 +21,7 @@
       <h3>הבקשה שלך תקינה ומלאה - לאחר שנבדוק נדפיס ונשלח לפי הכתובת </h3>
     {% endif %}
 
+    <p>{{ order.name }}</p>
     <p>כתובת: {{ order.address }}</p>
     <p>טלפון לברורים: {{ order.phone }}</p>
     <p>email: <a href="mailto: {{ order.email }}">{{ order.email }}</a></p>

@@ -261,6 +261,7 @@ class Order(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     batch = models.ForeignKey(Batch, null=True, on_delete=models.SET_NULL, related_name='orders')
     order_date = models.DateField(null=True, blank=True)
+    name = models.CharField(max_length=30, blank=True, null=True, verbose_name=u"שם מלא")
     address = models.CharField(max_length=500, verbose_name=u"כתובת למשלוח", blank=False)
     email = models.EmailField(max_length=250, verbose_name=u"דואר אלקטרוני", blank=False)
     phone = models.CharField(max_length=15, verbose_name=u"טלפון", blank=False)

@@ -486,7 +486,7 @@ class BatchDetailView(LoginRequiredMixin, DetailView):
 
 class OrderCreateView(LoginRequiredMixin, CreateView):
     model = Order
-    fields = ['address', 'email', 'phone', 'file' ]
+    fields = ['address', 'name', 'email', 'phone', 'file' ]
 
     def dispatch(self, *args, **kwargs):
         print('dispatch')
@@ -539,7 +539,7 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
 
 class OrderUpdateView(LoginRequiredMixin, UpdateView):
     model=Order
-    fields = ['address', 'email', 'phone', 'file']
+    fields = ['address', 'name', 'email', 'phone', 'file']
 
     def get_object(self):
         order = super(OrderUpdateView, self).get_object()
