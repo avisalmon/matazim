@@ -89,8 +89,18 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'programs:program_list' %}">תוכניות<span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'programs:facilitator_list' %}">מרחבי יצירה<span class="sr-only">(current)</span></a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              עוד
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="https://docs.google.com/presentation/d/e/2PACX-1vTLlmayfLmeBVDV4X2OlZ9yxUb5UslBiS9bsWbE68StlRcB-zCF9juYez2M5Hs0WxcJ2CBVxALhaoTe/pub?start=false&loop=false&delayms=3000&slide=id.p">מפת דרכים</a></li>
+              <li><a class="dropdown-item" href="https://Makerspace.co.il">מרחבים בישראל</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">לא יקרה כלום</a></li>
+            </ul>
+        </li>
+
           {% if user.is_staff %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'funnel:camp_tree' %}">Funnel<span class="sr-only">(current)</span></a>
