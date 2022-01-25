@@ -2,135 +2,119 @@
 {% load static %}
 
 {% block content %}
-<div class="container hebrew text-right">
 
-<div id="mainJumbo" class="jumbotron ">
-
-  <div class="row">
-    <div class="col">
-      <h1 class="display-4 text-center">האקדמיה למטצים</h1>
-      <h3 class="text-center d-none d-sm-block">מובילים טכנולוגיים צעירים - הרשמו והצטרפו למשחק</h3>
-    </div>
-    <div class="col d-none d-sm-block">
-      <div class="row">
-        <div class="col-1">
-
-        </div>
-        <div class="col border border-info rounded">
-          <p>מטצים – מובילים טכנולוגיים צעירים. תוכנית המתמקדת בהכשרת נוער בגיל צעיר ככל הניתן על מנת להכשיר אותם כמובילים ומדריכים טכנולוגיים כבר בתקופת החטיבה והתיכון. באתר זה תמצאו קורסים בחינם לתכנים טכנולוגיים. כמו כן באתר תמצאו רשימות של תוכניות ארציות ומרחבי יצירה בהם מטצים מוזמנים להשתלב כמדריכים.
-
-</p>
-        </div>
-        <div class="col-1">
-
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-
-  <div id="homeCards" class="container row mt-5">
-  <!-- <div id="homeCards" class="row"> -->
-
-  <div class="col-sm-3 d-flex align-items-stretch">
-    <div class="card">
-      <a href={% url 'learn:course_list' %}>
-        <h5 class="card-title text-center">צא ולמד!</h5>
-      </a>
-      <a href={% url 'learn:course_list' %}>
-        <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'programs/school.png' %}" alt="">
-      </a>
-      <div class="card-body ">
-        <p class="card-text text-right">
-אנחנו מציעים לכם מגוון רחב של קורסים טכנולוגיים. הכל בחינם ותוכלו לעקוב אחרי קצב ההתקדמות שלכם. ככל שתצברו יותר ידע, דרככם להיות מטצ מתקצרת.</p>
-        <!-- <a href={% url 'learn:course_list' %} class="btn btn-primary">אל הקורסים</a> -->
-      </div>
-    </div>
-  </div>
-
-      <div class="col-sm-3 d-flex align-items-stretch">
-          <div class="card">
-            <a href={% url 'programs:program_list' %}>
-              <h5 class="card-title text-center">תוכניות ומיזמים</h5>
-            </a>
-            <a href={% url 'programs:program_list' %}>
-              <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'programs/programs.jpg' %}" height=300 alt="">
-            </a>
-            <div class="card-body">
-              <p class="card-text text-right">רשימת תוכניות ומיזמים טכנולוגיים מגוונים הפועלים ברחבי הארץ. שפע התוכניות הוא גדול ומזמין מטצים להצטרף להדרכה.</p>
-              <!-- <a href={% url 'programs:program_list' %} class="btn btn-primary">לרשימת התוכניות</a> -->
-            </div>
-          </div>
-      </div>
-
-      <div class="col-sm-3 d-flex align-items-stretch">
-          <div class="card">
-            <a href={% url 'programs:facilitator_list' %}>
-              <h5 class="card-title text-center">מרחבי יצירה</h5>
-            </a>
-            <a href={% url 'programs:facilitator_list' %}>
-              <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'programs/makers.png' %}" alt="">
-            </a>
-            <div class="card-body">
-              <p class="card-text text-right">מייקר ספייס. המקומות הכי כיפיים בעולם ליצירה. מדפסות תלת מימד, חותכי לייזר, נגרות, אומנות... המקום שלכם ליצירה.</p>
-              <!-- <a href={% url 'programs:facilitator_list' %} class="btn btn-primary">אל המייקרס</a> -->
-            </div>
-          </div>
-      </div>
-      <div class="col-sm-3 d-flex align-items-stretch">
-          <div class="card">
-            <a href="#">
-              <h5 class="card-title text-center">עתידי</h5>
-            </a>
-            <a href="#">
-              <img class="card-img-top px-4 pt-3 d-none d-sm-inline" src="{% static 'main/coffee.jpg' %}" alt="">
-
-            </a>
-            <div class="card-body">
-              <p class="card-text text-right">אנחנו מתכוונים לבנות כאן מרחב מפגש וירטואלי. הרצאות, מפגשים, פאנלים וסתם בית קפה... או שוקו.
-כמו כן נבנה מערכת לניהול הקטונים ותחרויות אתגר. צפו ועיקבו.
-</p>
-              <!-- <a href="#" class="btn btn-warning">TBD spaces</a> -->
-            </div>
-          </div>
-      </div>
-    </div>
-    <!-- </div> -->
-  </div>
-
+<div class="home_full_page">
+  
 </div>
 
-
-
-<footer class="container jumbotron text-right rtl hebrew">
-  <div class="row">
-    <div class="col-4 text-primary">
-      <a class="dropdown-item text-primary" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfdSveMs64-mPjxRccDCa0TKPQA3Kmcvn9LgtbiafIeYwsIjA/viewform?usp=sf_link">דווח על בעיה</a>
-      {% if user.is_staff %}
-      <a class="dropdown-item text-primary" target="_blank" href="https://github.com/avisalmon/matazim">GitHub</a>
-      <a class="dropdown-item text-primary" target="_blank" href="https://airtable.com/tblzIwe7Vwt9A0qfU/viwzPk0NFxxwqlBQd?blocks=show">Air table (staff only)</a>
-      <a class="dropdown-item text-primary" target="_blank" href={% url 'learn:learn_report' %}>Students report (staff only)</a>
-      {% endif %}
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item text-primary" target="_blank" href="#">ליצירת קשר</a>
+  <div class="home_top a_container">
+    <div class="home_desc">
+      <p>
+        מטצים – מובילים טכנולוגיים צעירים. תוכנית המתמקדת בהכשרת נוער בגיל צעיר ככל הניתן על מנת להכשיר אותם כמובילים ומדריכים טכנולוגיים כבר בתקופת החטיבה והתיכון. באתר זה תמצאו קורסים בחינם לתכנים טכנולוגיים. כמו כן באתר תמצאו רשימות של תוכניות ארציות ומרחבי יצירה בהם מטצים מוזמנים להשתלב כמדריכים.
+      </p>
 
     </div>
-    <div class="col-4">
-        <a class="dropdown-item text-primary" target="_blank" href="">קישור עתידי</a>
-        <a class="dropdown-item text-primary" target="_blank" href="">קישור עתידי</a>
-        <a class="dropdown-item text-primary" target="_blank" href="">קישור עתידי</a>
+    <div class="home_title">
+      <h1>האקדמיה למטצים</h1>
+      <h2>מובילים טכנולוגיים צעירים</h2>
+    </div>
+  </div>
+
+
+<div class="home_cards a_container">
+
+  <!-- Spaces in Israel -->
+  <div class="home_card">
+
+    <div class="home_card_image">
+      <a href="https://makerspace.co.il/">
+        <img class="" width="100%" height="100% " src="{% static 'programs/makers.png' %}" alt="">
+      </a>
+    </div>
+    <div class="home_card_title">
+      <a href="https://makerspace.co.il/">
+        <h2>
+              מרחבים בישראל
+          </h2>
+      </a>
+    </div>
+    <div class="home_card_text">
+      <a href="https://makerspace.co.il/">
+        <p>
+          יש הרבה מרחבי יצירה בישראל ומייקרספייסים שתוכלו להשתלב בהם. אתם מוזמנים לצפות במפה ולבקר במקום הקרוב אליכם. 
+        </p>
+      </a>
+      
 
     </div>
-    <div class="col-4">
-      {% if user.is_authenticated %}
-      <a class="dropdown-item text-primary" target="_blank" href={% url 'main:profile' user.profile.pk %}>לצפייה בפרופיל האישי</a>
-      {% endif %}
-      <a class="dropdown-item text-primary" target="_blank" href="">קישור עתידי</a>
-      <a class="dropdown-item text-primary" target="_blank" href="">קישור עתידי</a>
+  </div>
+
+  <!-- Projects/chalenges -->
+  <div class="home_card">
+
+    <div class="home_card_image">
+      <a href="{% url 'projects:project_list' %}">
+        <img class="" width="100%" height="100% " src="{% static 'main/coffee.jpg' %}" alt="">
+      </a>
     </div>
+    <div class="home_card_title">
+      <a href="{% url 'projects:project_list' %}">
+        <h2>
+             פרויקטים ואתגרים
+          </h2>
+      </a>
+    </div>
+    <div class="home_card_text">
+      <a href="{% url 'projects:project_list' %}">
+        <p>
+        אנחנו מציעים לכם מגוון רחב של קורסים טכנולוגיים. הכל בחינם ותוכלו לעקוב אחרי קצב ההתקדמות שלכם. ככל שתצברו יותר ידע, דרככם להיות מטצ מתקצרת.
+        </p>
+      </a>
+      
+
+    </div>
+  </div>
+
+    <!-- Learn -->
+    <div class="home_card">
+
+      <div class="home_card_image">
+        <a href="{% url 'learn:course_list' %}">
+          <img class="" width="100%" height="100% " src="{% static 'programs/school.png' %}" alt="">
+        </a>
+      </div>
+      <div class="home_card_title">
+        <a href="{% url 'learn:course_list' %}">
+          <h2>
+                צא ולמד
+            </h2>
+        </a>
+      </div>
+      <div class="home_card_text">
+        <a href="{% url 'learn:course_list' %}">
+          <p>
+          אנחנו מציעים לכם מגוון רחב של קורסים טכנולוגיים. הכל בחינם ותוכלו לעקוב אחרי קצב ההתקדמות שלכם. ככל שתצברו יותר ידע, דרככם להיות מטצ מתקצרת.
+          </p>
+        </a>
+        
+  
+      </div>
+    </div>
+  
+</div>
+<br><br>
+<footer class="main_footer a_container">
+  <div class="main_footer_right">
+    <a class="" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfdSveMs64-mPjxRccDCa0TKPQA3Kmcvn9LgtbiafIeYwsIjA/viewform?usp=sf_link">דווח על בעיה</a>
+    {% if user.is_staff %}
+    <a class="" target="_blank" href="https://github.com/avisalmon/matazim">GitHub</a>
+    <a class="" target="_blank" href="https://airtable.com/tblzIwe7Vwt9A0qfU/viwzPk0NFxxwqlBQd?blocks=show">Air table (staff only)</a>
+    <a class="" target="_blank" href={% url 'learn:learn_report' %}>Students report (staff only)</a>
+    {% endif %}
 
   </div>
-</footer>
+ </footer>
+ <br>
+
 
 {% endblock %}

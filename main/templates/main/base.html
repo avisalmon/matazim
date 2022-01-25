@@ -9,11 +9,12 @@
 
     <script src="https://kit.fontawesome.com/0eb9bf2c1a.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Acme&family=IBM+Plex+Serif:wght@300&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="{% static "main/Logo.png" %}">
+    <link rel="icon" type="image/png" href="{% static "main/favicon.ico" %}">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href={% static 'main/css/site_custom.css' %}>
+    <link rel="stylesheet" href={% static 'main/css/avistyle.css' %}>
     <!-- <link rel="stylesheet" href="{% static 'main/css/main_local.css' %}"> -->
   <title>מטצים</title>
 
@@ -54,120 +55,92 @@
 
 </head>
   <body>
-    <!-- example navbar -->
-
-<div class="border-bottom">
-
-<div class="sticky-top bg-white">
-
-
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-primary text-white hebrew ">
-    <div class="container">
-      <div class="d-flex justify-content-start">
-
-      <a class="navbar-brand" href="{% url 'home' %}">
-        <img src="{% static "main/Logo.png" %}" width="30" height="30" class="d-inline-block align-top" alt="Matazim Logo">
-        <!-- <span>Avi Home</span> -->
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="font-weight-bold collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home"></i><span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " href="{% url 'learn:course_list' %}">קורסים<span class="sr-only">(current)</span></a>
-          </li>
-          {% if user.is_staff %}
-          <li class="nav-item">
-            <a class="nav-link " href="{% url 'projects:project_list' %}">פרויקטים<span class="sr-only">(current)</span></a>
-          </li>
+    <!-- <div class="a_bg_img">
+      <img src="{% static 'main/tech_bg.jpg' %}" alt="">
+    </div> -->
+    <!-- Main Nav -->
+    <div class="nav_main">
+      <div class="nav_container">
+        <div class="nav_user">
+          {% if user.is_authenticated %}
+            <a class="" href={% url 'logout' %}><i class="fas fa-sign-out-alt" data-toggle="tooltip" data-placement="top" title="התנתק"></i></a>&nbsp &nbsp
+            <a class="" href={% url 'main:profile' user.profile.pk %}><i class="fas fa-user" data-toggle="tooltip" data-placement="top" title="{{ user.username }} קישור לדף הפרופיל האישי"></i></a>
+            &nbsp {{ user.first_name }} {{ user.last_name }}
+          {% else %}
+            <a class="" href={% url 'signup' %}><i class="fas fa-user-plus" data-toggle="tooltip" data-placement="top" title="הרשם"></i></a>&nbsp &nbsp
+            <a class="" href={% url 'login' %}><i class="fas fa-sign-in-alt" data-toggle="tooltip" data-placement="top" title="התחבר"></i></a>
           {% endif %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'programs:program_list' %}">תוכניות<span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              עוד
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="https://docs.google.com/presentation/d/e/2PACX-1vTLlmayfLmeBVDV4X2OlZ9yxUb5UslBiS9bsWbE68StlRcB-zCF9juYez2M5Hs0WxcJ2CBVxALhaoTe/pub?start=false&loop=false&delayms=3000&slide=id.p">מפת דרכים</a></li>
-              <li><a class="dropdown-item" href="https://Makerspace.co.il">מרחבים בישראל</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">לא יקרה כלום</a></li>
-            </ul>
-        </li>
-
-          {% if user.is_staff %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'funnel:camp_tree' %}">Funnel<span class="sr-only">(current)</span></a>
+        </div>
+        <div class="nav_search">
+          <form class="" action={% url 'main:search' %}>
+            <button class="" type="submit"><i class="fas fa-search"></i></button>
+            <input class="" type="text" id="term" name="term" placeholder="אני מחפש..." aria-label="Search">
+          </form>
+        </div>
+        <div class="nav_menu">
+          <ul>
+            <!-- <li>
+              <a href="{% url 'home' %}">
+                <i class="fas fa-home"></i>
+              </a>
+            </li> -->
+            <li>
+              <a href="{% url 'learn:course_list' %}">
+                קורסים
+              </a>
             </li>
-          {% endif %}
-          {% if user.is_staff or user.profile.is_supplier %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'learn:order_admin_list' %}">Orders<span class="sr-only">(current)</span></a>
-          </li>
-          {% endif %}
-          <!-- </li> -->
-          <!-- <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             Navigate
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown"> -->
-              <!-- <a class="dropdown-item" href=#>Learn</a> -->
-              <!-- <a class="dropdown-item" href={% url 'programs:program_list' %}>Programs</a>
-              <a class="dropdown-item" href={% url 'programs:facilitator_list' %}>Schools / Maker Spaces</a>
-              <a class="dropdown-item" href={% url 'learn:course_list' %}>Lerning</a>
-              <a class="dropdown-item" href=#>Matazim</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Connect us</a>
-            </div>
-          </li> -->
-          <!-- DELETED FULL DROPDOWN SECTION -->
+            <li>
+              <a href="{% url 'programs:program_list' %}">
+                תוכניות
+              </a>
+            </li>
+         
+            {% if user.is_staff %}
+            <li class="">
+              <a class="" href="{% url 'funnel:camp_tree' %}">Funnel<span class="sr-only">(current)</span></a>
+            </li>
+            {% endif %}
+            {% if user.is_staff or user.profile.is_supplier %}
+            <li class="">
+              <a class="" href="{% url 'learn:order_admin_list' %}">Orders<span class="sr-only">(current)</span></a>
+            </li>
+            {% endif %}
 
-          <!-- You can recreate it from the main page footer -->
-
-          <!-- END OF DELETED SECTION -->
-        </ul>
+            <li class="dropdown">
+              <div >
+                <button onclick="myFunction()" class="dropbtn">עוד</button>
+                <div id="myDropdown" class="dropdown-content">
+                  <a href="https://docs.google.com/presentation/d/e/2PACX-1vTLlmayfLmeBVDV4X2OlZ9yxUb5UslBiS9bsWbE68StlRcB-zCF9juYez2M5Hs0WxcJ2CBVxALhaoTe/pub?start=false&loop=false&delayms=3000&slide=id.p" target="_blank">
+                    מפת דרכים
+                  </a>
+                  <a href="https://Makerspace.co.il" target="_blank">
+                    מרחבים בישראל
+                  </a>
+                  <a href="https://makerspace.co.il/%d7%9e%d7%99%d7%99%d7%a7%d7%a8%d7%a1-%d7%91%d7%9b%d7%90%d7%9f11/" target="_blank">
+                    מייקרז - כאן11
+                  </a>
+                  {% if user.is_staff %}
+                  <a href="{% url 'projects:project_list' %}">פרויקטים<span class="sr-only">(current)</span></a>
+                  {% endif %}
+                </div>
+              </div>
+            </li>
+            
+          </ul>
+          
+        </div>
+        <div class="nav_logo">
+          <a href={% url 'home' %}>
+            <img src={% static 'main/logo_full.png' %} width="100%" height="100%" alt="">
+          </a>
+        </div>
       </div>
     </div>
-    <form class="form-inline my-2 my-lg-0" action={% url 'main:search' %}>
-      <input class="form-control mr-sm-2 hebrew" type="text" id="term" name="term" placeholder="אני מחפש..." aria-label="Search">
-      <button class="btn btn-info my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
-      &nbsp &nbsp
-      {% if user.is_authenticated %}
-        <a class="text-white" href={% url 'logout' %}><i class="fas fa-sign-out-alt" data-toggle="tooltip" data-placement="top" title="התנתק"></i></a>&nbsp &nbsp
-        <a class="text-white" href={% url 'main:profile' user.profile.pk %}><i class="fas fa-user" data-toggle="tooltip" data-placement="top" title="קישור לדף הפרופיל האישי"></i></a>
-        &nbsp {{ user.first_name }} {{ user.last_name }}
-      {% else %}
-      <a class="text-white" href={% url 'signup' %}><i class="fas fa-user-plus" data-toggle="tooltip" data-placement="top" title="הרשם"></i></a>&nbsp &nbsp
-        <a class="text-white" href={% url 'login' %}><i class="fas fa-sign-in-alt" data-toggle="tooltip" data-placement="top" title="התחבר"></i></a>
-      {% endif %}
-    </form>
-  </div>
-    </nav>
 
-<div class="container pt-2">
-      {% if user.is_authenticated and not user.email and not user.first_name %}
-      <div class="text-danger">
-        <h1 class="" > PLEASE GIVE MORE DETAILS ON YOUR PROFILE </h1>
-        <h2>It is very helpfull for the network. at least add you mail and name. </h2>
-        <p>We promiss not to expose your email. ONLY through our messaging system</p>
-        <h3>
-          <a href={% url 'main:edit_profile' %}>Edit your Profile</a>
-        </h3>
-      </div>
-</div>
+    <div class="">
+      {% block content %}{% endblock %}
 
-      {% endif %}
-
-</div>
-</div>
-
-        {% block content %}{% endblock %}
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -176,6 +149,29 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script> -->
     <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
     <script src="{% static 'main/bootstrap-4.5.2/dist/js/bootstrap.min.js' %}"></script>
+
+    <script>
+      /* When the user clicks on the button, 
+      toggle between hiding and showing the dropdown content */
+      function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+      }
+      
+      // Close the dropdown if the user clicks outside of it
+      window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+          var dropdowns = document.getElementsByClassName("dropdown-content");
+          var i;
+          for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+              openDropdown.classList.remove('show');
+            }
+          }
+        }
+      }
+      </script>
+      
 
       {% block javascript %}{% endblock %}
 

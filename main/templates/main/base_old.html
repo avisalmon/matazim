@@ -7,86 +7,178 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <script src="https://kit.fontawesome.com/0eb9bf2c1a.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Acme&family=IBM+Plex+Serif:wght@300&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="{% static "main/Logo.png" %}">
-    <link rel="stylesheet" href={% static 'main/css/bootstrap.min.css' %}>
-    <!-- jQuery -->
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- The bellow is for tinymce editor cdn -->
-    <!--  more info: https://www.codementor.io/hiteshgarg14/how-to-integrate-custom-rich-text-editor-in-django-54czmp0gi-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href={% static 'main/css/site_custom.css' %}>
+    <!-- <link rel="stylesheet" href="{% static 'main/css/main_local.css' %}"> -->
+  <title>מטצים</title>
+
+      <!--  TinyMCE configurations -->
     <script src="https://cdn.tiny.cloud/1/wqz74mr18ulmc97svb64752cmeadhyf5z3y7g3b556whx4m0/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>tinymce.init({ selector:'textarea' });</script>
+    <script>
+      tinymce.init({
+        selector:'textarea',
+        // plugins: 'directionality link',
+        plugins: [
+          'advlist autolink lists link  charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen directionality',
+          'insertdatetime  table paste code help wordcount'
+        ],
+        // got out of plugings image media
+        // toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | ltr rtl | link',
+        toolbar: 'undo redo | formatselect | ' +
+                  'bold italic backcolor forecolor | link | ltr rtl | alignleft aligncenter ' +
+                  'alignright alignjustify | bullist numlist outdent indent | ' +
+                  'removeformat | help',
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+        branding: false,
+        link_assume_external_targets: true
+      });</script>
+    <!-- Quill css Js : -->
+    <!-- form.media -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-189055468-1">
+      </script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-189055468-1');
+      </script>
 
 </head>
   <body>
     <!-- example navbar -->
-    <div class="container">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-info text-white">
+<div class="border-bottom">
+
+<div class="sticky-top bg-white">
+
+
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-primary text-white hebrew ">
+    <div class="container">
+      <div class="d-flex justify-content-start">
+
       <a class="navbar-brand" href="{% url 'home' %}">
-        <img src="{% static "main/Logo.png" %}" width="30" height="30" class="d-inline-block align-top" alt="Nick's Logo">
+        <img src="{% static "main/Logo.png" %}" width="30" height="30" class="d-inline-block align-top" alt="Matazim Logo">
         <!-- <span>Avi Home</span> -->
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="font-weight-bold collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">link1 <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Django example pages
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="https://github.com/avisalmon/avisalmon">Site source on GitHub</a>
-              <a class="dropdown-item" href="{% url 'randg:randg' %}">Password generator</a>
-              <a class="dropdown-item" href="{% url 'portfolio:portfolio' %}">Personal Projects demo</a>
-              <a class="dropdown-item" href="{% url 'todo:todo_list_view' %}">Todo Projects demo</a>
-              <a class="dropdown-item" href="{% url 'presenterz:all_lectures' %}">PresenterZ</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
+            <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home"></i><span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Future link</a>
+            <a class="nav-link " href="{% url 'learn:course_list' %}">קורסים<span class="sr-only">(current)</span></a>
           </li>
+          {% if user.is_staff %}
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'projects:project_list' %}">פרויקטים<span class="sr-only">(current)</span></a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'programs:program_list' %}">תוכניות<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              עוד
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="https://docs.google.com/presentation/d/e/2PACX-1vTLlmayfLmeBVDV4X2OlZ9yxUb5UslBiS9bsWbE68StlRcB-zCF9juYez2M5Hs0WxcJ2CBVxALhaoTe/pub?start=false&loop=false&delayms=3000&slide=id.p">מפת דרכים</a></li>
+              <li><a class="dropdown-item" href="https://Makerspace.co.il">מרחבים בישראל</a></li>
+              <li><a class="dropdown-item" href="https://makerspace.co.il/%d7%9e%d7%99%d7%99%d7%a7%d7%a8%d7%a1-%d7%91%d7%9b%d7%90%d7%9f11/">מייקרז בכאן 11</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">לא יקרה כלום</a></li>
+            </ul>
+        </li>
+
+          {% if user.is_staff %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'funnel:camp_tree' %}">Funnel<span class="sr-only">(current)</span></a>
+            </li>
+          {% endif %}
+          {% if user.is_staff or user.profile.is_supplier %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'learn:order_admin_list' %}">Orders<span class="sr-only">(current)</span></a>
+          </li>
+          {% endif %}
+          <!-- </li> -->
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             Navigate
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown"> -->
+              <!-- <a class="dropdown-item" href=#>Learn</a> -->
+              <!-- <a class="dropdown-item" href={% url 'programs:program_list' %}>Programs</a>
+              <a class="dropdown-item" href={% url 'programs:facilitator_list' %}>Schools / Maker Spaces</a>
+              <a class="dropdown-item" href={% url 'learn:course_list' %}>Lerning</a>
+              <a class="dropdown-item" href=#>Matazim</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Connect us</a>
+            </div>
+          </li> -->
+          <!-- DELETED FULL DROPDOWN SECTION -->
+
+          <!-- You can recreate it from the main page footer -->
+
+          <!-- END OF DELETED SECTION -->
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
       </div>
+    </div>
+    <form class="form-inline my-2 my-lg-0" action={% url 'main:search' %}>
+      <input class="form-control mr-sm-2 hebrew" type="text" id="term" name="term" placeholder="אני מחפש..." aria-label="Search">
+      <button class="btn btn-info my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+      &nbsp &nbsp
+      {% if user.is_authenticated %}
+        <a class="text-white" href={% url 'logout' %}><i class="fas fa-sign-out-alt" data-toggle="tooltip" data-placement="top" title="התנתק"></i></a>&nbsp &nbsp
+        <a class="text-white" href={% url 'main:profile' user.profile.pk %}><i class="fas fa-user" data-toggle="tooltip" data-placement="top" title="קישור לדף הפרופיל האישי"></i></a>
+        &nbsp {{ user.first_name }} {{ user.last_name }}
+      {% else %}
+      <a class="text-white" href={% url 'signup' %}><i class="fas fa-user-plus" data-toggle="tooltip" data-placement="top" title="הרשם"></i></a>&nbsp &nbsp
+        <a class="text-white" href={% url 'login' %}><i class="fas fa-sign-in-alt" data-toggle="tooltip" data-placement="top" title="התחבר"></i></a>
+      {% endif %}
+    </form>
+  </div>
     </nav>
 
-  </div>
-
-<div class="container">
-      {% if user.is_authenticated %}
-        <p>Looged in as <b>{{ user.username}} </b>  <a href="{% url 'logout' %}">Log out</a>
-        <a href="{% url 'main:my_profile_view' %}">  |  See your profile</a>
-      </p>
-      {% else %}
-        <p>
-          <a href="{% url 'login' %}">Login</a>...
-          <a href="{% url 'signup' %}">Sign Up</a>...
-          <a href="{% provider_login_url 'github' %}">Login with GitHub</a>...
-          <a href="{% provider_login_url 'google' %}">Login with Google</a>...
-          <a href="{% provider_login_url 'facebook' %}">Login with FaceBook</a>...
-        </p>
-      {% endif %}
-      {% block content %}{% endblock %}
+<div class="container pt-2">
+      {% if user.is_authenticated and not user.email and not user.first_name %}
+      <div class="text-danger">
+        <h1 class="" > PLEASE GIVE MORE DETAILS ON YOUR PROFILE </h1>
+        <h2>It is very helpfull for the network. at least add you mail and name. </h2>
+        <p>We promiss not to expose your email. ONLY through our messaging system</p>
+        <h3>
+          <a href={% url 'main:edit_profile' %}>Edit your Profile</a>
+        </h3>
+      </div>
 </div>
 
+      {% endif %}
+
+</div>
+</div>
+
+        {% block content %}{% endblock %}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <!-- Got it on the hed. remove later after things are working -->
-    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
+    <script src="{% static 'main/bootstrap-4.5.2/dist/js/bootstrap.min.js' %}"></script>
+
+      {% block javascript %}{% endblock %}
+
   </body>
 </html>
