@@ -223,7 +223,7 @@
 
   .home_full_page {
       position: fixed;
-      top: 0;
+      top: 60px;
       left: 0;
       height: 100vh;
       width: 100%;
@@ -374,4 +374,10 @@
 
 .main_footer a {
     padding-top: 5px;
+}
+
+/* course list */
+
+.a_course_side {
+    position: fixed;
 }
