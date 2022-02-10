@@ -89,7 +89,7 @@ urlpatterns = [
          name='batch_list'),
     path('batch/<int:pk>', views.BatchDetailView.as_view(),
          name='batch_detail'),
-    path('int:course_pk>', views.OrderCreateView.as_view(),
+    path('order/create/<int:course_pk>', views.OrderCreateView.as_view(),
          name='order_create'),
     path('order/<int:pk>', views.OrderDetailView.as_view(),
          name='order_detail'),
